@@ -173,6 +173,11 @@ architecture Behavioral of pl_top is
     signal cmd_start_top : std_logic := '0';
     signal sts_in_prog_top : std_logic := '0';
     signal sts_done_top : std_logic := '0';
+    
+    signal data_bram_we_top   : std_logic := '0';
+    signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others => '0');
+    signal data_bram_clk_top  : std_logic := '0';
+    signal data_bram_din_top  : std_logic_vector(31 downto 0) := (others => '0');
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -280,7 +285,7 @@ port map (
 ----------------------------------------------------------------
 reg_i : entity work.reg_file
 port map (
-    clock => ps_clk_50mhz,
+    clock => read_clk,
     dataIn => dataIn,
     dataOut => dataOut,
     regNum => regNum,
@@ -289,6 +294,19 @@ port map (
     cmd_start => cmd_start_top,
     sts_in_prog => sts_in_prog_top,
     sts_done => sts_done_top
+    );
+----------------------------------------------------------------
+pack_i: entity work.packager
+    port map (
+    clock => read_clk,
+    
+--    adc_data =>
+--    adc_data_valid => adc_status_signals(0),
+    
+    data_bram_addr => data_bram_addr_top,
+    data_bram_clk => data_bram_clk_top,
+    data_bram_din => data_bram_din_top,
+    data_bram_we => data_bram_we_top
     );
 
 ----------------------------------------------------------------
