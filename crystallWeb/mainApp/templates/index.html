@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+
+    <!-- jQuery library -->
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+    <!-- Popper JS -->
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+
+    <!-- Latest compiled JavaScript -->
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+
+    <!-- Google charts -->
+<!--    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+    {% load staticfiles %}
+    <script src="{% static "mainApp/js/jquery.min.js" %}"></script>
+    <script src="{% static "mainApp/js/popper.min.js" %}"></script>
+    <script src="{% static "mainApp/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "mainApp/js/plotly.min.js" %}"></script>
+    <script src="{% static "mainApp/js/FileSaver.js" %}"></script>
+    <script src="{% static "mainApp/js/script.js" %}"></script>
+
+    <link rel="stylesheet" href="{% static "mainApp/css/index.css" %}">
+    <link rel="stylesheet" href="{% static "mainApp/css/bootstrap.min.css" %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Сервер по изучению сцинтилляционных кристаллов</title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+<br>
+<table class="table table-bordered">
+
+<tbody>
+    <tr>
+      <td width="80%" height="100%" style="height:100%">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" href="#all-tab-pane">Все каналы</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#1-adc-tab-pane">1 канал</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#2-adc-tab-pane">2 канал</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#3-adc-tab-pane">3 канал</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#4-adc-tab-pane">4 канал</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Спектры</a>
+            <div class="dropdown-menu" id="spectra-menu">
+              <a class="dropdown-item" id="add-spectrum-item" href="#add-spectrum" >Добавить спектр</a>
+              <a class="dropdown-item" id="add-spectrum-item" href="#delete-spectrum">Удалить спектр</a>
+              <div class="dropdown-divider"></div>
+            </div>
+
+          </li>
+        </ul>
+
+        <div class="tab-content"  style="height:100%">
+
+            <div id="all-tab-pane" class="tab-pane fade show active">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td width="50%">
+                      <div id="adc_graph_1"></div>
+                    </td>
+                    <td width="50%">
+                      <div id="adc_graph_2"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="50%">
+                      <div id="adc_graph_3"></div>
+                    </td>
+                    <td width="50%">
+                      <div id="adc_graph_4"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="1-adc-tab-pane" class="tab-pane fade" style="min-height:100%;">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td width="100%" style="min-height:100%;">
+                      <div id="adc_graph_1_1"></div>
+                    </td>
+                </table>
+            </div>
+
+
+            <div id="2-adc-tab-pane" class="tab-pane fade">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td width="100%">
+                      <div id="adc_graph_2_2"></div>
+                    </td>
+                </table>
+            </div>
+
+            <div id="3-adc-tab-pane" class="tab-pane fade">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td width="100%">
+                      <div id="adc_graph_3_3"></div>
+                    </td>
+                </table>
+            </div>
+
+            <div id="4-adc-tab-pane" class="tab-pane fade">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td width="100%">
+                      <div id="adc_graph_4_4"></div>
+                    </td>
+                </table>
+            </div>
+
+
+            </div>
+  </div>
+
+  </div>
+
+      </td>
+      <td width="20%">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">
+                  Управление
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="startCount" placeholder="Кол-во измерений" >
+                  <div class="input-group-append">
+                    <button class="btn btn-success" type="button" onclick="someStart()">Старт</button>
+                  </div>
+                </div>
+
+                  <div class="input-group mb-2" >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" >1 измерение</span>
+                    </div>
+                    <div class="input-group-append">
+                      <button id="start_button" class="btn btn-success" type="button" onclick="start()" style="width: 100%;">Старт</button>
+                    </div>
+                  </div>
+
+
+
+
+                </th>
+            </tr>
+            <tr>
+              <th scope="row">
+
+                <p>Вид графиков </p>
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" id="histogram_but" name="options" value="column" checked> Ступенчатый
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" id="line_but" name="options" value="line"> Линейный
+                  </label>
+                </div>
+
+
+              </th>
+            </tr>
+            <tr>
+              <th scope="row">
+                  <p id="status_text" class="text-left">Сохранить графики в файл</p>
+                  <button type="button" id="start_button" class="btn btn-success" onclick="saveCharts()" style="margin: 0 auto;width : 80%; text-align: center;">Сохранить</button>
+              </th>
+            </tr>
+
+            <tr>
+              <th scope="row">
+                  <p id="status_text" class="text-left">Статус: Готов</p>
+              </th>
+            </tr>
+            <tr>
+              <th scope="row" id="spectrumInfo" hidden>
+                <h5>Информация о спектре:</h5>
+                  <p id="channelInfo" class="text-left"></p>
+                  <p id="modeInfo" class="text-left"></p>
+                  <p id="pointInfo" class="text-left"></p>
+                  <p id="basketInfo" class="text-left"></p>
+              </th>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </td>
+    </tr>
+
+
+
+</table>
+
+    </div>
+
+
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Новый амплитудный спектр</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+
+                <label class="col-form-label">Канал АЦП</label>
+                <br>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="channelADC" id="channelADC1" autocomplete="off" checked> 1
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="channelADC" id="channelADC2" autocomplete="off"> 2
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="channelADC" id="channelADC3" autocomplete="off"> 3
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="channelADC" id="channelADC4" autocomplete="off"> 4
+                  </label>
+                </div>
+              </div>
+                <label class="col-form-label">Режим работы</label>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="mode" id="pointMode" autocomplete="off" checked> Опорная точка
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="mode" id="maxAmplMode" autocomplete="off"> Максимальное значение
+                  </label>
+                </div>
+              <div class="form-group">
+                <fieldset active>
+                <label for="pointADC" class="col-form-label" >Опорная точка</label>
+                <textarea class="form-control" id="pointADC" ></textarea>
+                </fieldset>
+              </div>
+              <div class="btn-group dropright">
+                <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" role="button">Количество корзин</a>
+                <div class="dropdown-menu" id="basketNumber">
+                  <a class="dropdown-item" >4096</a>
+                  <a class="dropdown-item" >2048</a>
+                  <a class="dropdown-item" >1024</a>
+                  <a class="dropdown-item" >512</a>
+                  <a class="dropdown-item" >256</a>
+                  <a class="dropdown-item" >128</a>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="hideSpectrum" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" id="createSpectrum">Создать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>
