@@ -1,8 +1,0 @@
-//arch = zynq; split = false; format = BIN
-the_ROM_image:
-{
-    [bootloader]zynq_fsbl.elf
-    crystand_top.bit
-    u-boot.elf
-    [offset = 0x520000]image.ub
-}
