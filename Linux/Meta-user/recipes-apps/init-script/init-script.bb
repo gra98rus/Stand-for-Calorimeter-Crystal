@@ -9,13 +9,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 SRC_URI = "file://script.sh \
 	"
-
 S = "${WORKDIR}"
 
-#do_install() {
-#	     install -d ${D}/${bindir}
-#	     install -m 0755 ${S}/init-script ${D}/${bindir}
-#}
 do_install() {
              install -d ${D}${sysconfdir}/init.d
              install -d ${D}${sysconfdir}/rcS.d
