@@ -1,7 +1,7 @@
-tar -xf /tmp_files/pytz-2006p.tar.xz -C /tmp_files
+tar -xf /tmp_files/pytz-2006p.tar.gz -C /tmp_files
 #tar -xf /tmp_files/python-periphery-master.tar.xz -C /tmp_files
-tar -xf /tmp_files/giref-0.1.2.tar.gz -C /tmp_files
-tar -xf /tmp_files/pytz-2006p.tar.xz -C /tmp_files
+tar -xf /tmp_files/wsgiref-0.1.2.tar.gz -C /tmp_files
+tar -xf /tmp_files/Django-1.11.28.tar.gz -C /tmp_files
 
 cd /tmp_files/pytz-2006p
 /usr/bin/python /tmp_files/pytz-2006p/setup.py install
