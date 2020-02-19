@@ -55892,7 +55892,7 @@ c083af1c T __initramfs_start
 c083af1c t __irf_start
 c083af1c T __security_initcall_end
 c083af1c T __security_initcall_start
-c083afa2 t __irf_end
+c083afa1 t __irf_end
 c083afa8 T __initramfs_size
 c083b000 D __per_cpu_load
 c083b000 D __per_cpu_start

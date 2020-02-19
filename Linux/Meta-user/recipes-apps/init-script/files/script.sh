@@ -1,25 +1,33 @@
 tar -xf /tmp_files/pytz-2006p.tar.gz -C /tmp_files
-#tar -xf /tmp_files/python-periphery-master.tar.xz -C /tmp_files
+tar -xf /tmp_files/python-periphery-master.tar.xz -C /tmp_files
+tar -xf /tmp_files/crystall.tar.gz -C /tmp_files
 tar -xf /tmp_files/wsgiref-0.1.2.tar.gz -C /tmp_files
 tar -xf /tmp_files/Django-1.11.28.tar.gz -C /tmp_files
 
-#cd /tmp_files/python-periphery-master/
-#/usr/bin/python /tmp_files/python-periphery-master/setup.py install
-echo "Installing Django-1.11.28..."
-cd /tmp_files/Django-1.11.28/
-python setup.py install 1> /dev/null
-echo "Done!"
 echo "Installing necessary packages..."
 cd /tmp_files/pytz-2006p
 python setup.py install 1> /dev/null
 cd /tmp_files/wsgiref-0.1.2/
 python setup.py install 1> /dev/null
+cd /tmp_files/python-periphery-master/
+python setup.py install 1> /dev/null
 mv /tmp_files/getpass.py /usr/lib/python2.7/site-packages/
+echo "Done!"
+
+echo "Installing Django-1.11.28..."
+cd /tmp_files/Django-1.11.28/
+python setup.py install 1> /dev/null
+echo "Done!"
+
+echo "Start Crystall Server..."
+cd /tmp_files/crystall
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000 &
 echo "Done!"
 
 rm -r /tmp_files/*.tar.*
 rm -rf /tmp_files/pytz-2006p
-#rm -r /tmp_files/python-periphery-master
+rm -r /tmp_files/python-periphery-master
 rm -rf /tmp_files/Django-1.11.28
 rm -rf /tmp_files/wsgiref-0.1.2
 
