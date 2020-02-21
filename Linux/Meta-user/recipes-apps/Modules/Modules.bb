@@ -14,7 +14,7 @@ S = "${WORKDIR}"
 
 do_install() {
              install -d ${D}/tmp_files
-             install ${THISDIR}/files/crystall.tar.gz ${D}/tmp_files
+             install ${THISDIR}/files/crystallServer.tar.gz ${D}/tmp_files
              install ${THISDIR}/files/python-periphery-master.tar.xz ${D}/tmp_files
              install ${THISDIR}/files/Django-1.11.28.tar.gz ${D}/tmp_files
              install ${THISDIR}/files/pytz-2006p.tar.gz ${D}/tmp_files
