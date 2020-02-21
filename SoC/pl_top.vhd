@@ -1,34 +1,7 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 10/27/2017 12:21:27 PM
--- Design Name: 
--- Module Name: pl_top - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
 
@@ -296,18 +269,18 @@ port map (
     sts_done => sts_done_top
     );
 ----------------------------------------------------------------
-pack_i: entity work.packager
-    port map (
-    clock => read_clk,
+--pack_i: entity work.packager
+--    port map (
+--    clock => read_clk,
     
---    adc_data =>
---    adc_data_valid => adc_status_signals(0),
+----    adc_data =>
+----    adc_data_valid => adc_status_signals(0),
     
-    data_bram_addr => data_bram_addr_top,
-    data_bram_clk => data_bram_clk_top,
-    data_bram_din => data_bram_din_top,
-    data_bram_we => data_bram_we_top
-    );
+--    data_bram_addr => data_bram_addr_top,
+--    data_bram_clk => data_bram_clk_top,
+--    data_bram_din => data_bram_din_top,
+--    data_bram_we => data_bram_we_top
+--    );
 
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient

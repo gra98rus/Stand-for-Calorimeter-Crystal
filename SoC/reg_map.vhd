@@ -1,0 +1,14 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+package reg_map is
+
+	constant REG_NUM_ECHO : std_logic_vector(15 downto 0) := X"0000";	
+	constant REG_STATUS : std_logic_vector(15 downto 0) := X"0010";
+	constant REG_COMMAND : std_logic_vector(15 downto 0) := X"0001";
+
+	
+end reg_map;
+
+package body reg_map is
+end reg_map;

@@ -2,13 +2,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-use work.types.all;
+use work.new_types.all;
 
 entity packager is
 port(
     clock    : in std_logic;
     
-    adc_data       : in adc_data_t;
+    adc_data       : in adc_data_ltt;
     adc_data_valid : in std_logic;
        
     data_bram_addr : out std_logic_vector(31 downto 0);
@@ -22,7 +22,7 @@ end packager;
 
 architecture behavioral of packager is
 
-    signal adc_data_sr     : adc_data_t := (others=>(others=>(others=>'0')));
+    signal adc_data_sr     : adc_data_ltt := (others=>(others=>(others=>'0')));
     signal adc_data_lsr    : adc_data_lt := (others=>(others=>'0'));
     
     signal adc_data_r      : std_logic_vector(13 downto 0) := (others=>'0');

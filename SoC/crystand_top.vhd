@@ -1,12 +1,3 @@
---Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
-----------------------------------------------------------------------------------
---Tool Version: Vivado v.2016.4 (lin64) Build 1733598 Wed Dec 14 22:35:42 MST 2016
---Date        : Fri Sep 21 17:33:27 2018
---Host        : devz.inp.nsk.su running 64-bit unknown
---Command     : generate_target ps_top_wrapper.bd
---Design      : ps_top_wrapper
---Purpose     : IP block netlist
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
@@ -95,7 +86,8 @@ entity crystand_top is
     ADC_DC0_N : in std_logic;
         
     ADC_FC0_P : in std_logic;
-    ADC_FC0_N : in std_logic);
+    ADC_FC0_N : in std_logic
+    );
 end crystand_top;
 
 architecture STRUCTURE of crystand_top is
@@ -127,7 +119,12 @@ architecture STRUCTURE of crystand_top is
     FCLK_CLK0 : out STD_LOGIC;
     reset : out std_logic;
     DataIn1 : in std_logic_vector;
-    DataIn2 : in std_logic_vector
+    DataIn2 : in std_logic_vector;
+    
+    regWE : out STD_LOGIC;
+    regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 )
+   -- dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component ps_top;
   
@@ -137,6 +134,12 @@ architecture STRUCTURE of crystand_top is
   
   signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
   signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
+  
+  signal reg_regWE      : STD_LOGIC := '0';
+  signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+  signal reg_dataInPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+  signal reg_regNum :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+
     
 begin
 ps_top_i: component ps_top
@@ -167,7 +170,12 @@ ps_top_i: component ps_top
       FCLK_CLK0 => FCLK_CLK0,
       reset => reset,
       DataIn1 =>DataOut1,
-      DataIn2 =>DataOut2
+      DataIn2 =>DataOut2,
+            
+ --     dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
+      dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
+      regNum(31 downto 0) => reg_regNum(31 downto 0),
+      regWE => reg_regWE
     );
     
 pl_top_i : entity work.pl_top
@@ -252,7 +260,12 @@ pl_top_i : entity work.pl_top
             ADC_DC0_N => ADC_DC0_N,
                 
             ADC_FC0_P => ADC_FC0_P,
-            ADC_FC0_N => ADC_FC0_N
+            ADC_FC0_N => ADC_FC0_N,
+            
+            regWE   =>  reg_regWE,
+            regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
+            dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
+            dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)
             
             );    
     

@@ -1,7 +1,7 @@
 --Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2016.4 (lin64) Build 1756540 Mon Jan 23 19:11:19 MST 2017
---Date        : Fri Feb 21 12:52:05 2020
+--Date        : Fri Feb 21 16:20:07 2020
 --Host        : deva2.inp.nsk.su running 64-bit Scientific Linux release 6.7 (Carbon)
 --Command     : generate_target ps_top.bd
 --Design      : ps_top
