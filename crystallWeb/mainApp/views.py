@@ -18,22 +18,22 @@ COMMAND_START = 0x0001
 MEM_ADDRESS = 0x40000000
 MEM_SIZE = 0x0000FFFF
 
-def write_to_reg (reg_num , data ):
-    mem = MMIO( REG_ADDRESS , REG_SIZE )
-    mem.write32(0x4 , reg_num )
-    mem.write32(0x8 , data )
+def write_to_reg (reg_num , data):
+    mem = MMIO(REG_ADDRESS , REG_SIZE)
+    mem.write32(0x4 , reg_num)
+    mem.write32(0x8 , data)
     mem.write32(0x0 , 0xFFFFFFFF)
     mem.close()
 
-def read_from_reg (reg_num ):
-    mem = MMIO( REG_ADDRESS , REG_SIZE )
-    data = mem.write32(0x4, reg_num )
+def read_from_reg (reg_num):
+    mem = MMIO(REG_ADDRESS , REG_SIZE)
+    data = mem.write32(0x4, reg_num)
     data = mem.read32(0xC)
     mem.close()
     return data
 
 def read_charts ():
-    mem = MMIO ( MEM_ADDRESS, MEM_SIZE)
+    mem = MMIO (MEM_ADDRESS, MEM_SIZE)
     data = mem.read(0, 2048)
     mem.close()
     data_ = struct.unpack("512I",data)
