@@ -123,8 +123,8 @@ architecture STRUCTURE of crystand_top is
     
     regWE : out STD_LOGIC;
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 )
-   -- dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 )
+    dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component ps_top;
   
@@ -172,8 +172,9 @@ ps_top_i: component ps_top
       DataIn1 =>DataOut1,
       DataIn2 =>DataOut2,
             
- --     dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
+      --dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
+      dataIn(31 downto 0) => dataOut1(31 downto 0),
       regNum(31 downto 0) => reg_regNum(31 downto 0),
       regWE => reg_regWE
     );

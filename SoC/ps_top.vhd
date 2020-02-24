@@ -1,7 +1,7 @@
 --Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2016.4 (lin64) Build 1756540 Mon Jan 23 19:11:19 MST 2017
---Date        : Fri Feb 21 16:20:07 2020
+--Date        : Mon Feb 24 17:51:12 2020
 --Host        : deva2.inp.nsk.su running 64-bit Scientific Linux release 6.7 (Carbon)
 --Command     : generate_target ps_top.bd
 --Design      : ps_top
@@ -2338,6 +2338,7 @@ entity ps_top is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     UART_0_rxd : in STD_LOGIC;
     UART_0_txd : out STD_LOGIC;
+    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regWE : out STD_LOGIC;
@@ -2568,6 +2569,7 @@ architecture STRUCTURE of ps_top is
   signal axi_bram_ctrl_0_BRAM_PORTA_EN : STD_LOGIC;
   signal axi_bram_ctrl_0_BRAM_PORTA_RST : STD_LOGIC;
   signal axi_bram_ctrl_0_BRAM_PORTA_WE : STD_LOGIC_VECTOR ( 3 downto 0 );
+  signal dataIn_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal proc_sys_reset_0_interconnect_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_0_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_0_peripheral_reset : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -2729,6 +2731,7 @@ begin
   DataIn2_1(31 downto 0) <= DataIn2(31 downto 0);
   FCLK_CLK0 <= processing_system7_0_FCLK_CLK0;
   UART_0_txd <= processing_system7_0_UART_0_TxD;
+  dataIn_1(31 downto 0) <= dataIn(31 downto 0);
   dataOut(31 downto 0) <= ps_top_reg_interface_ip_0_0_0_dataOut(31 downto 0);
   processing_system7_0_UART_0_RxD <= UART_0_rxd;
   regNum(31 downto 0) <= ps_top_reg_interface_ip_0_0_0_regNum(31 downto 0);
@@ -3027,7 +3030,7 @@ ps7_0_axi_periph: entity work.ps_top_ps7_0_axi_periph_1
     );
 ps_top_reg_interface_ip_0_0_0: component ps_top_ps_top_reg_interface_ip_0_0_0_0
      port map (
-      dataIn(31 downto 0) => B"00000000000000000000000000000000",
+      dataIn(31 downto 0) => dataIn_1(31 downto 0),
       dataOut(31 downto 0) => ps_top_reg_interface_ip_0_0_0_dataOut(31 downto 0),
       regNum(31 downto 0) => ps_top_reg_interface_ip_0_0_0_regNum(31 downto 0),
       regWE => ps_top_reg_interface_ip_0_0_0_regWE,

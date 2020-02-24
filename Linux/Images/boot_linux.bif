@@ -2,7 +2,7 @@
 the_ROM_image:
 {
     [bootloader]zynq_fsbl.elf
-    crystand_top.bit
+    ../crystand_top.bit
     u-boot.elf
     [offset = 0x520000]image.ub
 }
