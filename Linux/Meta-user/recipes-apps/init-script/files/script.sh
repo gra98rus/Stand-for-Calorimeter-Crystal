@@ -27,11 +27,11 @@ python manage.py runserver 0.0.0.0:8000 &
 echo "Done!"
 
 cd /
-#rm -rf /tmp_files/
+rm -rf /tmp_files/
 #rm -r /tmp_files/*.tar.*
 #rm -rf /tmp_files/pytz-2006p
 #rm -r /tmp_files/python-periphery-master
 #rm -rf /tmp_files/Django-1.11.28
 #rm -rf /tmp_files/wsgiref-0.1.2
 
-echo "Hello! It is Stand of Calorimeter' Crystals!"
+echo "Hello! It is Stand for Calorimeter' Crystals!"
