@@ -120,6 +120,14 @@ architecture STRUCTURE of crystand_top is
     reset : out std_logic;
     DataIn1 : in std_logic_vector;
     DataIn2 : in std_logic_vector;
+        
+    BRAM_PORTA_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    BRAM_PORTA_clk : in STD_LOGIC;
+    BRAM_PORTA_din : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    BRAM_PORTA_dout : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    BRAM_PORTA_en : in STD_LOGIC;
+    BRAM_PORTA_rst : in STD_LOGIC;
+    BRAM_PORTA_we : in STD_LOGIC_VECTOR ( 3 downto 0 );
     
     regWE : out STD_LOGIC;
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -134,6 +142,16 @@ architecture STRUCTURE of crystand_top is
   
   signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
   signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
+  
+  
+  signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others=>'0');
+  signal data_bram_clk_top  : std_logic := '0';
+  signal data_bram_din_top  : std_logic_vector(31 downto 0) := (others=>'0');
+  signal data_bram_dout : std_logic_vector(31 downto 0) := (others=>'0');
+  signal data_bram_en   : std_logic := '1';
+  signal data_bram_we_v : std_logic_vector(3 downto 0) := (others=>'0');
+  signal data_bram_we_top   : std_logic := '0';
+  signal data_bram_rst  : std_logic := '0';
   
   signal reg_regWE      : STD_LOGIC := '0';
   signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
@@ -172,12 +190,24 @@ ps_top_i: component ps_top
       DataIn1 =>DataOut1,
       DataIn2 =>DataOut2,
             
+      BRAM_PORTA_addr(31 downto 0) => data_bram_addr_top,
+      BRAM_PORTA_clk => data_bram_clk_top,
+      BRAM_PORTA_din(31 downto 0) => data_bram_din_top,
+      BRAM_PORTA_dout(31 downto 0) => data_bram_dout,
+      BRAM_PORTA_en => data_bram_en,
+      BRAM_PORTA_rst => data_bram_rst,
+      BRAM_PORTA_we(3 downto 0) => data_bram_we_v,
+            
       --dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
       dataIn(31 downto 0) => dataOut1(31 downto 0),
       regNum(31 downto 0) => reg_regNum(31 downto 0),
       regWE => reg_regWE
     );
+        
+    data_bram_we_v <= data_bram_we_top & data_bram_we_top & data_bram_we_top & data_bram_we_top;
+    data_bram_rst  <= '0';
+    data_bram_en   <= '1';
     
 pl_top_i : entity work.pl_top
     port map(
@@ -262,6 +292,11 @@ pl_top_i : entity work.pl_top
                 
             ADC_FC0_P => ADC_FC0_P,
             ADC_FC0_N => ADC_FC0_N,
+                    
+            data_bram_addr => data_bram_addr_top,
+            data_bram_clk  => data_bram_clk_top,
+            data_bram_din  => data_bram_din_top,
+            data_bram_we   => data_bram_we_top,
             
             regWE   =>  reg_regWE,
             regNum(15 downto 0)  =>  reg_regNum(15 downto 0),

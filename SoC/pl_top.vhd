@@ -97,7 +97,13 @@ port(
     regWE   : in std_logic;
     regNum  : in std_logic_vector(15 downto 0);
     dataIn  : in std_logic_vector(15 downto 0);
-    dataOut : out std_logic_vector(15 downto 0)
+    dataOut : out std_logic_vector(15 downto 0);
+        
+    data_bram_addr : out std_logic_vector(31 downto 0);
+    data_bram_clk  : out std_logic;
+    data_bram_din  : out std_logic_vector(31 downto 0);
+    data_bram_we   : out std_logic
+        
     
     );
 
@@ -151,6 +157,11 @@ architecture Behavioral of pl_top is
     signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others => '0');
     signal data_bram_clk_top  : std_logic := '0';
     signal data_bram_din_top  : std_logic_vector(31 downto 0) := (others => '0');
+        
+    signal adc_data_top : adc_data_ltt  := (others=>(others=>(others=>'0')));
+    signal adc_data_valid_top : std_logic := '0';
+    
+    signal temp_for_pack : std_logic := '0';
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -223,7 +234,11 @@ port map(
     read_ring_ena => read_buf_ena,           --in
     read_simple_ena => Data_read_ena,        --in
     
-    simple_buffer_state => simple_buffer_state --out
+    simple_buffer_state => simple_buffer_state, --out
+    
+            
+    adc_data => adc_data_top,
+    adc_data_valid => adc_data_valid_top
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
@@ -269,18 +284,18 @@ port map (
     sts_done => sts_done_top
     );
 ----------------------------------------------------------------
---pack_i: entity work.packager
---    port map (
---    clock => read_clk,
+pack_i: entity work.packager
+    port map (
+    clock => read_clk,
+    off_adc_data_valid => temp_for_pack,
+    adc_data => (others=>(others=>B"00000000000011")),
+    adc_data_valid => temp_for_pack,--adc_data_valid_top,
     
-----    adc_data =>
-----    adc_data_valid => adc_status_signals(0),
-    
---    data_bram_addr => data_bram_addr_top,
---    data_bram_clk => data_bram_clk_top,
---    data_bram_din => data_bram_din_top,
---    data_bram_we => data_bram_we_top
---    );
+    data_bram_addr => data_bram_addr_top,
+    data_bram_clk => data_bram_clk_top,
+    data_bram_din => data_bram_din_top,
+    data_bram_we => data_bram_we_top
+    );
 
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
@@ -393,6 +408,11 @@ ALT_17 <= shapers_controll(10);             --out
 ALT_18 <= shapers_controll(11);             --out
 
 Buffer_state <= simple_buffer_state;        --out
+        
+data_bram_addr <= data_bram_addr_top;        
+data_bram_we <= data_bram_we_top;
+data_bram_din <= data_bram_din_top;
+data_bram_clk <= data_bram_clk_top;
 ----------------------------------------------------------------
 
 end Behavioral;
