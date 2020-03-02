@@ -1,7 +1,7 @@
 --Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2016.4 (lin64) Build 1756540 Mon Jan 23 19:11:19 MST 2017
---Date        : Fri Feb 21 16:20:07 2020
+--Date        : Fri Feb 28 12:19:57 2020
 --Host        : deva2.inp.nsk.su running 64-bit Scientific Linux release 6.7 (Carbon)
 --Command     : generate_target ps_top.bd
 --Design      : ps_top
@@ -2305,6 +2305,20 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity ps_top is
   port (
+    ADC_SPI_io0_i : in STD_LOGIC;
+    ADC_SPI_io0_o : out STD_LOGIC;
+    ADC_SPI_io0_t : out STD_LOGIC;
+    ADC_SPI_io1_i : in STD_LOGIC;
+    ADC_SPI_io1_o : out STD_LOGIC;
+    ADC_SPI_io1_t : out STD_LOGIC;
+    ADC_SPI_sck_i : in STD_LOGIC;
+    ADC_SPI_sck_o : out STD_LOGIC;
+    ADC_SPI_sck_t : out STD_LOGIC;
+    ADC_SPI_ss1_o : out STD_LOGIC;
+    ADC_SPI_ss2_o : out STD_LOGIC;
+    ADC_SPI_ss_i : in STD_LOGIC;
+    ADC_SPI_ss_o : out STD_LOGIC;
+    ADC_SPI_ss_t : out STD_LOGIC;
     BRAM_PORTA_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     BRAM_PORTA_clk : in STD_LOGIC;
     BRAM_PORTA_din : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2338,20 +2352,35 @@ entity ps_top is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     UART_0_rxd : in STD_LOGIC;
     UART_0_txd : out STD_LOGIC;
+    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regWE : out STD_LOGIC;
     reset : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of ps_top : entity is "ps_top,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ps_top,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=15,numReposBlks=10,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=2,da_bram_cntlr_cnt=1,da_ps7_cnt=1,synth_mode=Global}";
-  attribute HW_HANDOFF : string;
-  attribute HW_HANDOFF of ps_top : entity is "ps_top.hwdef";
+  attribute core_generation_info : string;
+  attribute core_generation_info of ps_top : entity is "ps_top,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ps_top,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=15,numReposBlks=10,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=2,da_bram_cntlr_cnt=1,da_ps7_cnt=1,synth_mode=Global}";
+  attribute hw_handoff : string;
+  attribute hw_handoff of ps_top : entity is "ps_top.hwdef";
 end ps_top;
 
 architecture STRUCTURE of ps_top is
   component ps_top_processing_system7_0_0 is
   port (
+    SPI0_SCLK_I : in STD_LOGIC;
+    SPI0_SCLK_O : out STD_LOGIC;
+    SPI0_SCLK_T : out STD_LOGIC;
+    SPI0_MOSI_I : in STD_LOGIC;
+    SPI0_MOSI_O : out STD_LOGIC;
+    SPI0_MOSI_T : out STD_LOGIC;
+    SPI0_MISO_I : in STD_LOGIC;
+    SPI0_MISO_O : out STD_LOGIC;
+    SPI0_MISO_T : out STD_LOGIC;
+    SPI0_SS_I : in STD_LOGIC;
+    SPI0_SS_O : out STD_LOGIC;
+    SPI0_SS1_O : out STD_LOGIC;
+    SPI0_SS2_O : out STD_LOGIC;
+    SPI0_SS_T : out STD_LOGIC;
     UART0_TX : out STD_LOGIC;
     UART0_RX : in STD_LOGIC;
     M_AXI_GP0_ARVALID : out STD_LOGIC;
@@ -2568,6 +2597,7 @@ architecture STRUCTURE of ps_top is
   signal axi_bram_ctrl_0_BRAM_PORTA_EN : STD_LOGIC;
   signal axi_bram_ctrl_0_BRAM_PORTA_RST : STD_LOGIC;
   signal axi_bram_ctrl_0_BRAM_PORTA_WE : STD_LOGIC_VECTOR ( 3 downto 0 );
+  signal dataIn_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal proc_sys_reset_0_interconnect_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_0_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_0_peripheral_reset : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -2632,6 +2662,20 @@ architecture STRUCTURE of ps_top is
   signal processing_system7_0_M_AXI_GP0_WREADY : STD_LOGIC;
   signal processing_system7_0_M_AXI_GP0_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal processing_system7_0_M_AXI_GP0_WVALID : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO0_I : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO0_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO0_T : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO1_I : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO1_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_IO1_T : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SCK_I : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SCK_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SCK_T : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SS1_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SS2_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SS_I : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SS_O : STD_LOGIC;
+  signal processing_system7_0_SPI_0_SS_T : STD_LOGIC;
   signal processing_system7_0_UART_0_RxD : STD_LOGIC;
   signal processing_system7_0_UART_0_TxD : STD_LOGIC;
   signal ps7_0_axi_periph_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2710,14 +2754,24 @@ architecture STRUCTURE of ps_top is
   signal ps_top_reg_interface_ip_0_0_0_regWE : STD_LOGIC;
   signal NLW_proc_sys_reset_0_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  attribute BMM_INFO_ADDRESS_SPACE : string;
-  attribute BMM_INFO_ADDRESS_SPACE of axi_bram_ctrl_0 : label is "byte  0x40000000 32 > ps_top blk_mem_gen_0";
   attribute KEEP_HIERARCHY : string;
   attribute KEEP_HIERARCHY of axi_bram_ctrl_0 : label is "yes";
-  attribute BMM_INFO_PROCESSOR : string;
-  attribute BMM_INFO_PROCESSOR of processing_system7_0 : label is "arm > ps_top axi_bram_ctrl_0";
+  attribute bmm_info_address_space : string;
+  attribute bmm_info_address_space of axi_bram_ctrl_0 : label is "byte  0x40000000 32 > ps_top blk_mem_gen_0";
   attribute KEEP_HIERARCHY of processing_system7_0 : label is "yes";
+  attribute bmm_info_processor : string;
+  attribute bmm_info_processor of processing_system7_0 : label is "arm > ps_top axi_bram_ctrl_0";
 begin
+  ADC_SPI_io0_o <= processing_system7_0_SPI_0_IO0_O;
+  ADC_SPI_io0_t <= processing_system7_0_SPI_0_IO0_T;
+  ADC_SPI_io1_o <= processing_system7_0_SPI_0_IO1_O;
+  ADC_SPI_io1_t <= processing_system7_0_SPI_0_IO1_T;
+  ADC_SPI_sck_o <= processing_system7_0_SPI_0_SCK_O;
+  ADC_SPI_sck_t <= processing_system7_0_SPI_0_SCK_T;
+  ADC_SPI_ss1_o <= processing_system7_0_SPI_0_SS1_O;
+  ADC_SPI_ss2_o <= processing_system7_0_SPI_0_SS2_O;
+  ADC_SPI_ss_o <= processing_system7_0_SPI_0_SS_O;
+  ADC_SPI_ss_t <= processing_system7_0_SPI_0_SS_T;
   BRAM_PORTA_1_ADDR(31 downto 0) <= BRAM_PORTA_addr(31 downto 0);
   BRAM_PORTA_1_CLK <= BRAM_PORTA_clk;
   BRAM_PORTA_1_DIN(31 downto 0) <= BRAM_PORTA_din(31 downto 0);
@@ -2729,7 +2783,12 @@ begin
   DataIn2_1(31 downto 0) <= DataIn2(31 downto 0);
   FCLK_CLK0 <= processing_system7_0_FCLK_CLK0;
   UART_0_txd <= processing_system7_0_UART_0_TxD;
+  dataIn_1(31 downto 0) <= dataIn(31 downto 0);
   dataOut(31 downto 0) <= ps_top_reg_interface_ip_0_0_0_dataOut(31 downto 0);
+  processing_system7_0_SPI_0_IO0_I <= ADC_SPI_io0_i;
+  processing_system7_0_SPI_0_IO1_I <= ADC_SPI_io1_i;
+  processing_system7_0_SPI_0_SCK_I <= ADC_SPI_sck_i;
+  processing_system7_0_SPI_0_SS_I <= ADC_SPI_ss_i;
   processing_system7_0_UART_0_RxD <= UART_0_rxd;
   regNum(31 downto 0) <= ps_top_reg_interface_ip_0_0_0_regNum(31 downto 0);
   regWE <= ps_top_reg_interface_ip_0_0_0_regWE;
@@ -2900,6 +2959,20 @@ processing_system7_0: component ps_top_processing_system7_0_0
       PS_CLK => FIXED_IO_ps_clk,
       PS_PORB => FIXED_IO_ps_porb,
       PS_SRSTB => FIXED_IO_ps_srstb,
+      SPI0_MISO_I => processing_system7_0_SPI_0_IO1_I,
+      SPI0_MISO_O => processing_system7_0_SPI_0_IO1_O,
+      SPI0_MISO_T => processing_system7_0_SPI_0_IO1_T,
+      SPI0_MOSI_I => processing_system7_0_SPI_0_IO0_I,
+      SPI0_MOSI_O => processing_system7_0_SPI_0_IO0_O,
+      SPI0_MOSI_T => processing_system7_0_SPI_0_IO0_T,
+      SPI0_SCLK_I => processing_system7_0_SPI_0_SCK_I,
+      SPI0_SCLK_O => processing_system7_0_SPI_0_SCK_O,
+      SPI0_SCLK_T => processing_system7_0_SPI_0_SCK_T,
+      SPI0_SS1_O => processing_system7_0_SPI_0_SS1_O,
+      SPI0_SS2_O => processing_system7_0_SPI_0_SS2_O,
+      SPI0_SS_I => processing_system7_0_SPI_0_SS_I,
+      SPI0_SS_O => processing_system7_0_SPI_0_SS_O,
+      SPI0_SS_T => processing_system7_0_SPI_0_SS_T,
       UART0_RX => processing_system7_0_UART_0_RxD,
       UART0_TX => processing_system7_0_UART_0_TxD
     );
@@ -3027,7 +3100,7 @@ ps7_0_axi_periph: entity work.ps_top_ps7_0_axi_periph_1
     );
 ps_top_reg_interface_ip_0_0_0: component ps_top_ps_top_reg_interface_ip_0_0_0_0
      port map (
-      dataIn(31 downto 0) => B"00000000000000000000000000000000",
+      dataIn(31 downto 0) => dataIn_1(31 downto 0),
       dataOut(31 downto 0) => ps_top_reg_interface_ip_0_0_0_dataOut(31 downto 0),
       regNum(31 downto 0) => ps_top_reg_interface_ip_0_0_0_regNum(31 downto 0),
       regWE => ps_top_reg_interface_ip_0_0_0_regWE,

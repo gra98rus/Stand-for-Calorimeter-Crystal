@@ -97,7 +97,13 @@ port(
     regWE   : in std_logic;
     regNum  : in std_logic_vector(15 downto 0);
     dataIn  : in std_logic_vector(15 downto 0);
-    dataOut : out std_logic_vector(15 downto 0)
+    dataOut : out std_logic_vector(15 downto 0);
+        
+    data_bram_addr : out std_logic_vector(31 downto 0);
+    data_bram_clk  : out std_logic;
+    data_bram_din  : out std_logic_vector(31 downto 0);
+    data_bram_we   : out std_logic
+        
     
     );
 
@@ -116,6 +122,7 @@ architecture Behavioral of pl_top is
     signal adc_data_b : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_c : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_d : std_logic_vector(13 downto 0) := (others=>'0');
+    signal adc_data_test : std_logic_vector(13 downto 0) := (others=>'0');
     
     signal adc_status_signals : std_logic_vector (3 downto 0) := (others=>'0');
          
@@ -151,6 +158,22 @@ architecture Behavioral of pl_top is
     signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others => '0');
     signal data_bram_clk_top  : std_logic := '0';
     signal data_bram_din_top  : std_logic_vector(31 downto 0) := (others => '0');
+        
+    signal adc_data_top : adc_data_ltt  := (others=>(others=>(others=>'0')));
+    signal adc_data_valid_top : std_logic := '0';
+    
+    signal temp_for_pack : std_logic := '0';
+    
+    signal   ADC_D0A_P1: std_logic := '1';
+    signal   ADC_D0A_N1: std_logic := '1';
+    signal   ADC_D1A_P1: std_logic := '1';
+    signal   ADC_D1A_N1: std_logic := '1';
+                                   
+    signal   ADC_D0B_P1: std_logic := '1';
+    signal   ADC_D0B_N1: std_logic := '1';
+    signal   ADC_D1B_P1: std_logic := '1';
+    signal   ADC_D1B_N1: std_logic := '1';
+    
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -181,7 +204,8 @@ adc_deser_i : entity work.adc_deser                         --deser_block
         data_A => adc_data_a,                               --out
         data_B => adc_data_b,                               --out
         data_C => adc_data_c,                               --out
-        data_D => adc_data_d,                               --out
+        data_D => adc_data_d,
+        --data_test => adc_data_test,                               --out
           
         status_signals => adc_status_signals,               --out
           
@@ -210,7 +234,7 @@ adc_deser_i : entity work.adc_deser                         --deser_block
                           
         DC0P => ADC_DC0_P,      --in
         DC0N => ADC_DC0_N);     --in
-----------------------------------------------------------------
+------------------------------------------------------------------
 buffers_block_i : entity work.buffers_block             --ring and simple buffers block
 port map(
     write_clk_ring => write_clk,             --in
@@ -223,7 +247,11 @@ port map(
     read_ring_ena => read_buf_ena,           --in
     read_simple_ena => Data_read_ena,        --in
     
-    simple_buffer_state => simple_buffer_state --out
+    simple_buffer_state => simple_buffer_state, --out
+    
+            
+    adc_data => adc_data_top,
+    adc_data_valid => adc_data_valid_top
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
@@ -269,18 +297,18 @@ port map (
     sts_done => sts_done_top
     );
 ----------------------------------------------------------------
---pack_i: entity work.packager
---    port map (
---    clock => read_clk,
+pack_i: entity work.packager
+    port map (
+    clock => read_clk,
+    --off_adc_data_valid => temp_for_pack,
+    adc_data =>  adc_data_top,--(others=>(others=>B"00000000000011")),
+    adc_data_valid => adc_data_valid_top,--temp_for_pack,--adc_data_valid_top,
     
-----    adc_data =>
-----    adc_data_valid => adc_status_signals(0),
-    
---    data_bram_addr => data_bram_addr_top,
---    data_bram_clk => data_bram_clk_top,
---    data_bram_din => data_bram_din_top,
---    data_bram_we => data_bram_we_top
---    );
+    data_bram_addr => data_bram_addr_top,
+    data_bram_clk => data_bram_clk_top,
+    data_bram_din => data_bram_din_top,
+    data_bram_we => data_bram_we_top
+    );
 
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
@@ -343,6 +371,12 @@ begin
         ps_cnt <= ps_cnt + 1;                   --counter_increment
     end if;
 end process;
+
+--process(ps_clk_50mhz)
+--variable 
+--begin
+
+--end process;
 -----------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(
@@ -366,24 +400,43 @@ adc_deser_clock_locked <= clk_gen_lock; --in
 DATA_OUT_1 <= dataOut_buf(63 downto 32);                --out
 DATA_OUT_2 <= dataOut_buf(31 downto 0);                --out
 
+--process(ps_clk_50mhz)
+--begin
+--    if ADC_D0A_P = '0' then
+--        ADC_D0A_P1 <= '0';
+--    end if;
+--    if ADC_D0A_P = '1' then
+--        ADC_D0A_P1 <= '1';
+--    end if;
+--end process;
+
+--ADC_D0A_P1 <= ADC_D0A_P;
+--ADC_D0A_N1 <= ADC_D0A_N;
+--ADC_D1A_P1 <= ADC_D1A_P;
+--ADC_D1A_N1 <= ADC_D1A_N;
+--ADC_D0B_P1 <= ADC_D0B_P;
+--ADC_D0B_N1 <= ADC_D0B_N;
+--ADC_D1B_P1 <= ADC_D1B_P;
+--ADC_D1B_N1 <= ADC_D1B_N;
+
 adc_data(1) <= adc_data_a;              --in
-adc_data(2) <= adc_data_b;              --in
-adc_data(3) <= adc_data_c;              --in
-adc_data(4) <= adc_data_d;              --in
-
+adc_data(2) <= adc_data_b;              --in                                         
+adc_data(3) <= adc_data_c; --ADC_D0A_P & ADC_D0A_N & ADC_D1A_P & ADC_D1A_N  & ADC_D0B_N & ADC_D1B_P & ADC_D1B_N & B"1111111" ;              --in                                      
+adc_data(4) <= adc_data_d;              --in                     
+                                                                                     
 dataIn_buf <= adc_data;                     --in
-
-write_clk <= adc_deser_clock;                 --in
-read_clk <= adc_deser_clock;                  --in
-
+                                                                                     
+write_clk <= adc_deser_clock;                 --in                                   
+read_clk <= adc_deser_clock;                  --in                                   
+                                                                                     
 shapers_config <= ALT_CT_8 & ALT_CT_7 & ALT_CT_6 & ALT_CT_5
-                & ALT_CT_4 & ALT_CT_3 & ALT_CT_2 & ALT_CT_1;    --in
-                
-ALT_07 <= shapers_controll(0);              --out
-ALT_08 <= shapers_controll(1);              --out
+                & ALT_CT_4 & ALT_CT_3 & ALT_CT_2 & ALT_CT_1;    --in                 
+                                                                                    
+ALT_07 <= shapers_controll(0);              --out                                   
+ALT_08 <= shapers_controll(1);              --out                                   
 ALT_09 <= shapers_controll(2);              --out
-ALT_10 <= shapers_controll(3);              --out
-ALT_11 <= shapers_controll(4);              --out
+ALT_10 <= shapers_controll(3);              --out                                   
+ALT_11 <= shapers_controll(4);              --out                                   
 ALT_12 <= shapers_controll(5);              --out
 ALT_13 <= shapers_controll(6);              --out
 ALT_14 <= shapers_controll(7);              --out
@@ -393,6 +446,11 @@ ALT_17 <= shapers_controll(10);             --out
 ALT_18 <= shapers_controll(11);             --out
 
 Buffer_state <= simple_buffer_state;        --out
+        
+data_bram_addr <= data_bram_addr_top;        
+data_bram_we <= data_bram_we_top;
+data_bram_din <= data_bram_din_top;
+data_bram_clk <= data_bram_clk_top;
 ----------------------------------------------------------------
 
 end Behavioral;
