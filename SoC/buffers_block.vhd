@@ -172,19 +172,24 @@ process(read_clk_simple)
 begin
     if read_clk_simple'event and read_clk_simple='1' then
                         
-            if read_ring_ena='1'  then
-                counter <= 0;
-                burst_cnt <= 0;
-                com_count <= (others=>'0');
-            end if;
+--            if read_ring_ena='1'  then
+--                counter <= 0;
+--                burst_cnt <= 0;
+--                com_count <= (others=>'0');
+--            end if;
             
-            adc_data_r(burst_cnt)(counter) <= "00000000000001";
+            --adc_data_r(burst_cnt)(counter) <= (others => '1');
+            adc_data_r(burst_cnt)(counter) <= adc_data_write(burst_cnt + 1);
             
             if counter = 127 and burst_cnt /= 3 then
                 burst_cnt <= burst_cnt + 1;
                 counter <= 0;
                 com_count <= com_count + 1;
-            end if;            
+            end if;   
+            
+            if counter = 0 and burst_cnt = 0 then
+                adc_data_valid <= '0';
+            end if;          
             
             if counter /= 127 then
                 counter <= counter + 1;
@@ -197,14 +202,24 @@ begin
                 adc_data_valid <= '1';       
                 counter <= 0;
                 burst_cnt <= 0;
-                
+                adc_data <= adc_data_r;
             end if;  
+            
      end if;
 
 end process;
+
+--process(read_clk_simple)
+--begin
+--    if adc_data_valid_r = '1' then
+--        adc_data_valid_r <= '0';
+--    end if;
+--end process;
 --------------------------------------------------------------------
 
 --------------------------------------------------------------------
 simple_buffer_state <= simple_buffer_state_s;
+
+--adc_data_valid <= adc_data_valid_r;
 
 end Behavioral;

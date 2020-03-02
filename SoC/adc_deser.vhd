@@ -26,6 +26,7 @@ port(
     data_B : out std_logic_vector(13 downto 0);
     data_C : out std_logic_vector(13 downto 0);
     data_D : out std_logic_vector(13 downto 0);
+    --data_test : out std_logic_vector(13 downto 0);
     
     status_signals     : out std_logic_vector(3 downto 0);
           
@@ -115,7 +116,9 @@ architecture Behavioral of adc_deser is
     signal data_A_r : std_logic_vector(13 downto 0);
     signal data_B_r : std_logic_vector(13 downto 0);
     signal data_C_r : std_logic_vector(13 downto 0);
-    signal data_D_r : std_logic_vector(13 downto 0);       
+    signal data_D_r : std_logic_vector(13 downto 0);    
+    signal data_test_r : std_logic_vector(13 downto 0);   
+    
 -----------------------------------------------------------------------
 begin
 -----------------------------------------------------------------------
@@ -335,6 +338,14 @@ begin
         end if;
     end if;
 end process;
+
+process(clock)
+begin
+    if clock'event and clock='1' then 
+        data_test_r <= data_test_r + 1;
+    end if;
+end process;
+
 ---------------------------------------------------------------------
 process(clock_adc_s) --process to chang signals sequence
 begin
@@ -356,13 +367,13 @@ begin
           & IntDataOutD(6 downto 6)  & IntDataOutD(7 downto 7)  & IntDataOutD(4 downto 4)  & IntDataOutD(5 downto 5)
           & IntDataOutD(10 downto 10)  & IntDataOutD(11 downto 11)  & IntDataOutD(8 downto 8)  & IntDataOutD(9 downto 9)
           & IntDataOutD(14 downto 14)  & IntDataOutD(15 downto 15); 
-        
     end if;
 end process;
 ----------------------------------------------------------------------
-data_A <= data_A_r;             --out
-data_B <= data_B_r;             --out
-data_C <= data_C_r;             --out
+data_A <= IntDatDA0_p & IntDatDA0_n & IntDatDA1_p & IntDatDA1_n & IntDatDB0_p & IntDatDB0_n & IntDatDB1_p & IntDatDB1_n &
+         IntDatDD0_p & IntDatDD0_n & IntDatDD1_p & IntDatDD1_n & B"00";--data_A_r;             --out
+data_B <= IntDataOutA(31 downto 18);--data_B_r;             --out
+data_C <= data_test_r;           --out
 data_D <= data_D_r;             --out
 
 clk_rst <= AdcDeserReset;       --in
@@ -371,8 +382,12 @@ reset <= reset_r;               --in
 status_signals(0) <= IntBitClkDone;    --out
 status_signals(3) <= IntClkSwapMux;    --out
 status_signals(1) <= '0';
+
+--data_test <= data_test_r;
 ----------------------------------------------------------------------
 
 end behavioral;
+
+
 
 

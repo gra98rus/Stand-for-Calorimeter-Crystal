@@ -27,6 +27,10 @@ entity crystand_top is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     UART_RX : in STD_LOGIC;
     UART_TX : out STD_LOGIC;
+        
+--    SPI_CSB: out std_logic;
+--    SPI_SCLK: out std_logic;
+--    SPI_SDIO: out std_logic;
     
     JMP1 : in std_logic;
     JMP2 : in std_logic;
@@ -93,6 +97,9 @@ end crystand_top;
 architecture STRUCTURE of crystand_top is
   component ps_top is
   port (
+    ADC_SPI_sck_o: out STD_LOGIC;
+    ADC_SPI_io0_o: out STD_LOGIC;
+    ADC_SPI_ss_o: out STD_LOGIC;
     DDR_cas_n : inout STD_LOGIC;
     DDR_cke : inout STD_LOGIC;
     DDR_ck_n : inout STD_LOGIC;
@@ -157,6 +164,9 @@ architecture STRUCTURE of crystand_top is
   signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
   signal reg_dataInPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
   signal reg_regNum :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+  signal SPI_CSB:   std_logic:= '0';
+  signal SPI_SCLK:  std_logic:= '0';
+  signal SPI_SDIO:  std_logic:= '0';
 
     
 begin
@@ -185,6 +195,9 @@ ps_top_i: component ps_top
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
       UART_0_rxd => UART_RX,
       UART_0_txd => UART_TX,
+      ADC_SPI_sck_o => SPI_SCLK,
+      ADC_SPI_io0_o => SPI_SDIO,
+      ADC_SPI_ss_o => SPI_CSB,
       FCLK_CLK0 => FCLK_CLK0,
       reset => reset,
       DataIn1 =>DataOut1,
