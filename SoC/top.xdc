@@ -112,3 +112,13 @@ set_property IOSTANDARD LVDS_25 [get_ports ADC_D0A_P]
 
 set_property PACKAGE_PIN V5 [get_ports UART_RX]
 set_property PACKAGE_PIN U5 [get_ports UART_TX]
+
+
+set_property IOSTANDARD LVCMOS25 [get_ports SPI_CSB]
+set_property PACKAGE_PIN V13 [get_ports SPI_CSB]
+set_property IOSTANDARD LVCMOS25 [get_ports SPI_SCLK]
+set_property PACKAGE_PIN V18 [get_ports SPI_SCLK]
+set_property IOSTANDARD LVCMOS25 [get_ports SPI_SDIO]
+set_property PACKAGE_PIN W16 [get_ports SPI_SDIO]
+
+
