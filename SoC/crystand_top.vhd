@@ -28,9 +28,9 @@ entity crystand_top is
     UART_RX : in STD_LOGIC;
     UART_TX : out STD_LOGIC;
         
---    SPI_CSB: out std_logic;
---    SPI_SCLK: out std_logic;
---    SPI_SDIO: out std_logic;
+    SPI_CSB: out std_logic;
+    SPI_SCLK: out std_logic;
+    SPI_SDIO: out std_logic;
     
     JMP1 : in std_logic;
     JMP2 : in std_logic;
@@ -125,8 +125,8 @@ architecture STRUCTURE of crystand_top is
     UART_0_rxd : in STD_LOGIC;
     FCLK_CLK0 : out STD_LOGIC;
     reset : out std_logic;
-    DataIn1 : in std_logic_vector;
-    DataIn2 : in std_logic_vector;
+  --  DataIn1 : in std_logic_vector;
+   -- DataIn2 : in std_logic_vector;
         
     BRAM_PORTA_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     BRAM_PORTA_clk : in STD_LOGIC;
@@ -164,10 +164,6 @@ architecture STRUCTURE of crystand_top is
   signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
   signal reg_dataInPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
   signal reg_regNum :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
-  signal SPI_CSB:   std_logic:= '0';
-  signal SPI_SCLK:  std_logic:= '0';
-  signal SPI_SDIO:  std_logic:= '0';
-
     
 begin
 ps_top_i: component ps_top
@@ -200,8 +196,8 @@ ps_top_i: component ps_top
       ADC_SPI_ss_o => SPI_CSB,
       FCLK_CLK0 => FCLK_CLK0,
       reset => reset,
-      DataIn1 =>DataOut1,
-      DataIn2 =>DataOut2,
+     -- DataIn1 =>DataOut1,
+     -- DataIn2 =>DataOut2,
             
       BRAM_PORTA_addr(31 downto 0) => data_bram_addr_top,
       BRAM_PORTA_clk => data_bram_clk_top,
@@ -211,9 +207,8 @@ ps_top_i: component ps_top
       BRAM_PORTA_rst => data_bram_rst,
       BRAM_PORTA_we(3 downto 0) => data_bram_we_v,
             
-      --dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
+      dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
-      dataIn(31 downto 0) => dataOut1(31 downto 0),
       regNum(31 downto 0) => reg_regNum(31 downto 0),
       regWE => reg_regWE
     );
@@ -231,8 +226,8 @@ pl_top_i : entity work.pl_top
             clk_gen_lock => '0',
             Data_read_ena => '1',
             compare_data => B"00000000000000000000000000000000000000000000000000000000",
-            start_event => '1',
-            start_type => '1',
+            --start_event => '1',
+            --start_type => '1',
             
             DATA_OUT_1 => DataOut1,
             DATA_OUT_2 => DataOut2,
@@ -315,7 +310,6 @@ pl_top_i : entity work.pl_top
             regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
             dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
             dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)
-            
             );    
     
 end STRUCTURE;

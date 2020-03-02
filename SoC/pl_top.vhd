@@ -25,8 +25,8 @@ port(
     pll_clk_p_125mhz : out std_logic;
     pll_clk_n_125mhz : out std_logic;
     
-    START_EVENT : in std_logic;
-    START_TYPE  : in std_logic;
+    --START_EVENT : in std_logic;
+    --START_TYPE  : in std_logic;
     
     ADC_D0A_P : in std_logic;
     ADC_D0A_N : in std_logic;
@@ -174,6 +174,12 @@ architecture Behavioral of pl_top is
     signal   ADC_D1B_P1: std_logic := '1';
     signal   ADC_D1B_N1: std_logic := '1';
     
+    signal START_TYPE  : std_logic := '0';
+    signal START_EVENT : std_logic := '0';
+    
+    signal plTestVal  : std_logic_vector(13 downto 0) := (others => '0');
+
+    
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -294,7 +300,11 @@ port map (
     
     cmd_start => cmd_start_top,
     sts_in_prog => sts_in_prog_top,
-    sts_done => sts_done_top
+    sts_done => sts_done_top,
+    start_event => START_EVENT,
+    trigger_type => START_TYPE,
+    
+    testValue => plTestVal
     );
 ----------------------------------------------------------------
 pack_i: entity work.packager
@@ -420,7 +430,7 @@ DATA_OUT_2 <= dataOut_buf(31 downto 0);                --out
 --ADC_D1B_N1 <= ADC_D1B_N;
 
 adc_data(1) <= adc_data_a;              --in
-adc_data(2) <= adc_data_b;              --in                                         
+adc_data(2) <= plTestVal;--adc_data_b;              --in                                         
 adc_data(3) <= adc_data_c; --ADC_D0A_P & ADC_D0A_N & ADC_D1A_P & ADC_D1A_N  & ADC_D0B_N & ADC_D1B_P & ADC_D1B_N & B"1111111" ;              --in                                      
 adc_data(4) <= adc_data_d;              --in                     
                                                                                      

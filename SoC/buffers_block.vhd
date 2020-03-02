@@ -172,13 +172,6 @@ process(read_clk_simple)
 begin
     if read_clk_simple'event and read_clk_simple='1' then
                         
---            if read_ring_ena='1'  then
---                counter <= 0;
---                burst_cnt <= 0;
---                com_count <= (others=>'0');
---            end if;
-            
-            --adc_data_r(burst_cnt)(counter) <= (others => '1');
             adc_data_r(burst_cnt)(counter) <= adc_data_write(burst_cnt + 1);
             
             if counter = 127 and burst_cnt /= 3 then
@@ -209,16 +202,8 @@ begin
 
 end process;
 
---process(read_clk_simple)
---begin
---    if adc_data_valid_r = '1' then
---        adc_data_valid_r <= '0';
---    end if;
---end process;
 --------------------------------------------------------------------
-
---------------------------------------------------------------------
-simple_buffer_state <= simple_buffer_state_s;
+--simple_buffer_state <= simple_buffer_state_s;
 
 --adc_data_valid <= adc_data_valid_r;
 

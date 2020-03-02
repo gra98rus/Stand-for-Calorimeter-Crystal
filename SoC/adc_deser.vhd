@@ -372,7 +372,7 @@ end process;
 ----------------------------------------------------------------------
 data_A <= IntDatDA0_p & IntDatDA0_n & IntDatDA1_p & IntDatDA1_n & IntDatDB0_p & IntDatDB0_n & IntDatDB1_p & IntDatDB1_n &
          IntDatDD0_p & IntDatDD0_n & IntDatDD1_p & IntDatDD1_n & B"00";--data_A_r;             --out
-data_B <= IntDataOutA(31 downto 18);--data_B_r;             --out
+data_B <= data_B_r;             --out
 data_C <= data_test_r;           --out
 data_D <= data_D_r;             --out
 

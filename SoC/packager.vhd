@@ -62,7 +62,7 @@ begin
        if delay_cnt = 3 then 
 	       
 	       if sample_addr /= 127 then
-	           sample_addr <= sample_addr +1;
+	           sample_addr <= sample_addr + 1;
 	           addr_count <= addr_count + 1;
 	       end if;
 	   
