@@ -8,9 +8,10 @@ entity trigg_system is
 Port ( 
     clk : in std_logic;
     
-    start_type  : in std_logic;         -- 0 - user's start; 1 -forced start 
-    start_event : in std_logic;         --signal to start reading
-    confirm_match : in std_logic;       --signal from bound_comparator_module 
+    start_type    : in std_logic;         -- 0 - user's start; 1 -forced start 
+    start_event   : in std_logic;         --signal to start reading
+    confirm_match : in std_logic;         --signal from bound_comparator_module
+    complete_read : in std_logic;
         
     read_ena : out std_logic
 );
@@ -44,11 +45,6 @@ compare_ibuf : IBUF
         I => confirm_match,                       
         O => confirm_match_s);
 -------------------------------------------------------------------------
---clk_obuf : OBUF
---    port map(                                       --output buffer   
---        I => read_ena_s,                       
---        O => read_ena);
--------------------------------------------------------------------------    
 c_counter_binary_0_i : c_counter_binary_0              --counter
     port map(
         CLK => clk,                                  --in
@@ -60,7 +56,8 @@ begin
     
     if clk'event and clk='0' then                       --on clock  
         if start_event = '0' and action_status = '1' then   --stop reading if counter has TOP_VALUE 
-            if counter = B"111_1111" then
+            --if counter = B"111_1111" then
+            if complete_read = '1' then
                 read_ena_s <= '0';
                 action_status <= '0';
             end if;   

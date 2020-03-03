@@ -71,8 +71,11 @@ begin
         end if;
         
 		if regNum = REG_START_EVENT and regWE = '1' then
-            hereTestVal <= data_in_r(13 downto 0);
-            
+            start_event_r <= data_in_r(0);
+        end if;
+        
+		if regNum = REG_TRIGGER_TYPE and regWE = '1' then
+            trigger_type_r <= data_in_r(0);
         end if;
 		
 		if cmd_start_ena_r='1' then

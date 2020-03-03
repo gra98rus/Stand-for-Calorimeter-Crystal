@@ -41,8 +41,7 @@
 
 <br>
 <table class="table table-bordered">
-
-<tbody>
+  <tbody>
     <tr>
       <td width="80%" height="100%" style="height:100%">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -129,102 +128,104 @@
             </div>
 
             <div id="4-adc-tab-pane" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tbody>
-                  <tr>
-                    <td width="100%">
-                      <div id="adc_graph_4_4"></div>
-                    </td>
-                </table>
-            </div>
-
-
-            </div>
-  </div>
-
-  </div>
-
-      </td>
-      <td width="20%">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                  Управление
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td width="100%">
+                <div id="adc_graph_4_4"></div>
+            </td>
+</table>
+</div>
+</div>
+</div>
+</div>
+</td>
+<td width="20%">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Управление
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control" id="startCount" placeholder="Кол-во измерений" >
-                  <div class="input-group-append">
-                    <button class="btn btn-success" type="button" onclick="someStart()">Старт</button>
-                  </div>
+                    <input type="text" class="form-control" id="startCount" placeholder="Кол-во измерений" >
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button" onclick="someStart()">Старт</button>
+                    </div>
                 </div>
-
-                  <div class="input-group mb-2" >
+                <div class="input-group mb-2" >
                     <div class="input-group-prepend">
-                      <span class="input-group-text" >1 измерение</span>
+                        <span class="input-group-text" >1 измерение</span>
                     </div>
                     <div class="input-group-append">
-                      <button id="start_button" class="btn btn-success" type="button" onclick="start()" style="width: 100%;">Старт</button>
+                        <button id="start_button" class="btn btn-success" type="button" onclick="start()" style="width: 100%;">Старт</button>
                     </div>
-                  </div>
-
-
-
-
-                </th>
-            </tr>
-            <tr>
-              <th scope="row">
-
-                <p>Вид графиков </p>
-
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-primary active">
-                    <input type="radio" id="histogram_but" name="options" value="column" checked> Ступенчатый
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" id="line_but" name="options" value="line"> Линейный
-                  </label>
                 </div>
-
-
-              </th>
-            </tr>
-            <tr>
-              <th scope="row">
-                  <p id="status_text" class="text-left">Сохранить графики в файл</p>
-                  <button type="button" id="start_button" class="btn btn-success" onclick="saveCharts()" style="margin: 0 auto;width : 80%; text-align: center;">Сохранить</button>
-              </th>
-            </tr>
-
-            <tr>
-              <th scope="row">
-                  <p id="status_text" class="text-left">Статус: Готов</p>
-              </th>
-            </tr>
-            <tr>
-              <th scope="row" id="spectrumInfo" hidden>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+                <div class="input-group mb-2">
+                    <p> Параметры считывания </p>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" id="force_but" name="trigger_type" value="column" checked> Принудительно
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" id="level_but" name="trigger_type" value="line"> По порогу
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="triggLevel" placeholder="Порог считывания" >
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button" onclick="sendTriggLevel()">Добро</button>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+            <p>Вид графиков </p>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" id="histogram_but" name="options" value="column" checked> Ступенчатый
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" id="line_but" name="options" value="line"> Линейный
+                    </label>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+                <p id="status_text" class="text-left">Сохранить графики в файл</p>
+                <button type="button" id="start_button" class="btn btn-success" onclick="saveCharts()" style="margin: 0 auto;width : 80%; text-align: center;">Сохранить</button>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+                <p id="status_text" class="text-left">Статус: Готов</p>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row" id="spectrumInfo" hidden>
                 <h5>Информация о спектре:</h5>
-                  <p id="channelInfo" class="text-left"></p>
-                  <p id="modeInfo" class="text-left"></p>
-                  <p id="pointInfo" class="text-left"></p>
-                  <p id="basketInfo" class="text-left"></p>
-              </th>
-            </tr>
-
-          </tbody>
-        </table>
-
-      </td>
-    </tr>
-
-
-
+                <p id="channelInfo" class="text-left"></p>
+                <p id="modeInfo" class="text-left"></p>
+                <p id="pointInfo" class="text-left"></p>
+                <p id="basketInfo" class="text-left"></p>
+            </th>
+        </tr>
+    </tbody>
+</table>
+</td>
+</tr>
 </table>
 
     </div>

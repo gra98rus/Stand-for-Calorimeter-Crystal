@@ -1,4 +1,3 @@
-
 var ADC_WIDTH = 128;
 
 var chartsData = []
@@ -57,8 +56,6 @@ function readDataFromReg() {
   console.log("send POST")
 
 }
-
-
 
 function start() {
   var request = new XMLHttpRequest();
@@ -179,8 +176,6 @@ function drawCharts() {
         drawADC("adc_graph_3",3,chartsData);
         drawADC("adc_graph_4",4,chartsData);
 }
-
-
 
 function drawSpectra() {
   for (var i = 0; i < (spectraList.length+1); i++)
@@ -350,8 +345,6 @@ function drawSpectrum(num){
       }
     });
 
-
-
     $('.nav-tabs a').on('shown.bs.tab', function(event){
       var cutHref = event.target.href.split("/")[3];
       console.log(cutHref)
@@ -450,6 +443,25 @@ function drawSpectrum(num){
       drawADC("adc_graph_2_2",2,chartsData);
       drawADC("adc_graph_3_3",3,chartsData);
       drawADC("adc_graph_4_4",4,chartsData);
+    });
+
+    $("input[name='trigger_type']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#force_but').prop("checked");
+        if (value == true)
+            data = 1;
+        if (value == false)
+            data = 0;
+        var json = {"command" : "setTriggerType",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
     });
 
     $("#basketNumber").children().on("click",function(event) {

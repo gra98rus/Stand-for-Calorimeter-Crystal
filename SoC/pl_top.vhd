@@ -25,9 +25,6 @@ port(
     pll_clk_p_125mhz : out std_logic;
     pll_clk_n_125mhz : out std_logic;
     
-    --START_EVENT : in std_logic;
-    --START_TYPE  : in std_logic;
-    
     ADC_D0A_P : in std_logic;
     ADC_D0A_N : in std_logic;
     ADC_D1A_P : in std_logic;
@@ -262,13 +259,12 @@ port map(
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
 port map(
-    clk => read_clk,                    --in
-
-    start_type  => START_TYPE,          --in
-    start_event => START_EVENT,         --in    
-    confirm_match => confirm_match_s,   --in
-    
-    read_ena => read_buf_ena            --out
+    clk => read_clk,                      --in
+    start_type    => START_TYPE,          --in
+    start_event   => START_EVENT,         --in    
+    confirm_match => confirm_match_s,     --in
+    complete_read => simple_buffer_state, --in
+    read_ena => read_buf_ena              --out
 );
 ----------------------------------------------------------------
 bound_comparator_i : entity work.bound_comparator   --comparators block
