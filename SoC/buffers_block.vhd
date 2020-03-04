@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_unsigned.ALL;
 
 use IEEE.NUMERIC_STD.ALL;
 
@@ -73,13 +74,15 @@ end component;
     signal dina_simple : std_logic_vector (63 downto 0) := (others=>'0');
     signal adc_data_read : std_logic_vector (55 downto 0) := (others=>'0');
                 
-    signal counter : integer := 127;
+    signal counter : integer := 127; --127
     signal com_count : unsigned (8 downto 0) := (others=>'0');
-    signal burst_cnt : integer := 3;--unsigned(1 downto 0) := (others=>'1');  
+    signal burst_cnt : integer := 3; --3
     
     signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
     signal adc_data_valid_r: std_logic := '0';
     signal data_read_r : std_logic_vector(63 downto 0) := (others => '0');
+    
+    signal test_value : std_logic_vector (13 downto 0) := "00000000000111";
                
 -----------------------------------------------------------------
 begin
@@ -124,13 +127,14 @@ begin                                                                     --to p
     if read_clk_ring'event and read_clk_ring='1' then                     --every ring_clock
        if ring_data_out_observer = B"01" then                             --if read enable event
             addrb_ring <= std_logic_vector (unsigned(addra_ring) - 10);
+            --adc_data_r <= (others =>( others => test_value ));
+            test_value <= test_value + 1;
             addra_simple <= B"000_0000";
             ring_data_out_observer <= B"11";
             simple_buffer_state_s <= '0';
-
         elsif read_ring_ena='1' then                                       --if read enable
-            addrb_ring <= std_logic_vector (unsigned(addrb_ring) + 1);
             addra_simple <= std_logic_vector (unsigned(addra_simple) + 1);
+            addrb_ring <= std_logic_vector (unsigned(addrb_ring) + 1);
         end if;
 
         dina_simple <= B"11" & adc_data_read(55 downto 42) & B"10" & adc_data_read(41 downto 28) & B"01"  --convert adc_data (14-bit*4) to data_out (16-bit*4);
@@ -140,7 +144,7 @@ begin                                                                     --to p
         end if;
  
         if read_ring_ena'event and read_ring_ena='1' then                     --to change read address on read event
-                ring_data_out_observer <= B"01";
+            ring_data_out_observer <= B"01";
         end if;
     
         if read_ring_ena'event and read_ring_ena='0' then                     --to reset signal on read event
@@ -165,35 +169,25 @@ end process;
 
 process(read_clk_simple)
 begin
-    if simple_buffer_state_s='1' then
-                        
-           -- adc_data_r(burst_cnt)(counter) <= adc_data_write(burst_cnt + 1);
-            adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
-            if counter = 127 and burst_cnt /= 3 then
-                burst_cnt <= burst_cnt + 1;
-                counter <= 0;
-                com_count <= com_count + 1;
-            end if;   
-            
-            if counter = 0 and burst_cnt = 0 then
-                adc_data_valid <= '0';
-            end if;          
-            
-            if counter /= 127 then
-                counter <= counter + 1;
-                addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
-                com_count <= com_count + 1;
-            end if;
-            
-            if counter = 127 and burst_cnt = 3 then
-                --simple_buffer_state <= '1';  
-                adc_data_valid <= '1';       
-                counter <= 0;
-                burst_cnt <= 0;
-                adc_data <= adc_data_r;
-            end if;  
-            
-     end if;
+    --if simple_buffer_state_s = '1' then
+        adc_data_r(burst_cnt)(counter) <= B"00000000000111";--adc_data_write(burst_cnt + 1);
+        --adc_data_r(burst_cnt)(counter) <= adc_data_write(2);--dina_ring(27 downto 14);--data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
+        
+        if counter /= 127 then
+            counter <= counter + 1;
+            addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
+        elsif counter = 127 and burst_cnt /= 3 then
+            burst_cnt <= burst_cnt + 1;
+            counter <= 0;
+        elsif counter = 127 and burst_cnt = 3 then
+            --simple_buffer_state <= '1';  
+            --adc_data_valid <= '1';       
+            counter <= 0;
+            burst_cnt <= 0;
+            --adc_data <= adc_data_r;
+        end if; 
+
+    --end if;
 
 end process;
 
@@ -201,5 +195,6 @@ end process;
 simple_buffer_state <= simple_buffer_state_s;
 data_read <= data_read_r;
 --adc_data_valid <= adc_data_valid_r;
+adc_data <= adc_data_r;
 
 end Behavioral;

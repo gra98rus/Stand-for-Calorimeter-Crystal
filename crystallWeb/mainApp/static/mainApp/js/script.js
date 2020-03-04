@@ -64,8 +64,17 @@ function start() {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.responseType = 'text';
 
-  var json = {"command" : "readCharts"};
+  var json = {"command" : "sendStartEvent"};
   var str = JSON.stringify(json);
+  request.send(str);
+
+  request = new XMLHttpRequest();
+  request.open("POST", "", true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.responseType = 'text';
+
+  json = {"command" : "readCharts"};
+  str = JSON.stringify(json);
   request.send(str);
 
   request.onreadystatechange = function() {
@@ -277,6 +286,20 @@ function addSpectrum(channel, point, basketNum, mode){
   spectraList.push(sp)
 
   console.log(spectraList)
+}
+function sendTriggLevel() {
+    
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var level  = document.getElementById('triggLevel').value;
+        var json = {"command" : "setTriggerLevel",
+                    "regNumber" : "",
+                    "data" : level};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
 }
 
 function deleteSpectrum(channel, point){

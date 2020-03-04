@@ -13,9 +13,10 @@ Port (
     clk : in std_logic;
 
     adc_buf_data : in adc_data_t;
-    data_to_compare : in std_logic_vector (55 downto 0);
+    data_to_compare : in std_logic_vector (13 downto 0);
     
-    confirm_match: out std_logic
+    confirm_match: out std_logic;
+    adc_data       : out adc_data_ltt
 );
 end bound_comparator;
 
@@ -36,6 +37,8 @@ architecture Behavioral of bound_comparator is
     signal compareB : std_logic := '0';
     signal compareC : std_logic := '0';
     signal compareD : std_logic := '0';
+    signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
+
 ---------------------------------------------------------------------------------------
 begin
 ---------------------------------------------------------------------------------------
@@ -45,10 +48,14 @@ data_ch_B <= adc_buf_data(2);               --adc data
 data_ch_C <= adc_buf_data(3);                          
 data_ch_D <= adc_buf_data(4);
 
-data_tc_A <= data_to_compare (13 downto 0);
-data_tc_B <= data_to_compare (27 downto 14);
-data_tc_C <= data_to_compare (41 downto 28);    --compare data
-data_tc_D <= data_to_compare (55 downto 42);
+--data_tc_A <= data_to_compare (13 downto 0);
+--data_tc_B <= data_to_compare (27 downto 14);
+--data_tc_C <= data_to_compare (41 downto 28);    --compare data
+--data_tc_D <= data_to_compare (55 downto 42);
+data_tc_A <= data_to_compare ;
+data_tc_B <= data_to_compare ;
+data_tc_C <= data_to_compare ;    --compare daa
+data_tc_D <= data_to_compare ;
 -------------------------------------------------------------------------
 process (clk)
 begin
@@ -84,8 +91,11 @@ if clk'event and clk = '1' then
         confirm_match <= '0';
     end if;
        
+    adc_data_r <= (others => (others =>  (data_to_compare)));
+    
 end if;
 end process;
 -------------------------------------------------------------------------
+adc_data <= adc_data_r;
 
 end Behavioral;

@@ -1,8 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use ieee.std_logic_unsigned.ALL;
 library UNISIM;
 use UNISIM.VComponents.all;
+library work;
+use work.new_types.all;
 ------------------------------------------------------------------------
 entity trigg_system is
 Port ( 
@@ -13,7 +15,10 @@ Port (
     confirm_match : in std_logic;         --signal from bound_comparator_module
     complete_read : in std_logic;
         
-    read_ena : out std_logic
+    read_ena      : out std_logic;
+    
+    adc_data      : out adc_data_ltt
+
 );
 end trigg_system;
 ------------------------------------------------------------------------
@@ -36,6 +41,9 @@ signal observer : std_logic := '1';
 signal match_event : std_logic := '0';
 
 signal counter : std_logic_vector (6 downto 0) := B"000_0000" ;
+signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
+signal test_value : std_logic_vector (13 downto 0) := "00000000000111";
+
 -------------------------------------------------------------------------
 begin
 -------------------------------------------------------------------------
@@ -54,7 +62,7 @@ c_counter_binary_0_i : c_counter_binary_0              --counter
 process (clk,start_event,confirm_match_s)                                -- trigger and counter conditions
 begin
     
-    if clk'event and clk='0' then                       --on clock  
+    if clk'event and clk='1' then                       --on clock  
         if start_event = '0' and action_status = '1' then   --stop reading if counter has TOP_VALUE 
             --if counter = B"111_1111" then
             if complete_read = '1' then
@@ -68,6 +76,8 @@ begin
         if start_type = '1' then
             action_status <= '1';            --forsed start enable       
             read_ena_s <= '1';
+            adc_data_r <= ( others => (others => test_value));
+            test_value <= test_value + 1;
             compare_ena <= '0';
         else
             compare_ena <= '1';              --bound start enable
@@ -92,5 +102,7 @@ begin
 end process;
 ---------------------------------------------------------------------------
 read_ena <= read_ena_s;  --in
+
+adc_data <= adc_data_r;
 ---------------------------------------------------------------------------S
 end Behavioral;

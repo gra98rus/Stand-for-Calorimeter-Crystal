@@ -8,6 +8,7 @@ package reg_map is
 	constant REG_STATUS : std_logic_vector(15 downto 0)   := X"0010";
     constant REG_START_EVENT : std_logic_vector(15 downto 0)  := X"0011";
     constant REG_TRIGGER_TYPE : std_logic_vector(15 downto 0) := X"0100";
+    constant REG_TRIGGER_LEVEL : std_logic_vector(15 downto 0) := X"0101";
 
 	
 end reg_map;

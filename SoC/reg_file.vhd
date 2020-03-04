@@ -19,9 +19,8 @@ port(
     
     start_event  : out std_logic;
     trigger_type : out std_logic;
-    
-    testValue    : out std_logic_vector(13 downto 0)	
-	);
+    trigger_level: out std_logic_vector(13 downto 0)
+  	);
 	
 end reg_file;
 
@@ -35,10 +34,10 @@ architecture behavioral of reg_file is
 	signal cmd_start_ena_r    : std_logic := '0';
 	signal cmd_start_r   : std_logic := '0';
 	
-	signal hereTestVal   : std_logic_vector(13 downto 0) := (others => '0');
     signal start_event_r : std_logic := '0';
-    signal trigger_type_r : std_logic := '0';
-               
+    signal trigger_type_r : std_logic := '1';
+    signal trigger_level_r : std_logic_vector(13 downto 0) := (others => '0');
+
 begin
 
 process(clock)
@@ -77,7 +76,11 @@ begin
 		if regNum = REG_TRIGGER_TYPE and regWE = '1' then
             trigger_type_r <= data_in_r(0);
         end if;
-		
+        
+	    if regNum = REG_TRIGGER_LEVEL and regWE = '1' then
+            trigger_level_r <= data_in_r(13 downto 0);
+        end if;
+        
 		if cmd_start_ena_r='1' then
 		      cmd_start_r <= '1';
 		      cmd_start_ena_r <= '0';
@@ -90,9 +93,9 @@ begin
 	end if; -- clock
 end process;
 	
-testValue    <= hereTestVal;
 dataOut      <= data_out_r;
 cmd_start    <= cmd_start_r;
 trigger_type <= trigger_type_r;
 start_event  <= start_event_r;
+trigger_level<= trigger_level_r;
 end architecture;

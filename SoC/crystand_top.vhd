@@ -225,7 +225,7 @@ pl_top_i : entity work.pl_top
             adc_ctrl_cmd => '0',
             clk_gen_lock => '0',
             Data_read_ena => '1',
-            compare_data => B"00000000000000000000000000000000000000000000000000000000",
+            --compare_data => B"00000000000000000000000000000000000000000000000000000000",
             --start_event => '1',
             --start_type => '1',
             

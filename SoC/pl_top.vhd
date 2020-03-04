@@ -17,7 +17,7 @@ port(
     adc_ctrl_cmd    : in std_logic;
     clk_gen_lock : in std_logic;
     Data_read_ena : in std_logic;
-    COMPARE_DATA : in std_logic_vector (55 downto 0);
+    --COMPARE_DATA : in std_logic_vector (55 downto 0);
     
     Data_out_1     : out std_logic_vector (31 downto 0);
     Data_out_2     : out std_logic_vector (31 downto 0);
@@ -119,7 +119,8 @@ architecture Behavioral of pl_top is
     signal adc_data_b : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_c : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_d : std_logic_vector(13 downto 0) := (others=>'0');
-    signal adc_data_test : std_logic_vector(13 downto 0) := (others=>'0');
+    signal adc_data_test : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data_t_test : adc_data_ltt;
     
     signal adc_status_signals : std_logic_vector (3 downto 0) := (others=>'0');
          
@@ -157,6 +158,7 @@ architecture Behavioral of pl_top is
     signal data_bram_din_top  : std_logic_vector(31 downto 0) := (others => '0');
         
     signal adc_data_top : adc_data_ltt  := (others=>(others=>(others=>'0')));
+    signal adc_data_top_test : adc_data_ltt  := (others=>(others=>(others=>'0')));
     signal adc_data_valid_top : std_logic := '0';
     
     signal temp_for_pack : std_logic := '0';
@@ -173,8 +175,7 @@ architecture Behavioral of pl_top is
     
     signal START_TYPE  : std_logic := '0';
     signal START_EVENT : std_logic := '0';
-    
-    signal plTestVal  : std_logic_vector(13 downto 0) := (others => '0');
+    signal COMPARE_DATA : std_logic_vector (13 downto 0) := (others => '0');
 
     
 -----------------------------------------------------------------   
@@ -264,6 +265,7 @@ port map(
     start_event   => START_EVENT,         --in    
     confirm_match => confirm_match_s,     --in
     complete_read => simple_buffer_state, --in
+    --adc_data => adc_data_top,
     read_ena => read_buf_ena              --out
 );
 ----------------------------------------------------------------
@@ -273,7 +275,7 @@ port map(
      
     adc_buf_data => adc_data,           --in
     data_to_compare => COMPARE_DATA,    --in
-    
+    adc_data => adc_data_top_test,
     confirm_match => confirm_match_s    --out
 );
 ----------------------------------------------------------------
@@ -299,16 +301,15 @@ port map (
     sts_done => sts_done_top,
     start_event => START_EVENT,
     trigger_type => START_TYPE,
-    
-    testValue => plTestVal
+    trigger_level=> COMPARE_DATA
     );
 ----------------------------------------------------------------
 pack_i: entity work.packager
     port map (
     clock => read_clk,
     --off_adc_data_valid => temp_for_pack,
-    adc_data =>  adc_data_top,--(others=>(others=>B"00000000000011")),
-    adc_data_valid => adc_data_valid_top,--temp_for_pack,--adc_data_valid_top,
+    adc_data => adc_data_top,--adc_data_t_test,
+    adc_data_valid => START_EVENT,--temp_for_pack,--adc_data_valid_top,
     
     data_bram_addr => data_bram_addr_top,
     data_bram_clk => data_bram_clk_top,
@@ -426,10 +427,12 @@ DATA_OUT_2 <= dataOut_buf(31 downto 0);                --out
 --ADC_D1B_N1 <= ADC_D1B_N;
 
 adc_data(1) <= adc_data_a;              --in
-adc_data(2) <= plTestVal;--adc_data_b;              --in                                         
-adc_data(3) <= adc_data_c; --ADC_D0A_P & ADC_D0A_N & ADC_D1A_P & ADC_D1A_N  & ADC_D0B_N & ADC_D1B_P & ADC_D1B_N & B"1111111" ;              --in                                      
-adc_data(4) <= adc_data_d;              --in                     
-                                                                                     
+adc_data(2) <= adc_data_top_test(0)(0);--adc_data_b;              --in                                         
+adc_data(3) <= adc_data_c;       --in                                      
+adc_data(4) <= adc_data_d;              --in       
+
+adc_data_test <= "00" & adc_data_c;              
+adc_data_t_test <= (others => ( others => adc_data_test));                                                                                     
 dataIn_buf <= adc_data;                     --in
                                                                                      
 write_clk <= adc_deser_clock;                 --in                                   
