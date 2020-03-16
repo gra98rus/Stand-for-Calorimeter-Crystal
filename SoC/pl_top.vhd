@@ -17,10 +17,6 @@ port(
     adc_ctrl_cmd    : in std_logic;
     clk_gen_lock : in std_logic;
     Data_read_ena : in std_logic;
-    --COMPARE_DATA : in std_logic_vector (55 downto 0);
-    
-    Data_out_1     : out std_logic_vector (31 downto 0);
-    Data_out_2     : out std_logic_vector (31 downto 0);
     Buffer_state : out std_logic;
     pll_clk_p_125mhz : out std_logic;
     pll_clk_n_125mhz : out std_logic;
@@ -134,7 +130,6 @@ architecture Behavioral of pl_top is
     signal read_clk : std_logic := '0';
     
     signal dataIn_buf: adc_data_t;
-    signal dataOut_buf: std_logic_vector (63 downto 0) := (others=>'0');
         
     signal write_buf_ena : std_logic := '0';
     signal read_buf_ena : std_logic := '0';
@@ -176,6 +171,8 @@ architecture Behavioral of pl_top is
     signal START_TYPE  : std_logic := '0';
     signal START_EVENT : std_logic := '0';
     signal COMPARE_DATA : std_logic_vector (13 downto 0) := (others => '0');
+    
+    signal data_for_pack_state_top : std_logic := '0';
 
     
 -----------------------------------------------------------------   
@@ -241,26 +238,24 @@ adc_deser_i : entity work.adc_deser                         --deser_block
 ------------------------------------------------------------------
 buffers_block_i : entity work.buffers_block             --ring and simple buffers block
 port map(
-    write_clk_ring => write_clk,             --in
-    read_clk_ring => read_clk,               --in
-    read_clk_simple => ps_clk_50mhz,         --in 
+    clk_ring => adc_deser_clock,               --in
+    clk_simple => ps_clk_50mhz,         --in 
                                                 
     adc_data_write => dataIn_buf,            --in
-    data_read => dataOut_buf,                --out
     
-    read_ring_ena => read_buf_ena,           --in
+    read_ring_ena => read_buf_ena,--START_EVENT, --read_buf_ena,           --in
     read_simple_ena => Data_read_ena,        --in
     
     simple_buffer_state => simple_buffer_state, --out
     
-            
+    data_for_pack_state => data_for_pack_state_top,
     adc_data => adc_data_top,
     adc_data_valid => adc_data_valid_top
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
 port map(
-    clk => read_clk,                      --in
+    clk => adc_deser_clock,                      --in
     start_type    => START_TYPE,          --in
     start_event   => START_EVENT,         --in    
     confirm_match => confirm_match_s,     --in
@@ -271,7 +266,7 @@ port map(
 ----------------------------------------------------------------
 bound_comparator_i : entity work.bound_comparator   --comparators block
 port map(
-    clk => write_clk,                   --in
+    clk => adc_deser_clock,                   --in
      
     adc_buf_data => adc_data,           --in
     data_to_compare => COMPARE_DATA,    --in
@@ -290,7 +285,7 @@ port map (
 ----------------------------------------------------------------
 reg_i : entity work.reg_file
 port map (
-    clock => read_clk,
+    clock => ps_clk_50mhz,
     dataIn => dataIn,
     dataOut => dataOut,
     regNum => regNum,
@@ -302,14 +297,15 @@ port map (
     start_event => START_EVENT,
     trigger_type => START_TYPE,
     trigger_level=> COMPARE_DATA
+    --adc_data =>adc_data_top
     );
 ----------------------------------------------------------------
 pack_i: entity work.packager
     port map (
-    clock => read_clk,
+    clock => ps_clk_50mhz,
     --off_adc_data_valid => temp_for_pack,
     adc_data => adc_data_top,--adc_data_t_test,
-    adc_data_valid => START_EVENT,--temp_for_pack,--adc_data_valid_top,
+    adc_data_valid => START_EVENT,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
     
     data_bram_addr => data_bram_addr_top,
     data_bram_clk => data_bram_clk_top,
@@ -379,11 +375,6 @@ begin
     end if;
 end process;
 
---process(ps_clk_50mhz)
---variable 
---begin
-
---end process;
 -----------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(
@@ -403,9 +394,6 @@ TP8 <= ps_cnt(7);                       --out
 
 cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
 adc_deser_clock_locked <= clk_gen_lock; --in
-
-DATA_OUT_1 <= dataOut_buf(63 downto 32);                --out
-DATA_OUT_2 <= dataOut_buf(31 downto 0);                --out
 
 --process(ps_clk_50mhz)
 --begin
@@ -431,7 +419,7 @@ adc_data(2) <= adc_data_top_test(0)(0);--adc_data_b;              --in
 adc_data(3) <= adc_data_c;       --in                                      
 adc_data(4) <= adc_data_d;              --in       
 
-adc_data_test <= "00" & adc_data_c;              
+adc_data_test <= "00" & adc_data_top_test(0)(0);              
 adc_data_t_test <= (others => ( others => adc_data_test));                                                                                     
 dataIn_buf <= adc_data;                     --in
                                                                                      

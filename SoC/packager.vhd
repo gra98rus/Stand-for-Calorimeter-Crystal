@@ -22,7 +22,12 @@ port(
 end packager;
 
 architecture behavioral of packager is
-
+component c_counter_binary_0                    --counter; read counter; final count value 0x28; start count value 0x00
+port (
+    CLK : in std_logic;                         --clock signal
+    CE : in std_logic;                          --enable signal
+    Q : out std_logic_vector (6 downto 0));     --counter value
+end component;
     signal adc_data_sr     : adc_data_ltt := (others=>(others=>(others=>'0')));
     signal adc_data_lsr    : adc_data_lt := (others=>(others=>'0'));
     
@@ -45,11 +50,30 @@ architecture behavioral of packager is
     signal data_bram_we_r   : std_logic := '0';
     signal data_bram_we_dr  : std_logic := '0';    
     signal data_bram_we_ddr : std_logic := '0';
-    signal data_bram_we_dddr : std_logic := '0';     
+    signal data_bram_we_dddr : std_logic := '0';
     
+    signal adc_data_valid_loc: std_logic := '0';
+    
+    signal counter : std_logic_vector (6 downto 0) := B"000_0000" ;
     --signal here_off_adc_data_valid : std_logic := '1';
           
 begin
+
+c_counter_binary_0_i : c_counter_binary_0              --counter
+    port map(
+        CLK => clock,                                  --in
+        CE => adc_data_valid,                              --in
+        Q => counter);                                 --out
+
+process(clock, adc_data_valid)
+begin
+    if adc_data_valid' event and adc_data_valid='1' then
+        adc_data_valid_loc <= '1';
+    end if;
+    if counter = B"111_1111" then
+        adc_data_valid_loc <= '0';
+    end if;   
+end process;
 
 process(clock)
 begin

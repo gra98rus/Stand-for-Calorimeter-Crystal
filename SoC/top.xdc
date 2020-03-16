@@ -1,5 +1,6 @@
-set_property IOSTANDARD LVCMOS33 [get_ports UART_TX]
+create_clock -name clk_fpga_0 -period 20 [get_pins "ps_top_i/processing_system7_0/inst/PS7_i/FCLKCLK[0]"]
 
+set_property IOSTANDARD LVCMOS33 [get_ports UART_TX]
 set_property IOSTANDARD LVCMOS33 [get_ports UART_RX]
 
 set_property IOSTANDARD LVCMOS33 [get_ports TP1]
@@ -21,7 +22,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports TP6]
 set_property PACKAGE_PIN Y11 [get_ports TP6]
 
 set_property IOSTANDARD LVCMOS33 [get_ports TP7]
-set_property PACKAGE_PIN W10 [get_ports TP7]
+set_property PACKAGE_PIN W10 [get_ports TP7] 
 
 set_property IOSTANDARD LVCMOS33 [get_ports TP8]
 set_property PACKAGE_PIN W9 [get_ports TP8]
@@ -109,10 +110,8 @@ set_property IOSTANDARD LVDS_25 [get_ports ADC_CLK_N]
 set_property IOSTANDARD LVDS_25 [get_ports ADC_CLK_P]
 set_property IOSTANDARD LVDS_25 [get_ports ADC_D0A_P]
 
-
 set_property PACKAGE_PIN V5 [get_ports UART_RX]
 set_property PACKAGE_PIN U5 [get_ports UART_TX]
-
 
 set_property IOSTANDARD LVCMOS25 [get_ports SPI_CSB]
 set_property PACKAGE_PIN V13 [get_ports SPI_CSB]
@@ -120,5 +119,3 @@ set_property IOSTANDARD LVCMOS25 [get_ports SPI_SCLK]
 set_property PACKAGE_PIN V18 [get_ports SPI_SCLK]
 set_property IOSTANDARD LVCMOS25 [get_ports SPI_SDIO]
 set_property PACKAGE_PIN W16 [get_ports SPI_SDIO]
-
-

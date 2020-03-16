@@ -125,8 +125,6 @@ architecture STRUCTURE of crystand_top is
     UART_0_rxd : in STD_LOGIC;
     FCLK_CLK0 : out STD_LOGIC;
     reset : out std_logic;
-  --  DataIn1 : in std_logic_vector;
-   -- DataIn2 : in std_logic_vector;
         
     BRAM_PORTA_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     BRAM_PORTA_clk : in STD_LOGIC;
@@ -196,8 +194,6 @@ ps_top_i: component ps_top
       ADC_SPI_ss_o => SPI_CSB,
       FCLK_CLK0 => FCLK_CLK0,
       reset => reset,
-     -- DataIn1 =>DataOut1,
-     -- DataIn2 =>DataOut2,
             
       BRAM_PORTA_addr(31 downto 0) => data_bram_addr_top,
       BRAM_PORTA_clk => data_bram_clk_top,
@@ -225,12 +221,6 @@ pl_top_i : entity work.pl_top
             adc_ctrl_cmd => '0',
             clk_gen_lock => '0',
             Data_read_ena => '1',
-            --compare_data => B"00000000000000000000000000000000000000000000000000000000",
-            --start_event => '1',
-            --start_type => '1',
-            
-            DATA_OUT_1 => DataOut1,
-            DATA_OUT_2 => DataOut2,
             
             pll_clk_p_125mhz => ADC_CLK_P,
             pll_clk_n_125mhz => ADC_CLK_N,
