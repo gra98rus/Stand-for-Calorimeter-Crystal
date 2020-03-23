@@ -56,8 +56,10 @@ begin
         start_event_delay <= start_event_r;
 		if start_event_r = '1' and start_event_delay = '0' then
 			start_event_result <= '1';
+--            test_value2 <= test_value2 + 1;
 	    else
 	        start_event_result <= '0';
+--	        test_value4 <= test_value4 + 1;
 		end if;
 	end if;
 end process;
@@ -95,8 +97,6 @@ begin
         
 		if regNum = REG_TRIGGER_TYPE and regWE = '1' then
             trigger_type_r <= dataIn(0);
-            test_value2 <= test_value2 + 1;
-            test_value4 <= B"0000000000000" & dataIn(0);
         end if;
         
 	    if regNum = REG_TRIGGER_LEVEL and regWE = '1' then

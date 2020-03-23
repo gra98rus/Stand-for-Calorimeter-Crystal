@@ -47,6 +47,7 @@ signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
 signal test_value1 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value2 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value3 : std_logic_vector (13 downto 0) := "00000000000111";
+signal test_value4 : std_logic_vector (13 downto 0) := "00000000000111";
 signal flag : std_logic := '0';
 
 -------------------------------------------------------------------------
@@ -64,16 +65,16 @@ c_counter_binary_0_i : c_counter_binary_0              --counter
         CE => '1',--read_ena_s,                              --in
         Q => counter);                                 --out
 --------------------------------------------------------------------------
-process (clk)                                -- trigger and counter conditions
+process (clk)
 begin
-    if clk'event and clk='1' then                       --on clock  
+    if clk'event and clk='1' then
         --if counter = B"111_1111" then
-        if complete_read = '1' then
+        if read_ena_s = '1' and complete_read = '1' then
             read_ena_s <= '0';
             test_value2 <= test_value2 + 1;
         end if;
     
-        if start_event = '1' and start_type = '1' then    --on start_event
+        if start_event = '1' and start_type = '1' then
             read_ena_s <= '1';
             test_value1 <= test_value1 + 1;
             compare_ena <= '0';
@@ -100,6 +101,7 @@ begin
     adc_data(0) <= (others => test_value1);
     adc_data(1) <= (others => test_value2);
     adc_data(2) <= (others => test_value3);
+    adc_data(3) <= (others => test_value4);
     end if;
 end process;
 ---------------------------------------------------------------------------

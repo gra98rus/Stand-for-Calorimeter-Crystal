@@ -296,8 +296,8 @@ port map (
     sts_done => sts_done_top,
     start_event => START_EVENT,
     trigger_type => START_TYPE,
+    --adc_data =>adc_data_top,
     trigger_level=> COMPARE_DATA
-    --adc_data =>adc_data_top
     );
 ----------------------------------------------------------------
 pack_i: entity work.packager

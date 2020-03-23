@@ -58,7 +58,7 @@ port (
 end component;
 ----------------------------------------------------------------
     constant wea_c : std_logic_vector (0 downto 0) := B"1";
-    signal ring_data_out_observer: std_logic := '0';--std_logic_vector (1 downto 0) := (others=>'0');
+    shared variable ring_data_out_observer: integer := 0;-- std_logic := '0';--std_logic_vector (1 downto 0) := (others=>'0');
     signal simple_data_out_observer: std_logic := '0';
     signal simple_buffer_state_s: std_logic := '0';
    
@@ -84,7 +84,10 @@ end component;
     signal test_value2 : std_logic_vector (13 downto 0) := "00000000000011";
     signal test_value3 : std_logic_vector (13 downto 0) := "00000000000011";
     signal test_value4 : std_logic_vector (13 downto 0) := "00000000000011";
-               
+
+    signal read_ring_ena_delay: std_logic := '0';
+    signal read_ring_ena_result: std_logic := '0';
+
 -----------------------------------------------------------------
 begin
 dina_ring <= adc_data_write(4) & adc_data_write(3) & adc_data_write(2) & adc_data_write(1);
@@ -124,36 +127,52 @@ begin
     end if;
 end process;
 --------------------------------------------------------------------
+process(clk_simple)
+begin
+    if clk_simple'event and clk_simple='1' then
+        read_ring_ena_delay <= read_ring_ena;
+		if read_ring_ena = '1' and read_ring_ena_delay = '0' then
+			read_ring_ena_result <= '1';
+--            test_value2 <= test_value2 + 1;
+	    else
+	        read_ring_ena_result <= '0';
+--	        test_value4 <= test_value4 + 1;
+		end if;
+	end if;
+end process;
 
 process (clk_simple)
 begin 
-    if clk_simple'event and clk_simple='1' then       
-        if read_ring_ena='1' then
-            ring_data_out_observer <= '1';
-            simple_buffer_state_s <= '0';
-            test_value4 <= test_value4 + 1;
-        end if;
     
-        if ring_data_out_observer = '1' then 
-            ring_data_out_observer <= '0';
+    if clk_simple'event and clk_simple='1' then 
+    
+        if ring_data_out_observer = 1 then 
+            ring_data_out_observer := 0;
             addrb_ring <= std_logic_vector (unsigned(addra_ring) - 10);
             addra_simple <= B"0000000";
             test_value3 <= test_value3 + 1;
             simple_buffer_state_s <= '0';
-        elsif read_ring_ena='1' then
+        else --if read_ring_ena_result='1' then
             addra_simple <= std_logic_vector (unsigned(addra_simple) + 1);
             addrb_ring <= std_logic_vector (unsigned(addrb_ring) + 1);
         end if;
-
+          
+        if read_ring_ena_result = '1' then
+            ring_data_out_observer := 1;
+            simple_buffer_state_s <= '0';
+            test_value4 <= test_value4 + 1;
+        end if;
         dina_simple <= B"11" & adc_data_read(55 downto 42) & B"10" & adc_data_read(41 downto 28) & B"01"  --convert adc_data (14-bit*4) to data_out (16-bit*4);
                                     & adc_data_read(27 downto 14) & B"00" & adc_data_read(13 downto 0);   --16-bit word includes 2-bit to identify channal and
+        
         if addra_simple = B"1111111" then
             simple_buffer_state_s <= '1';
+            test_value2 <= test_value2 + 1;
         end if;
         
-        if read_ring_ena='0' then
-            ring_data_out_observer <= '0';
-            test_value1 <= B"00000000011111";
+        if read_ring_ena_result='0' then
+            ring_data_out_observer := 0;
+            test_value1 <= test_value1 + 1;
         end if;
     end if;
 end process;
@@ -162,8 +181,8 @@ process(clk_simple)
 begin
     if clk_simple'event and clk_simple = '1' then
         if simple_buffer_state_s = '1' then
-            addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);            
-            --adc_data_r(burst_cnt)(counter) <=  adc_data_read(41 downto 28);-- adc_data_write(3);
+            addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
+            --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
             adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
             if counter /= 127 then
                 counter <= counter + 1;
