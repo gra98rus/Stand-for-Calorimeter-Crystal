@@ -16,10 +16,11 @@ port (
     
     adc_data_write  :    in  adc_data_t;
     
-    read_ring_ena   : in std_logic;
+    trigg_ena   : in std_logic;
     read_simple_ena : in std_logic;
     
     simple_buffer_state: out std_logic;
+    array_state: out std_logic;
     data_for_pack_state: out std_logic;
     
     adc_data       : out adc_data_ltt;
@@ -61,6 +62,7 @@ end component;
     shared variable ring_data_out_observer: integer := 0;-- std_logic := '0';--std_logic_vector (1 downto 0) := (others=>'0');
     signal simple_data_out_observer: std_logic := '0';
     signal simple_buffer_state_s: std_logic := '0';
+    signal array_state_s: std_logic := '0';
    
     signal dina_ring : std_logic_vector (55 downto 0) := (others=>'0');
     
@@ -85,8 +87,10 @@ end component;
     signal test_value3 : std_logic_vector (13 downto 0) := "00000000000011";
     signal test_value4 : std_logic_vector (13 downto 0) := "00000000000011";
 
-    signal read_ring_ena_delay: std_logic := '0';
-    signal read_ring_ena_result: std_logic := '0';
+    signal trigg_ena_delay: std_logic := '0';
+    signal trigg_ena_result: std_logic := '0';
+    
+    signal read_ring_ena: std_logic := '0';
 
 -----------------------------------------------------------------
 begin
@@ -130,12 +134,12 @@ end process;
 process(clk_simple)
 begin
     if clk_simple'event and clk_simple='1' then
-        read_ring_ena_delay <= read_ring_ena;
-		if read_ring_ena = '1' and read_ring_ena_delay = '0' then
-			read_ring_ena_result <= '1';
+        trigg_ena_delay <= trigg_ena;
+		if trigg_ena = '1' and trigg_ena_delay = '0' then
+			trigg_ena_result <= '1';
 --            test_value2 <= test_value2 + 1;
 	    else
-	        read_ring_ena_result <= '0';
+	        trigg_ena_result <= '0';
 --	        test_value4 <= test_value4 + 1;
 		end if;
 	end if;
@@ -152,12 +156,14 @@ begin
             addra_simple <= B"0000000";
             test_value3 <= test_value3 + 1;
             simple_buffer_state_s <= '0';
+            read_ring_ena <= '1';
+            
         else --if read_ring_ena_result='1' then
             addra_simple <= std_logic_vector (unsigned(addra_simple) + 1);
             addrb_ring <= std_logic_vector (unsigned(addrb_ring) + 1);
         end if;
           
-        if read_ring_ena_result = '1' then
+        if trigg_ena_result = '1' then
             ring_data_out_observer := 1;
             simple_buffer_state_s <= '0';
             test_value4 <= test_value4 + 1;
@@ -167,10 +173,12 @@ begin
         
         if addra_simple = B"1111111" then
             simple_buffer_state_s <= '1';
+            array_state_s <= '0';
             test_value2 <= test_value2 + 1;
+            read_ring_ena <= '0';
         end if;
         
-        if read_ring_ena_result='0' then
+        if trigg_ena_result='0' then
             ring_data_out_observer := 0;
             test_value1 <= test_value1 + 1;
         end if;
@@ -180,7 +188,7 @@ end process;
 process(clk_simple)
 begin
     if clk_simple'event and clk_simple = '1' then
-        if simple_buffer_state_s = '1' then
+        if simple_buffer_state_s = '1' and array_state_s = '0' then
             addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
             --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
             adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
@@ -193,6 +201,8 @@ begin
                 burst_cnt <= 0;
                 counter <= 0;
                 addrb_simple <= (others => '0');
+                array_state_s <= '1';
+                adc_data <= adc_data_r;
             end if;
         end if;
     end if;
@@ -205,5 +215,5 @@ simple_buffer_state <= simple_buffer_state_s;
 --adc_data(1) <= (others => test_value2);
 --adc_data(2) <= (others => test_value3);
 --adc_data(3) <= (others => test_value4);
-adc_data <= adc_data_r;
+array_state <= array_state_s;
 end Behavioral;

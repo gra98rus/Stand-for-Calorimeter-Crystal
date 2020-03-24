@@ -144,8 +144,8 @@ architecture Behavioral of pl_top is
     signal Data_out: std_logic_vector (63 downto 0) := (others=>'0');
     
     signal cmd_start_top : std_logic := '0';
-    signal sts_in_prog_top : std_logic := '0';
-    signal sts_done_top : std_logic := '0';
+--    signal sts_in_prog_top : std_logic := '0';
+--    signal sts_done_top : std_logic := '0';
     
     signal data_bram_we_top   : std_logic := '0';
     signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others => '0');
@@ -173,7 +173,8 @@ architecture Behavioral of pl_top is
     signal COMPARE_DATA : std_logic_vector (13 downto 0) := (others => '0');
     
     signal data_for_pack_state_top : std_logic := '0';
-
+    
+    signal array_state_top : std_logic := '0';
     
 -----------------------------------------------------------------   
 begin
@@ -243,13 +244,14 @@ port map(
                                                 
     adc_data_write => dataIn_buf,            --in
     
-    read_ring_ena => read_buf_ena,--START_EVENT, --read_buf_ena,           --in
+    trigg_ena => read_buf_ena,--START_EVENT,
     read_simple_ena => Data_read_ena,        --in
     
     simple_buffer_state => simple_buffer_state, --out
     
     data_for_pack_state => data_for_pack_state_top,
     adc_data => adc_data_top,
+    array_state => array_state_top,
     adc_data_valid => adc_data_valid_top
 );
 ----------------------------------------------------------------
@@ -292,8 +294,9 @@ port map (
     regWE => regWE,
     
     cmd_start => cmd_start_top,
-    sts_in_prog => sts_in_prog_top,
-    sts_done => sts_done_top,
+--    sts_in_prog => sts_in_prog_top,
+--    sts_done => sts_done_top,
+    data_ready => array_state_top,
     start_event => START_EVENT,
     trigger_type => START_TYPE,
     --adc_data =>adc_data_top,
@@ -305,7 +308,7 @@ pack_i: entity work.packager
     clock => ps_clk_50mhz,
     --off_adc_data_valid => temp_for_pack,
     adc_data => adc_data_top,--adc_data_t_test,
-    adc_data_valid => START_EVENT,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
+    adc_data_valid => array_state_top,--START_EVENT,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
     
     data_bram_addr => data_bram_addr_top,
     data_bram_clk => data_bram_clk_top,

@@ -22,12 +22,7 @@ port(
 end packager;
 
 architecture behavioral of packager is
---component c_counter_binary_0                    --counter; read counter; final count value 0x28; start count value 0x00
---port (
---    CLK : in std_logic;                         --clock signal
---    CE : in std_logic;                          --enable signal
---    Q : out std_logic_vector (6 downto 0));     --counter value
---end component;
+
     signal adc_data_sr     : adc_data_ltt := (others=>(others=>(others=>'0')));
     signal adc_data_lsr    : adc_data_lt := (others=>(others=>'0'));
     
@@ -56,24 +51,26 @@ architecture behavioral of packager is
     
     signal counter : std_logic_vector (6 downto 0) := B"000_0000" ;
     --signal here_off_adc_data_valid : std_logic := '1';
+    
+    signal adc_data_valid_delay : std_logic := '0';
+    signal adc_data_valid_result : std_logic := '0';
+
           
 begin
 
---c_counter_binary_0_i : c_counter_binary_0              --counter
---    port map(
---        CLK => clock,                                  --in
---        CE => adc_data_valid,                              --in
---        Q => counter);                                 --out
-
---process(clock, adc_data_valid)
---begin
---    if adc_data_valid' event and adc_data_valid='1' then
---        adc_data_valid_loc <= '1';
---    end if;
---    if counter = B"111_1111" then
---        adc_data_valid_loc <= '0';
---    end if;   
---end process;
+process(clock)
+begin
+    if clock'event and clock='1' then
+        adc_data_valid_delay <= adc_data_valid;
+		if adc_data_valid = '1' and adc_data_valid_delay = '0' then
+			adc_data_valid_result <= '1';
+--            test_value2 <= test_value2 + 1;
+	    else
+	        adc_data_valid_result <= '0';
+--	        test_value4 <= test_value4 + 1;
+		end if;
+	end if;
+end process;
 
 process(clock)
 begin
@@ -101,7 +98,7 @@ begin
                 delay_cnt <= 0;
            end if;
 
-	       if adc_data_valid='1' then
+	       if adc_data_valid_result='1' then
 	           burst_addr <= (others=>'0');
 	           sample_addr <= (others=>'0');
 	           addr_count <= (others=>'0');
@@ -127,7 +124,7 @@ begin
             data_bram_we_r <= '0';
         end if;
         
-        if adc_data_valid='1' then
+        if adc_data_valid_result='1' then
             data_bram_we_r <= '1';
         end if;
         

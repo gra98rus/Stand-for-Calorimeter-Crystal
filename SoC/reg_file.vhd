@@ -15,8 +15,9 @@ port(
 	dataOut : out std_logic_vector(15 downto 0);
 
 	cmd_start : out std_logic;
-    sts_in_prog    : in std_logic;
-    sts_done    : in std_logic;
+--    sts_in_prog    : in std_logic;
+--    sts_done    : in std_logic;
+    data_ready    : in std_logic;
     
     start_event  : out std_logic;
     trigger_type : out std_logic;
@@ -110,8 +111,9 @@ begin
 		end if;
 		
 		if regNum=REG_STATUS then
-		  data_out_r(0) <= sts_done;
-          data_out_r(1) <= sts_in_prog;
+		  data_out_r(0) <= data_ready;
+--		  data_out_r(1) <= sts_done;
+--          data_out_r(2) <= sts_in_prog;
 		end if;
     adc_data(0) <= (others => test_value1);
     adc_data(1) <= (others => test_value2);
