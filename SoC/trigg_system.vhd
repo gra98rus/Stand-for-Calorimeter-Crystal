@@ -30,20 +30,18 @@ port (
     Q : out std_logic_vector (6 downto 0));     --counter value
 end component;
 ------------------------------------------------------------------------
-signal clock : std_logic := '0';                                
 signal read_ena_s : std_logic := '0';
-signal compare_ena : std_logic := '0';
+shared variable compare_ena : integer := 0;
 signal confirm_match_s : std_logic := '0';
 
-signal action_status : std_logic := '0';
-signal observer : std_logic := '1';
 
-signal match_event : std_logic := '0';
+signal start_event_delay : std_logic := '0';
+signal start_event_result : std_logic := '0';
+
 signal count_ena : std_logic := '0';
 signal counterMy : std_logic_vector (6 downto 0) := B"000_0000" ;
 
 signal counter : std_logic_vector (6 downto 0) := B"000_0000" ;
-signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
 signal test_value1 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value2 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value3 : std_logic_vector (13 downto 0) := "00000000000111";
@@ -54,10 +52,10 @@ signal flag : std_logic := '0';
 begin
 -------------------------------------------------------------------------
                                                     --input buffers 
-compare_ibuf : IBUF
-    port map(   
-        I => confirm_match,                       
-        O => confirm_match_s);
+--compare_ibuf : IBUF
+--    port map(   
+--        I => confirm_match,                       
+--        O => confirm_match_s);
 -------------------------------------------------------------------------
 c_counter_binary_0_i : c_counter_binary_0              --counter
     port map(
@@ -65,6 +63,19 @@ c_counter_binary_0_i : c_counter_binary_0              --counter
         CE => '1',--read_ena_s,                              --in
         Q => counter);                                 --out
 --------------------------------------------------------------------------
+
+process(clk)
+begin
+    if clk'event and clk='1' then
+        start_event_delay <= start_event;
+		if start_event = '1' and start_event_delay = '0' then
+			start_event_result <= '1';
+	    else
+	        start_event_result <= '0';
+		end if;
+	end if;
+end process;
+
 process (clk)
 begin
     if clk'event and clk='1' then
@@ -74,29 +85,24 @@ begin
             test_value2 <= test_value2 + 1;
         end if;
     
-        if start_event = '1' and start_type = '1' then
+        if start_event_result = '1' and start_type = '1' then
             read_ena_s <= '1';
             test_value1 <= test_value1 + 1;
-            compare_ena <= '0';
-        elsif start_event = '1' and start_type = '0' then
-            compare_ena <= '1';
-            observer <= '1';
+            compare_ena := 0;
+        elsif start_event_result = '1' and start_type = '0' then
+            compare_ena := 1;
+            --read_ena_s <= '1';
             test_value3 <= test_value3 + 1;
         end if;
    
---    if confirm_match_s'event and confirm_match_s = '1' and observer ='1'then     --check concurrency
---        match_event <= '1';
---        observer <= '0';
---    end if;
-    
---    if compare_ena = '1' and match_event = '1' then 
---        action_status <= '1';           --bound start
---        read_ena_s <= '1';
---    end if;
-
---    if match_event = '1' then
---        match_event <= '0';             --reset match_event signal
---    end if;
+        if compare_ena = 1 then 
+       -- read_ena_s <= '1';
+            if confirm_match = '1' then
+                read_ena_s <= '1';
+                compare_ena := 0;
+                test_value4 <= test_value4 + 1;
+            end if;
+        end if;
 
     adc_data(0) <= (others => test_value1);
     adc_data(1) <= (others => test_value2);
@@ -106,8 +112,5 @@ begin
 end process;
 ---------------------------------------------------------------------------
 read_ena <= read_ena_s;  --in
---adc_data <= ( others => (others => test_value));
-
---adc_data <= adc_data_r;
 ---------------------------------------------------------------------------S
 end Behavioral;

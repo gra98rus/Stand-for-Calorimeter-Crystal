@@ -32,12 +32,12 @@ architecture Behavioral of buffers_block is
 component blk_mem_gen_0                         --ring memory block
 port (
 
-    addra : in std_logic_vector (4 downto 0);   
+    addra : in std_logic_vector (7 downto 0);   
     clka : in std_logic;                        
     dina : in std_logic_vector (55 downto 0);   
     wea : in std_logic_vector (0 downto 0);     
     
-    addrb : in std_logic_vector (4 downto 0);   
+    addrb : in std_logic_vector (7 downto 0);   
     clkb : in std_logic;                        
     doutb : out std_logic_vector (55 downto 0); 
     enb : in std_logic);                        
@@ -63,11 +63,12 @@ end component;
     signal simple_data_out_observer: std_logic := '0';
     signal simple_buffer_state_s: std_logic := '0';
     signal array_state_s: std_logic := '0';
+    signal array_state_s1: std_logic := '0';
    
     signal dina_ring : std_logic_vector (55 downto 0) := (others=>'0');
     
-    signal addra_ring : std_logic_vector (4 downto 0) := B"0_0000";
-    signal addrb_ring : std_logic_vector (4 downto 0) := B"0_0000";
+    signal addra_ring : std_logic_vector (7 downto 0) := B"0000_0000";
+    signal addrb_ring : std_logic_vector (7 downto 0) := B"0000_0000";
     
     signal addra_simple : std_logic_vector (6 downto 0) := B"000_0000";
     signal addrb_simple : std_logic_vector (6 downto 0) := B"000_0000";
@@ -157,8 +158,7 @@ begin
             test_value3 <= test_value3 + 1;
             simple_buffer_state_s <= '0';
             read_ring_ena <= '1';
-            
-        else --if read_ring_ena_result='1' then
+        elsif read_ring_ena='1' then
             addra_simple <= std_logic_vector (unsigned(addra_simple) + 1);
             addrb_ring <= std_logic_vector (unsigned(addrb_ring) + 1);
         end if;
@@ -171,6 +171,10 @@ begin
         dina_simple <= B"11" & adc_data_read(55 downto 42) & B"10" & adc_data_read(41 downto 28) & B"01"  --convert adc_data (14-bit*4) to data_out (16-bit*4);
                                     & adc_data_read(27 downto 14) & B"00" & adc_data_read(13 downto 0);   --16-bit word includes 2-bit to identify channal and
         
+        if array_state_s1 = '1' then
+            array_state_s <= '1';
+        end if;
+        
         if addra_simple = B"1111111" then
             simple_buffer_state_s <= '1';
             array_state_s <= '0';
@@ -180,7 +184,7 @@ begin
         
         if trigg_ena_result='0' then
             ring_data_out_observer := 0;
-            test_value1 <= test_value1 + 1;
+            
         end if;
     end if;
 end process;
@@ -189,6 +193,7 @@ process(clk_simple)
 begin
     if clk_simple'event and clk_simple = '1' then
         if simple_buffer_state_s = '1' and array_state_s = '0' then
+            array_state_s1 <= '0';
             addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
             --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
             adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
@@ -201,7 +206,8 @@ begin
                 burst_cnt <= 0;
                 counter <= 0;
                 addrb_simple <= (others => '0');
-                array_state_s <= '1';
+                array_state_s1 <= '1';
+                test_value1 <= test_value1 + 1;
                 adc_data <= adc_data_r;
             end if;
         end if;

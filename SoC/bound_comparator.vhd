@@ -39,6 +39,8 @@ architecture Behavioral of bound_comparator is
     signal compareD : std_logic := '0';
     signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
 
+    signal confirm_match_s : std_logic := '0';
+
 ---------------------------------------------------------------------------------------
 begin
 ---------------------------------------------------------------------------------------
@@ -85,17 +87,18 @@ if clk'event and clk = '1' then
         compareD <= '0';                        --ch_D comparator
     end if; 
     
-    if compareA = '1' and compareB = '1' and compareC = '1' and compareD = '1' then
+    --if compareA = '1' and compareB = '1' and compareC = '1' and compareD = '1' then
+    if compareA = '1' or compareB = '1' or compareC = '1' or compareD = '1' then
         confirm_match <= '1';
     else                                        --compare result
         confirm_match <= '0';
     end if;
-       
+   -- confirm_match_s <= '1';   
     adc_data_r <= (others => (others =>  (data_to_compare)));
     
 end if;
 end process;
 -------------------------------------------------------------------------
 adc_data <= adc_data_r;
-
+--confirm_match <= confirm_match_s;
 end Behavioral;

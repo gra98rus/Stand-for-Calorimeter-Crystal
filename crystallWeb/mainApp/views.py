@@ -82,16 +82,20 @@ def index(request):
             response = JsonResponse({'reg_number': reg_num, 'data': data})
             return HttpResponse(response)
 
-        if (js['command'] == 'readCharts'):
-            response = {}
-            write_to_reg(REG_START_EVENT, COMMAND_START)
-            data = read_charts()
-            for i in range(0,512):
-                response[str(i)] = data[i]
-            response = JsonResponse(response)
+        if (js['command'] == 'readCharts'):                               
+            response = {}                                                 
+            write_to_reg(REG_START_EVENT, COMMAND_START)                  
+            status = read_from_reg (REG_STATUS)                           
+            while status != 1:                                            
+                print(status)
+                status = read_from_reg (REG_STATUS)                       
+            data = read_charts()                                          
+            for i in range(0,512):                                        
+                response[str(i)] = data[i]                                
+            response = JsonResponse(response)                             
             return HttpResponse(response)
-
-        if (js['command'] == 'setTriggerType'):
+       
+         if (js['command'] == 'setTriggerType'):
             write_to_reg(REG_TRIGGER_TYPE, int(js['data']))
             return HttpResponse('ok!')
         
@@ -101,8 +105,5 @@ def index(request):
         
         if (js['command'] == 'sendStartEvent'):
             write_to_reg(REG_START_EVENT, 1)
-            i = 0
-            while i < 100:
-                i = i + 1
             write_to_reg(REG_START_EVENT, 0)
             return HttpResponse('ok!')

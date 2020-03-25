@@ -49,6 +49,11 @@ architecture behavioral of reg_file is
     signal test_value4 : std_logic_vector (13 downto 0) := "00000000000000";
     signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
 
+    signal data_ready_delay : std_logic := '0';
+    signal data_ready_result : std_logic := '0';
+    
+    signal data_status : std_logic := '0';
+
 begin
 
 process(clock)
@@ -62,6 +67,30 @@ begin
 	        start_event_result <= '0';
 --	        test_value4 <= test_value4 + 1;
 		end if;
+	end if;
+end process;
+
+process(clock)
+begin
+    if clock'event and clock='1' then
+        data_ready_delay <= data_ready;
+		if data_ready = '1' and data_ready_delay = '0' then
+			data_ready_result <= '1';
+	    else
+	        data_ready_result <= '0';
+		end if;
+	end if;
+end process;
+
+process(clock)
+begin
+    if clock'event and clock='1' then
+    	if start_event_result = '1' then
+	        data_status <= '0';
+	    end if;
+	    if data_ready_result = '1' then
+	        data_status <= '1';
+	    end if;
 	end if;
 end process;
 
@@ -111,7 +140,7 @@ begin
 		end if;
 		
 		if regNum=REG_STATUS then
-		  data_out_r(0) <= data_ready;
+		  data_out_r(0) <= data_status;
 --		  data_out_r(1) <= sts_done;
 --          data_out_r(2) <= sts_in_prog;
 		end if;

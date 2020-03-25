@@ -269,7 +269,6 @@ port map(
 bound_comparator_i : entity work.bound_comparator   --comparators block
 port map(
     clk => adc_deser_clock,                   --in
-     
     adc_buf_data => adc_data,           --in
     data_to_compare => COMPARE_DATA,    --in
     adc_data => adc_data_top_test,
@@ -418,7 +417,7 @@ adc_deser_clock_locked <= clk_gen_lock; --in
 --ADC_D1B_N1 <= ADC_D1B_N;
 
 adc_data(1) <= adc_data_a;              --in
-adc_data(2) <= adc_data_top_test(0)(0);--adc_data_b;              --in                                         
+adc_data(2) <= adc_data_b;              --in      adc_data_top_test(0)(0);                                   
 adc_data(3) <= adc_data_c;       --in                                      
 adc_data(4) <= adc_data_d;              --in       
 
