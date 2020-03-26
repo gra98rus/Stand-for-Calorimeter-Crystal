@@ -293,7 +293,43 @@ function sendTriggLevel() {
         request.open("POST", "", true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
-        var level  = document.getElementById('triggLevel').value;
+        var level  = parseInt(document.getElementById('triggLevel0').value, 10);
+        var json = {"command" : "setTriggerLevel",
+                    "regNumber" : "",
+                    "data" : level};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+        
+        request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        level  = parseInt(document.getElementById('triggLevel1').value, 10) + 16384;
+        var json = {"command" : "setTriggerLevel",
+                    "regNumber" : "",
+                    "data" : level};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+           
+        request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        level  = parseInt(document.getElementById('triggLevel2').value, 10) + 32768;
+        var json = {"command" : "setTriggerLevel",
+                    "regNumber" : "",
+                    "data" : level};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+        
+        request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        level  = parseInt(document.getElementById('triggLevel3').value, 10) + 49152;
         var json = {"command" : "setTriggerLevel",
                     "regNumber" : "",
                     "data" : level};

@@ -59,8 +59,7 @@ port (
 end component;
 ----------------------------------------------------------------
     constant wea_c : std_logic_vector (0 downto 0) := B"1";
-    shared variable ring_data_out_observer: integer := 0;-- std_logic := '0';--std_logic_vector (1 downto 0) := (others=>'0');
-    signal simple_data_out_observer: std_logic := '0';
+    shared variable ring_data_out_observer: integer := 0;
     signal simple_buffer_state_s: std_logic := '0';
     signal array_state_s: std_logic := '0';
     signal array_state_s1: std_logic := '0';
@@ -76,8 +75,8 @@ end component;
     signal dina_simple : std_logic_vector (63 downto 0) := (others=>'0');
     signal adc_data_read : std_logic_vector (55 downto 0) := (others=>'0');
                 
-    signal counter : integer := 0;
-    signal burst_cnt : integer := 0;
+    shared variable counter : integer := 0;
+    shared variable burst_cnt : integer := 0;
     
     signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
     signal adc_data_valid_r: std_logic := '0';
@@ -153,7 +152,7 @@ begin
     
         if ring_data_out_observer = 1 then 
             ring_data_out_observer := 0;
-            addrb_ring <= std_logic_vector (unsigned(addra_ring) - 10);
+            addrb_ring <= std_logic_vector (unsigned(addra_ring) - 30);
             addra_simple <= B"0000000";
             test_value3 <= test_value3 + 1;
             simple_buffer_state_s <= '0';
@@ -193,18 +192,18 @@ process(clk_simple)
 begin
     if clk_simple'event and clk_simple = '1' then
         if simple_buffer_state_s = '1' and array_state_s = '0' then
-            array_state_s1 <= '0';
+            array_state_s1 <= '0';            
+            adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
             addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
             --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
-            adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
             if counter /= 127 then
-                counter <= counter + 1;
+                counter := counter + 1;
             elsif counter = 127 and burst_cnt /= 3 then
-                burst_cnt <= burst_cnt + 1;
-                counter <= 0;
+                burst_cnt := burst_cnt + 1;
+                counter := 0;
             elsif counter = 127 and burst_cnt = 3 then
-                burst_cnt <= 0;
-                counter <= 0;
+                burst_cnt := 0;
+                counter := 0;
                 addrb_simple <= (others => '0');
                 array_state_s1 <= '1';
                 test_value1 <= test_value1 + 1;

@@ -182,11 +182,43 @@
                     </div>
                 </div>
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="triggLevel" placeholder="Порог считывания" >
+                    <input type="text" class="form-control" id="triggLevel0" placeholder="1 канал" >
                     <div class="input-group-append">
-                        <button class="btn btn-success" type="button" onclick="sendTriggLevel()">Добро</button>
+                        <label class="container">
+                            <input type="checkbox" id="level1" name="level_num">
+                            <span class="checkmark"></span>
+                        </label>
+                       <!-- <input type="radio" id="level_num" onclick="sendTriggLevel()">Добро</button> -->
                     </div>
                 </div>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="triggLevel1" placeholder="2 канал" >
+                    <div class="input-group-append">
+                        <label class="container">
+                            <input type="checkbox" id="level1" name="level_num">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="triggLevel2" placeholder="3 канал" >
+                    <div class="input-group-append">
+                        <label class="container">
+                            <input type="checkbox" id="level1" name="level_num">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="triggLevel3" placeholder="4 канал" >
+                    <div class="input-group-append">
+                        <label class="container">
+                            <input type="checkbox" id="level1" name="level_num">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" onclick="sendTriggLevel()" style="margin: 0 auto; width : 60%; text-align: center;">Добро</button>
             </th>
         </tr>
         <tr>

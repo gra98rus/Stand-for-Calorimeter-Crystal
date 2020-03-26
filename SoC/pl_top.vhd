@@ -170,7 +170,7 @@ architecture Behavioral of pl_top is
     
     signal START_TYPE  : std_logic := '0';
     signal START_EVENT : std_logic := '0';
-    signal COMPARE_DATA : std_logic_vector (13 downto 0) := (others => '0');
+    signal COMPARE_DATA : std_logic_vector (55 downto 0) := (others => '0');
     
     signal data_for_pack_state_top : std_logic := '0';
     
@@ -416,10 +416,15 @@ adc_deser_clock_locked <= clk_gen_lock; --in
 --ADC_D1B_P1 <= ADC_D1B_P;
 --ADC_D1B_N1 <= ADC_D1B_N;
 
-adc_data(1) <= adc_data_a;              --in
-adc_data(2) <= adc_data_b;              --in      adc_data_top_test(0)(0);                                   
-adc_data(3) <= adc_data_c;       --in                                      
-adc_data(4) <= adc_data_d;              --in       
+--adc_data(1) <= adc_data_a;
+--adc_data(2) <= adc_data_b;
+--adc_data(3) <= adc_data_c;
+--adc_data(4) <= adc_data_d;
+
+adc_data(1) <= adc_data_top_test(0)(0);
+adc_data(2) <= adc_data_top_test(1)(0);
+adc_data(3) <= adc_data_top_test(2)(0);
+adc_data(4) <= adc_data_top_test(3)(0);
 
 adc_data_test <= "00" & adc_data_top_test(0)(0);              
 adc_data_t_test <= (others => ( others => adc_data_test));                                                                                     

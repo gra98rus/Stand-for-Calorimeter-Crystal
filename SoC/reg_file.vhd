@@ -21,7 +21,7 @@ port(
     
     start_event  : out std_logic;
     trigger_type : out std_logic;
-    trigger_level: out std_logic_vector(13 downto 0);
+    trigger_level: out std_logic_vector(55 downto 0);
         
     adc_data      : out adc_data_ltt
   	);
@@ -41,7 +41,7 @@ architecture behavioral of reg_file is
     signal start_event_delay : std_logic := '0';
     signal start_event_result : std_logic := '0';
     signal trigger_type_r : std_logic := '1';
-    signal trigger_level_r : std_logic_vector(13 downto 0) := (others => '0');
+    signal trigger_level_r : std_logic_vector(55 downto 0) := (others => '0');
 
     signal test_value1 : std_logic_vector (13 downto 0) := "00000000000000";
     signal test_value2 : std_logic_vector (13 downto 0) := "00000000000000";
@@ -85,13 +85,14 @@ end process;
 process(clock)
 begin
     if clock'event and clock='1' then
-    	if start_event_result = '1' then
-	        data_status <= '0';
-	    end if;
-	    if data_ready_result = '1' then
+    	if start_event_result = '1' and data_ready_result = '0' then
+            data_status <= '0';
+        elsif start_event_result = '1' and data_ready_result = '1' then
 	        data_status <= '1';
-	    end if;
-	end if;
+	    elsif start_event_result = '0'  and data_ready_result = '1' then
+	        data_status <= '1';
+        end if;
+    end if;
 end process;
 
 process(clock)
@@ -130,9 +131,22 @@ begin
         end if;
         
 	    if regNum = REG_TRIGGER_LEVEL and regWE = '1' then
-            trigger_level_r <= dataIn(13 downto 0);
-            test_value3 <= dataIn(13 downto 0);
+	        if dataIn(15 downto 14) = "00" then
+                trigger_level_r(13 downto 0) <= dataIn(13 downto 0);
+            elsif dataIn(15 downto 14) = "01" then
+                trigger_level_r(27 downto 14) <= dataIn(13 downto 0);
+            elsif dataIn(15 downto 14) = "10" then
+                trigger_level_r(41 downto 28) <= dataIn(13 downto 0);
+            elsif dataIn(15 downto 14) = "11" then
+                trigger_level_r(55 downto 42) <= dataIn(13 downto 0);
+            end if;
+            --test_value3 <= dataIn(13 downto 0);
         end if;
+        
+--        if regNum = REG_TRIGGER_LEVEL and regWE = '1' then
+--            trigger_level_r(13 downto 0) <= dataIn(13 downto 0);
+--            test_value3 <= dataIn(13 downto 0);
+--        end if;
         
 		if cmd_start_ena_r='1' then
 		      cmd_start_r <= '1';
