@@ -117,7 +117,7 @@ architecture Behavioral of adc_deser is
     signal data_B_r : std_logic_vector(13 downto 0);
     signal data_C_r : std_logic_vector(13 downto 0);
     signal data_D_r : std_logic_vector(13 downto 0);    
-    signal data_test_r : std_logic_vector(13 downto 0) := (others => '0');   
+    signal data_test_r : std_logic_vector(26 downto 0) := (others => '0');   
     
 -----------------------------------------------------------------------
 begin
@@ -373,8 +373,8 @@ end process;
 data_A <= IntDatDA0_p & IntDatDA0_n & IntDatDA1_p & IntDatDA1_n & IntDatDB0_p & IntDatDB0_n & IntDatDB1_p & IntDatDB1_n &
          IntDatDD0_p & IntDatDD0_n & IntDatDD1_p & IntDatDD1_n & B"00";--data_A_r;             --out
 data_B <= data_B_r;             --out
-data_C <= data_test_r;           --out
-data_D <= data_test_r;             --out
+data_C <= data_test_r(26 downto 13);           --out
+data_D <= data_test_r(25 downto 12);             --out
 
 clk_rst <= AdcDeserReset;       --in
 reset <= reset_r;               --in

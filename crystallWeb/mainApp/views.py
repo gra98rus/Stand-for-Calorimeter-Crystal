@@ -15,7 +15,7 @@ REG_STATUS = 0x0010
 REG_START_EVENT = 0x0011
 REG_TRIGGER_TYPE = 0x0100
 REG_TRIGGER_LEVEL = 0x0101
-
+REG_SELECTED_CHANNELS = 0x0110
 
 COMMAND_START = 0x0001
 
@@ -100,6 +100,10 @@ def index(request):
         
         if (js['command'] == 'setTriggerLevel'):
             write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
+            return HttpResponse('ok!')
+        
+        if (js['command'] == 'setSelectedChannels'):
+            write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
             return HttpResponse('ok!')
         
         if (js['command'] == 'sendStartEvent'):

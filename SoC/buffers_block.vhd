@@ -97,7 +97,7 @@ begin
 dina_ring <= adc_data_write(4) & adc_data_write(3) & adc_data_write(2) & adc_data_write(1);
 -----------------------------------------------------------------
 ring_mem_gen_i : blk_mem_gen_0                 --ring memory module
-port map(                                       --port A - write port            
+port map(                                       --port A - write port
                                                 --port B - read port
     addra => addra_ring,                        --in
     clka => clk_ring,                           --in
@@ -110,7 +110,7 @@ port map(                                       --port A - write port
     enb => read_ring_ena);                      --in
 -----------------------------------------------------------------
 simple_mem_gen_i : blk_mem_gen_1                 --simple memory module
-port map(                                       --port A - write port            
+port map(                                       --port A - write port
                                                 --port B - read port
     addra => addra_simple,                      --in
     clka => clk_simple,                         --in
@@ -122,7 +122,7 @@ port map(                                       --port A - write port
     clkb => clk_simple,                         --in
     doutb => data_read_r,                       --out
     enb => '1'
-    );--read_simple_ena);                    --in
+    );
 -------------------------------------------------------------------
 process (clk_ring)                                             --port A address increment (ring buffer)
 begin
@@ -192,7 +192,7 @@ process(clk_simple)
 begin
     if clk_simple'event and clk_simple = '1' then
         if simple_buffer_state_s = '1' and array_state_s = '0' then
-            array_state_s1 <= '0';            
+            array_state_s1 <= '0'; 
             adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
             addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
             --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
@@ -207,6 +207,7 @@ begin
                 addrb_simple <= (others => '0');
                 array_state_s1 <= '1';
                 test_value1 <= test_value1 + 1;
+                adc_data_r(3)(127) <= test_value1;
                 adc_data <= adc_data_r;
             end if;
         end if;

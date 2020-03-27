@@ -158,19 +158,10 @@ architecture Behavioral of pl_top is
     
     signal temp_for_pack : std_logic := '0';
     
-    signal   ADC_D0A_P1: std_logic := '1';
-    signal   ADC_D0A_N1: std_logic := '1';
-    signal   ADC_D1A_P1: std_logic := '1';
-    signal   ADC_D1A_N1: std_logic := '1';
-                                   
-    signal   ADC_D0B_P1: std_logic := '1';
-    signal   ADC_D0B_N1: std_logic := '1';
-    signal   ADC_D1B_P1: std_logic := '1';
-    signal   ADC_D1B_N1: std_logic := '1';
-    
     signal START_TYPE  : std_logic := '0';
     signal START_EVENT : std_logic := '0';
     signal COMPARE_DATA : std_logic_vector (55 downto 0) := (others => '0');
+    signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
     
     signal data_for_pack_state_top : std_logic := '0';
     
@@ -272,6 +263,7 @@ port map(
     adc_buf_data => adc_data,           --in
     data_to_compare => COMPARE_DATA,    --in
     adc_data => adc_data_top_test,
+    selected_channels => selected_channels_top,
     confirm_match => confirm_match_s    --out
 );
 ----------------------------------------------------------------
@@ -298,6 +290,7 @@ port map (
     data_ready => array_state_top,
     start_event => START_EVENT,
     trigger_type => START_TYPE,
+    selected_channels => selected_channels_top,
     --adc_data =>adc_data_top,
     trigger_level=> COMPARE_DATA
     );
@@ -397,34 +390,15 @@ TP8 <= ps_cnt(7);                       --out
 cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
 adc_deser_clock_locked <= clk_gen_lock; --in
 
---process(ps_clk_50mhz)
---begin
---    if ADC_D0A_P = '0' then
---        ADC_D0A_P1 <= '0';
---    end if;
---    if ADC_D0A_P = '1' then
---        ADC_D0A_P1 <= '1';
---    end if;
---end process;
+adc_data(1) <= adc_data_a;
+adc_data(2) <= adc_data_b;
+adc_data(3) <= adc_data_c;
+adc_data(4) <= adc_data_d;
 
---ADC_D0A_P1 <= ADC_D0A_P;
---ADC_D0A_N1 <= ADC_D0A_N;
---ADC_D1A_P1 <= ADC_D1A_P;
---ADC_D1A_N1 <= ADC_D1A_N;
---ADC_D0B_P1 <= ADC_D0B_P;
---ADC_D0B_N1 <= ADC_D0B_N;
---ADC_D1B_P1 <= ADC_D1B_P;
---ADC_D1B_N1 <= ADC_D1B_N;
-
---adc_data(1) <= adc_data_a;
---adc_data(2) <= adc_data_b;
---adc_data(3) <= adc_data_c;
---adc_data(4) <= adc_data_d;
-
-adc_data(1) <= adc_data_top_test(0)(0);
-adc_data(2) <= adc_data_top_test(1)(0);
-adc_data(3) <= adc_data_top_test(2)(0);
-adc_data(4) <= adc_data_top_test(3)(0);
+--adc_data(1) <= adc_data_top_test(0)(0);
+--adc_data(2) <= adc_data_top_test(1)(0);
+--adc_data(3) <= adc_data_top_test(2)(0);
+--adc_data(4) <= adc_data_top_test(3)(0);
 
 adc_data_test <= "00" & adc_data_top_test(0)(0);              
 adc_data_t_test <= (others => ( others => adc_data_test));                                                                                     

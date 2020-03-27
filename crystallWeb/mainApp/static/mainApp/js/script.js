@@ -523,6 +523,24 @@ function drawSpectrum(num){
         console.log("send POST")
     });
 
+    $("input[name='level_num_checkbox']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var dataCheck0 = $('#level0').prop("checked") ? 1 : 0;
+        var dataCheck1 = $('#level1').prop("checked") ? 1 : 0;
+        var dataCheck2 = $('#level2').prop("checked") ? 1 : 0;
+        var dataCheck3 = $('#level3').prop("checked") ? 1 : 0;
+        var dataCheck = dataCheck0 + dataCheck1 * 2 + dataCheck2 * 4 + dataCheck3 * 8;
+        var json = {"command" : "setSelectedChannels",
+                    "regNumber" : "",
+                    "data" : dataCheck};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
     $("#basketNumber").children().on("click",function(event) {
       $("#basketNumber").children().attr("class", "dropdown-item");
       $(event.target).attr("class", "dropdown-item active");

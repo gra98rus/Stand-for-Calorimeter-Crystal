@@ -22,6 +22,7 @@ port(
     start_event  : out std_logic;
     trigger_type : out std_logic;
     trigger_level: out std_logic_vector(55 downto 0);
+    selected_channels: out std_logic_vector(3 downto 0);
         
     adc_data      : out adc_data_ltt
   	);
@@ -42,6 +43,7 @@ architecture behavioral of reg_file is
     signal start_event_result : std_logic := '0';
     signal trigger_type_r : std_logic := '1';
     signal trigger_level_r : std_logic_vector(55 downto 0) := (others => '0');
+    signal selected_channels_r : std_logic_vector(3 downto 0) := (others => '0');
 
     signal test_value1 : std_logic_vector (13 downto 0) := "00000000000000";
     signal test_value2 : std_logic_vector (13 downto 0) := "00000000000000";
@@ -140,13 +142,11 @@ begin
             elsif dataIn(15 downto 14) = "11" then
                 trigger_level_r(55 downto 42) <= dataIn(13 downto 0);
             end if;
-            --test_value3 <= dataIn(13 downto 0);
         end if;
-        
---        if regNum = REG_TRIGGER_LEVEL and regWE = '1' then
---            trigger_level_r(13 downto 0) <= dataIn(13 downto 0);
---            test_value3 <= dataIn(13 downto 0);
---        end if;
+		
+		if regNum = REG_SELECTED_CHANNELS and regWE = '1' then
+            selected_channels_r <= dataIn(3 downto 0);
+        end if;
         
 		if cmd_start_ena_r='1' then
 		      cmd_start_r <= '1';
@@ -162,7 +162,7 @@ begin
     adc_data(1) <= (others => test_value2);
     adc_data(2) <= (others => test_value3);
     adc_data(3) <= (others => test_value4);
-	end if; -- clock
+	end if;
 
 end process;
 	
@@ -171,4 +171,5 @@ cmd_start    <= cmd_start_r;
 trigger_type <= trigger_type_r;
 start_event  <= start_event_result;
 trigger_level<= trigger_level_r;
+selected_channels <= selected_channels_r;
 end architecture;
