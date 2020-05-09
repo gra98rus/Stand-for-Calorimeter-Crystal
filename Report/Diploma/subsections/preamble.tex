@@ -1,0 +1,104 @@
+\usepackage[utf8]{inputenc}%включаем свою кодировку: koi8-r или utf8 в UNIX, cp1251 в Windows
+\usepackage[english,russian]{babel}%используем русский и английский языки с переносами
+\usepackage{amssymb,amsfonts,amsmath,mathtext,enumerate,float} %подключаем нужные пакеты расширений
+\usepackage{graphicx}
+\usepackage{cmap}
+\usepackage{verbatim}
+%\usepackage[T2A]{fontenc}
+\graphicspath{{images/}}%путь к рисункам
+
+\usepackage{geometry} % Меняем поля страницы
+\geometry{left=3cm}% левое поле
+\geometry{right=2cm}% правое поле
+\geometry{top=2cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+\geometry{marginparwidth=2.5cm} % Ширина заметок на полях.
+
+\usepackage{cite}
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку:
+\makeatother
+
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{marginnote}
+\reversemarginpar % Перенос заметок с правого поля на левое.
+
+\usepackage{tabularx}
+
+% Полезные типы колонок: колонки с выравниваем влево/по центру/справа 
+% фиксированной ширины (как p{}, но не justify).
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Колонки для tabularx
+\newcolumntype{E}[1]{>{\hsize=#1\hsize\raggedright\arraybackslash}X}%
+\newcolumntype{F}[1]{>{\hsize=#1\hsize\centering\arraybackslash}X}%
+\newcolumntype{G}[1]{>{\hsize=#1\hsize\raggedleft\arraybackslash}X}%
+%\newcolumntype{C}[2]{>{\hsize=#1\hsize\columncolor{#2}\centering\arraybackslash}X}%
+
+\usepackage{indentfirst}
+\usepackage{setspace}
+\onehalfspacing
+
+% % % % % % % % % % % % % % % % % % %
+% Нумерация абзацев
+% % % % % % % % % % % % % % % % % % %
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+%\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления на цифра.цифра
+
+\renewcommand{\thesection}{\arabic{section}}
+%\renewcommand{\thesubsection}{\arabic{subsection}}
+%\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+\setlength{\intextsep}{1.75\intextsep}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+%\addtolength{\parskip}{8pt}
+
+
+% % % % % % % % % % % % % % % % % % %
+% Новые команды
+% % % % % % % % % % % % % % % % % % %
+
+\newcommand{\off}[1]{{\color{gray}#1}}
+
+%\newcommand{\todo}[1]{\marginpar{\color{red} \footnotesize #1}}
+%\newcommand{\todonote}[1]{\todo{#1}}
+%\newcommand{\toask}[1]{\marginpar{\color{blue} \footnotesize #1}}
+
+%\newcommand{\todo}[1]{}
+%\newcommand{\todonote}[1]{{\color{red}#1}}
+%\newcommand{\toask}[1]{{\color{blue}#1}}
+
+\newcommand{\todo}[1]{}
+\newcommand{\todonote}[1]{}
+\newcommand{\toask}[1]{}
+
+
+\newcommand{\comm}[1]{\marginpar{\color{red}\Large \textbf{!!}}}
+\newcommand{\alt}[2]{$\overset{\text{#2}}{\text{#1}}$}
+\newcommand{\tweakedsim}{{\raise.17ex\hbox{$\scriptstyle\sim$}}}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\abs}[1]{\left|#1\right|}
+\renewcommand{\phi}{\varphi}
+
+% % % % % % % % % % % % % % % % % % %
+% Библиография
+% % % % % % % % % % % % % % % % % % %
+
+%\usepackage[backend=biber,style=unsrt]{biblatex}
+%\addbibresource{bibliography.bib}
+
+%\bibliographystyle{unsrt}
+
+% https://tex.stackexchange.com/questions/26575/bibtex-how-can-i-automatically-reduce-long-author-lists-to-xxx-et-al
+\bibliographystyle{unsrtLimauthors.bst}
+%\bibliographystyle{ugost2008}
