@@ -23,46 +23,19 @@ Port (
 end trigg_system;
 ------------------------------------------------------------------------
 architecture Behavioral of trigg_system is
-component c_counter_binary_0                    --counter; read counter; final count value 0x28; start count value 0x00
-port (
-    CLK : in std_logic;                         --clock signal
-    CE : in std_logic;                          --enable signal
-    Q : out std_logic_vector (6 downto 0));     --counter value
-end component;
 ------------------------------------------------------------------------
 signal read_ena_s : std_logic := '0';
 shared variable compare_ena : integer := 0;
-signal confirm_match_s : std_logic := '0';
-
 
 signal start_event_delay : std_logic := '0';
 signal start_event_result : std_logic := '0';
 
-signal count_ena : std_logic := '0';
-signal counterMy : std_logic_vector (6 downto 0) := B"000_0000" ;
-
-signal counter : std_logic_vector (6 downto 0) := B"000_0000" ;
 signal test_value1 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value2 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value3 : std_logic_vector (13 downto 0) := "00000000000111";
 signal test_value4 : std_logic_vector (13 downto 0) := "00000000000111";
-signal flag : std_logic := '0';
-
--------------------------------------------------------------------------
+------------------------------------------------------------------------
 begin
--------------------------------------------------------------------------
-                                                    --input buffers 
---compare_ibuf : IBUF
---    port map(   
---        I => confirm_match,                       
---        O => confirm_match_s);
--------------------------------------------------------------------------
-c_counter_binary_0_i : c_counter_binary_0              --counter
-    port map(
-        CLK => clk,                                  --in
-        CE => '1',--read_ena_s,                              --in
-        Q => counter);                                 --out
---------------------------------------------------------------------------
 
 process(clk)
 begin
@@ -79,7 +52,6 @@ end process;
 process (clk)
 begin
     if clk'event and clk='1' then
-        --if counter = B"111_1111" then
         if read_ena_s = '1' and complete_read = '1' then
             read_ena_s <= '0';
             test_value2 <= test_value2 + 1;
@@ -91,12 +63,10 @@ begin
             compare_ena := 0;
         elsif start_event_result = '1' and start_type = '0' then
             compare_ena := 1;
-            --read_ena_s <= '1';
             test_value3 <= test_value3 + 1;
         end if;
    
         if compare_ena = 1 then 
-       -- read_ena_s <= '1';
             if confirm_match = '1' then
                 read_ena_s <= '1';
                 compare_ena := 0;
@@ -104,10 +74,10 @@ begin
             end if;
         end if;
 
-    adc_data(0) <= (others => test_value1);
-    adc_data(1) <= (others => test_value2);
-    adc_data(2) <= (others => test_value3);
-    adc_data(3) <= (others => test_value4);
+        adc_data(0) <= (others => test_value1);
+        adc_data(1) <= (others => test_value2);
+        adc_data(2) <= (others => test_value3);
+        adc_data(3) <= (others => test_value4);
     end if;
 end process;
 ---------------------------------------------------------------------------

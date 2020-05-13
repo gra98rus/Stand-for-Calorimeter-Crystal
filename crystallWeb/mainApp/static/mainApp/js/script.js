@@ -480,6 +480,18 @@ function drawSpectrum(num){
             $('#add-spectrum-item').attr("class", "dropdown-item");
           } else {
             console.log("create Spectra");
+            
+            var request = new XMLHttpRequest();
+            request.open("POST", "", true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            request.responseType = 'text';
+            var json = {"command" : "setBasketNum",
+                        "regNumber" : "",
+                        "data" : smpl};
+            var str = JSON.stringify(json)
+            request.send(str);
+            console.log("send POST")
+            
             addSpectrum(ch,pt,smpl,mode);
           }
         }

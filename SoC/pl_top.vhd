@@ -242,8 +242,7 @@ port map(
     
     data_for_pack_state => data_for_pack_state_top,
     adc_data => adc_data_top,
-    array_state => array_state_top,
-    adc_data_valid => adc_data_valid_top
+    array_state => array_state_top
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
@@ -308,6 +307,10 @@ pack_i: entity work.packager
     data_bram_we => data_bram_we_top
     );
 
+spectrum_i: entity work.spectrum_creator
+    port map (
+    clk => ps_clk_50mhz
+    );
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
 begin

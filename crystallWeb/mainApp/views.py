@@ -16,6 +16,7 @@ REG_START_EVENT = 0x0011
 REG_TRIGGER_TYPE = 0x0100
 REG_TRIGGER_LEVEL = 0x0101
 REG_SELECTED_CHANNELS = 0x0110
+REG_BASKET_NUM = 0x0111
 
 COMMAND_START = 0x0001
 
@@ -88,6 +89,7 @@ def index(request):
             status = read_from_reg (REG_STATUS)                           
             while status != 1:                                            
                 status = read_from_reg (REG_STATUS)                       
+                print(status)
             data = read_charts()                                          
             for i in range(0,512):                                        
                 response[str(i)] = data[i]                                
@@ -104,6 +106,10 @@ def index(request):
         
         if (js['command'] == 'setSelectedChannels'):
             write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
+            return HttpResponse('ok!')
+        
+        if (js['command'] == 'setBasketNumber'):
+            write_to_reg(REG_BASKET_NUM, int(js['data']))
             return HttpResponse('ok!')
         
         if (js['command'] == 'sendStartEvent'):

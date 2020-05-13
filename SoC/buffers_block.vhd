@@ -23,8 +23,7 @@ port (
     array_state: out std_logic;
     data_for_pack_state: out std_logic;
     
-    adc_data       : out adc_data_ltt;
-    adc_data_valid : out std_logic
+    adc_data       : out adc_data_ltt
     );
 end buffers_block;
 --------------------------------------------------------------
@@ -79,7 +78,6 @@ end component;
     shared variable burst_cnt : integer := 0;
     
     signal adc_data_r : adc_data_ltt := (others=>(others=>(others=>'0')));
-    signal adc_data_valid_r: std_logic := '0';
     signal data_read_r : std_logic_vector(63 downto 0) := (others => '0');
     
     signal test_value1 : std_logic_vector (13 downto 0) := "00000000000011";
@@ -195,7 +193,6 @@ begin
             array_state_s1 <= '0'; 
             adc_data_r(burst_cnt)(counter) <= data_read_r((burst_cnt+1)*16-3 downto burst_cnt*16);
             addrb_simple <= std_logic_vector (unsigned(addrb_simple) + 1);
-            --adc_data_r(burst_cnt)(counter) <= adc_data_write(3); -- adc_data_read(41 downto 28);
             if counter /= 127 then
                 counter := counter + 1;
             elsif counter = 127 and burst_cnt /= 3 then
@@ -207,7 +204,7 @@ begin
                 addrb_simple <= (others => '0');
                 array_state_s1 <= '1';
                 test_value1 <= test_value1 + 1;
-                adc_data_r(3)(127) <= test_value1;
+--                adc_data_r(3)(127) <= test_value1;
                 adc_data <= adc_data_r;
             end if;
         end if;
@@ -216,7 +213,6 @@ end process;
 
 --------------------------------------------------------------------
 simple_buffer_state <= simple_buffer_state_s;
---adc_data_valid <= adc_data_valid_r;
 --adc_data(0) <= (others => test_value1);
 --adc_data(1) <= (others => test_value2);
 --adc_data(2) <= (others => test_value3);
