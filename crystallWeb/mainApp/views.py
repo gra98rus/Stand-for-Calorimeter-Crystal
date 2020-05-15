@@ -108,7 +108,7 @@ def index(request):
             write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
             return HttpResponse('ok!')
         
-        if (js['command'] == 'setBasketNumber'):
+        if (js['command'] == 'setBasketNum'):
             write_to_reg(REG_BASKET_NUM, int(js['data']))
             return HttpResponse('ok!')
         

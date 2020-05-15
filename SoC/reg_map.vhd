@@ -10,6 +10,7 @@ package reg_map is
     constant REG_TRIGGER_TYPE : std_logic_vector(15 downto 0) := X"0100";
     constant REG_TRIGGER_LEVEL : std_logic_vector(15 downto 0) := X"0101";
     constant REG_SELECTED_CHANNELS : std_logic_vector(15 downto 0) := X"0110";
+    constant REG_BASKEN_NUM : std_logic_vector(15 downto 0) := X"0111";
 
 end reg_map;
 

@@ -309,7 +309,12 @@ pack_i: entity work.packager
 
 spectrum_i: entity work.spectrum_creator
     port map (
-    clk => ps_clk_50mhz
+    clk => ps_clk_50mhz,
+    num_of_basket => "000",
+    adc_data_valid => array_state_top,
+    channel => "01",
+    cmd => '1',
+    adc_data => adc_data_top
     );
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient

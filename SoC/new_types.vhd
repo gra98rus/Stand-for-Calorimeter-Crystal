@@ -6,8 +6,11 @@ package new_types is
     type adc_data_t is array(1 to 4) of std_logic_vector (13 downto 0);
     
     constant ADC_NB : integer := 4;
+    constant baskets: integer := 4096;
     
     type adc_data_lt is array(0 to 127) of std_logic_vector(13 downto 0);
     type adc_data_ltt is array(0 to ADC_NB - 1) of adc_data_lt;
+    
+    type spectrum_t is array(0 to baskets - 1) of std_logic_vector(8 downto 0);
 
 end new_types;
