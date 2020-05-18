@@ -90,7 +90,7 @@ begin
     	if start_event_result = '1' and data_ready_result = '0' then
             data_status <= '0';
         elsif start_event_result = '1' and data_ready_result = '1' then
-	        data_status <= '1';
+	        data_status <= '0';
 	    elsif start_event_result = '0'  and data_ready_result = '1' then
 	        data_status <= '1';
         end if;

@@ -299,7 +299,7 @@ pack_i: entity work.packager
     clock => ps_clk_50mhz,
     --off_adc_data_valid => temp_for_pack,
     adc_data => adc_data_top,--adc_data_t_test,
-    adc_data_valid => array_state_top,--START_EVENT,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
+    adc_data_valid => array_state_top,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
     
     data_bram_addr => data_bram_addr_top,
     data_bram_clk => data_bram_clk_top,
@@ -308,11 +308,15 @@ pack_i: entity work.packager
     );
 
 spectrum_i: entity work.spectrum_creator
+    generic map(
+    channel => "01",
+    type_of_spectrum => '1'
+    )
     port map (
     clk => ps_clk_50mhz,
     num_of_basket => "000",
     adc_data_valid => array_state_top,
-    channel => "01",
+    selected_point => "0000000",
     cmd => '1',
     adc_data => adc_data_top
     );

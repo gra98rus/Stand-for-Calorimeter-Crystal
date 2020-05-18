@@ -57,11 +57,11 @@ begin
             test_value2 <= test_value2 + 1;
         end if;
     
-        if start_event_result = '1' and start_type = '1' then
+        if start_event = '1' and start_type = '1' then
             read_ena_s <= '1';
             test_value1 <= test_value1 + 1;
             compare_ena := 0;
-        elsif start_event_result = '1' and start_type = '0' then
+        elsif start_event = '1' and start_type = '0' then
             compare_ena := 1;
             test_value3 <= test_value3 + 1;
         end if;
