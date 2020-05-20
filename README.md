@@ -1,3 +1,3 @@
 # Stand-for-Calorimeter-Crystal
 
-Xilinx Zynq-7000 XC72020 CLG400
+Xilinx Zynq-7000 XC7Z020 CLG400
