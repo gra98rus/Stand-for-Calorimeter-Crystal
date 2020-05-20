@@ -77,7 +77,7 @@ begin
                 counter <= 0;
                 new_max <= current_max;
                 current_max <= (others => '0');
-                status_of_max <= 1;
+                --status_of_max <= 1;
         elsif adc_data(toInteger(channel))(counter) > current_max then
                 current_max <= adc_data(toInteger(channel))(counter);
             end if;

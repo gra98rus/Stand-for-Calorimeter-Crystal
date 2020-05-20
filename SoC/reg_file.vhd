@@ -23,6 +23,7 @@ port(
     trigger_type : out std_logic;
     trigger_level: out std_logic_vector(55 downto 0);
     selected_channels: out std_logic_vector(3 downto 0);
+    shapers_config: out std_logic_vector(7 downto 0);
         
     adc_data      : out adc_data_ltt
   	);
@@ -44,6 +45,7 @@ architecture behavioral of reg_file is
     signal trigger_type_r : std_logic := '1';
     signal trigger_level_r : std_logic_vector(55 downto 0) := (others => '0');
     signal selected_channels_r : std_logic_vector(3 downto 0) := (others => '0');
+    signal shapers_config_r : std_logic_vector(7 downto 0) := (others => '0');
 
     signal test_value1 : std_logic_vector (13 downto 0) := "00000000000000";
     signal test_value2 : std_logic_vector (13 downto 0) := "00000000000000";
@@ -148,6 +150,18 @@ begin
             selected_channels_r <= dataIn(3 downto 0);
         end if;
         
+        if regNum = REG_SHAPER and regWE = '1' then
+            if dataIn(3 downto 2) = "00" then
+                shapers_config_r(1 downto 0) <= dataIn(1 downto 0);
+            elsif dataIn(3 downto 2) = "01" then
+                shapers_config_r(3 downto 2) <= dataIn(1 downto 0);
+            elsif dataIn(3 downto 2) = "10" then
+                shapers_config_r(5 downto 4) <= dataIn(1 downto 0);
+            elsif dataIn(3 downto 2) = "11" then
+                shapers_config_r(5 downto 6) <= dataIn(1 downto 0);
+            end if;
+        end if;
+        
 		if cmd_start_ena_r='1' then
 		      cmd_start_r <= '1';
 		      cmd_start_ena_r <= '0';
@@ -171,5 +185,6 @@ cmd_start    <= cmd_start_r;
 trigger_type <= trigger_type_r;
 start_event  <= start_event_result;
 trigger_level<= trigger_level_r;
+shapers_config<= shapers_config_r;
 selected_channels <= selected_channels_r;
 end architecture;

@@ -136,7 +136,7 @@ architecture Behavioral of pl_top is
     
     signal confirm_match_s : std_logic := '0';
     
-    signal shapers_config : std_logic_vector (7 downto 0);
+    signal shapers_config_top : std_logic_vector (7 downto 0);
     signal shapers_controll : std_logic_vector (11 downto 0);
     
     signal simple_buffer_state: std_logic := '0';
@@ -247,7 +247,8 @@ port map(
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block
 port map(
-    clk => adc_deser_clock,                      --in
+    clk => ps_clk_50mhz,--adc_deser_clock,                      --in
+    clk_100 => adc_deser_clock,
     start_type    => START_TYPE,          --in
     start_event   => START_EVENT,         --in    
     confirm_match => confirm_match_s,     --in
@@ -270,7 +271,7 @@ shaper_controller_i : entity work.shaper_controller     --shaper controller bloc
 port map (
     clk => ps_clk_50mhz,                    --in
     
-    shapers_config => shapers_config,       --in
+    shapers_config => shapers_config_top,       --in
     
     shapers_controll => shapers_controll    --out
 );
@@ -290,6 +291,7 @@ port map (
     start_event => START_EVENT,
     trigger_type => START_TYPE,
     selected_channels => selected_channels_top,
+    shapers_config => shapers_config_top,
     --adc_data =>adc_data_top,
     trigger_level=> COMPARE_DATA
     );
@@ -419,8 +421,8 @@ dataIn_buf <= adc_data;                     --in
 write_clk <= adc_deser_clock;                 --in                                   
 read_clk <= adc_deser_clock;                  --in                                   
                                                                                      
-shapers_config <= ALT_CT_8 & ALT_CT_7 & ALT_CT_6 & ALT_CT_5
-                & ALT_CT_4 & ALT_CT_3 & ALT_CT_2 & ALT_CT_1;    --in                 
+--shapers_config_top <= ALT_CT_8 & ALT_CT_7 & ALT_CT_6 & ALT_CT_5
+--                & ALT_CT_4 & ALT_CT_3 & ALT_CT_2 & ALT_CT_1;    --in                 
                                                                                     
 ALT_07 <= shapers_controll(0);              --out                                   
 ALT_08 <= shapers_controll(1);              --out                                   

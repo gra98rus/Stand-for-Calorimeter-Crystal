@@ -535,6 +535,102 @@ function drawSpectrum(num){
         console.log("send POST")
     });
 
+    $("input[name='first_channel']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#first_channel_01').prop("checked");
+        if (value == true)
+            data = 0b0001;
+        else{
+            value = $('#first_channel_02').prop("checked");
+            if (value == true)
+                data = 0b0010;
+            else
+                data = 0b0011;
+        }
+        var json = {"command" : "setShapersConfig",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+    
+    $("input[name='second_channel']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#second_channel_01').prop("checked");
+        if (value == true)
+            data = 0b0101;
+        else{
+            value = $('#second_channel_02').prop("checked");
+            if (value == true)
+                data = 0b0110;
+            else
+                data = 0b0111;
+        }
+        var json = {"command" : "setShapersConfig",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+    
+    $("input[name='third_channel']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#third_channel_01').prop("checked");
+        if (value == true)
+            data = 0b1001;
+        else{
+            value = $('#third_channel_02').prop("checked");
+            if (value == true)
+                data = 0b1010;
+            else
+                data = 0b1011;
+        }
+        var json = {"command" : "setShapersConfig",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
+    $("input[name='fourth_channel']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#fourth_channel_01').prop("checked");
+        if (value == true)
+            data = 0b1101;
+        else{
+            value = $('#fourth_channel_02').prop("checked");
+            if (value == true)
+                data = 0b1110;
+            else
+                data = 0b1111;
+        }
+        var json = {"command" : "setShapersConfig",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
     $("input[name='level_num_checkbox']").change( function() {
         var request = new XMLHttpRequest();
         request.open("POST", "", true);

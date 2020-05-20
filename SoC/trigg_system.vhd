@@ -9,7 +9,8 @@ use work.new_types.all;
 entity trigg_system is
 Port ( 
     clk : in std_logic;
-    
+    clk_100 : in std_logic;
+        
     start_type    : in std_logic;         -- 0 - user's start; 1 -forced start 
     start_event   : in std_logic;         --signal to start reading
     confirm_match : in std_logic;         --signal from bound_comparator_module
@@ -49,9 +50,9 @@ begin
 	end if;
 end process;
 
-process (clk)
+process (clk_100)
 begin
-    if clk'event and clk='1' then
+    if clk_100'event and clk_100='1' then
         if read_ena_s = '1' and complete_read = '1' then
             read_ena_s <= '0';
             test_value2 <= test_value2 + 1;

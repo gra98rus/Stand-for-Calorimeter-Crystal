@@ -301,5 +301,7 @@ pl_top_i : entity work.pl_top
             dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
             dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)
             );    
-    
+              --  SPI_CSB <= '1';
+              --  SPI_SCLK <= '0';
+              --  SPI_SDIO <= '1';
 end STRUCTURE;

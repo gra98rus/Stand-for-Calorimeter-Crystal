@@ -17,6 +17,7 @@ REG_TRIGGER_TYPE = 0x0100
 REG_TRIGGER_LEVEL = 0x0101
 REG_SELECTED_CHANNELS = 0x0110
 REG_BASKET_NUM = 0x0111
+REG_SHAPER = 0x1000
 
 COMMAND_START = 0x0001
 
@@ -110,6 +111,10 @@ def index(request):
         
         if (js['command'] == 'setBasketNum'):
             write_to_reg(REG_BASKET_NUM, int(js['data']))
+            return HttpResponse('ok!')
+        
+        if (js['command'] == 'setShapersConfig'):
+            write_to_reg(REG_SHAPER, int(js['data']))
             return HttpResponse('ok!')
         
         if (js['command'] == 'sendStartEvent'):
