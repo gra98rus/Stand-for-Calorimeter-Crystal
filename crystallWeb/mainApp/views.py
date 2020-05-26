@@ -24,6 +24,17 @@ COMMAND_START = 0x0001
 MEM_ADDRESS = 0x40000000
 MEM_SIZE = 0x0000FFFF
 
+trigger_type = 1
+selected_level = 0
+trigger_level_0 = 0
+trigger_level_1 = 0
+trigger_level_2 = 0
+trigger_level_3 = 0
+shapers_config_0 = 0b0001
+shapers_config_1 = 0b0101
+shapers_config_2 = 0b1001
+shapers_config_3 = 0b1101
+
 def write_to_reg (reg_num , data):
     mem = MMIO(REG_ADDRESS , REG_SIZE)
     mem.write32(0x4 , reg_num)
@@ -48,6 +59,8 @@ def read_charts ():
     #    data__.append(struct.unpack("I", data)[i])
     return data_
 
+#def read_config ():
+    
 
 @csrf_exempt
 def index(request):
@@ -98,15 +111,31 @@ def index(request):
             return HttpResponse(response)
        
         if (js['command'] == 'setTriggerType'):
-            write_to_reg(REG_TRIGGER_TYPE, int(js['data']))
+           # write_to_reg(REG_TRIGGER_TYPE, int(js['data']))
+            global trigger_type
+            trigger_type = int(js['data'])
             return HttpResponse('ok!')
         
         if (js['command'] == 'setTriggerLevel'):
-            write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
+           # write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
+            global trigger_level_0
+            global trigger_level_1
+            global trigger_level_2
+            global trigger_level_3
+            if (int(js['data']) & 0b1100000000000000 == 0):
+                trigger_level_0 = int(js['data'])
+            elif (int(js['data']) & 0b1100000000000000 == 0x4000):
+                trigger_level_1 = int(js['data'])
+            elif (int(js['data']) & 0b1100000000000000 == 0x8000):
+                trigger_level_2 = int(js['data'])
+            else:
+                trigger_level_3 = int(js['data'])
             return HttpResponse('ok!')
         
         if (js['command'] == 'setSelectedChannels'):
-            write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
+           # write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
+            global selected_level
+            selected_level = int(js['data'])
             return HttpResponse('ok!')
         
         if (js['command'] == 'setBasketNum'):
@@ -114,7 +143,19 @@ def index(request):
             return HttpResponse('ok!')
         
         if (js['command'] == 'setShapersConfig'):
-            write_to_reg(REG_SHAPER, int(js['data']))
+           # write_to_reg(REG_SHAPER, int(js['data']))
+            global shapers_config_0
+            global shapers_config_1
+            global shapers_config_2
+            global shapers_config_3
+            if (int(js['data']) & 0b1100 == 0):
+                shapers_config_0 = int(js['data']) & 0b0011
+            elif (int(js['data']) & 0b1100 == 0b0100):
+                shapers_config_1 = int(js['data']) & 0b0011
+            elif (int(js['data']) & 0b1100 == 0b1000):
+                shapers_config_2 = int(js['data']) & 0b0011
+            else:
+                shapers_config_3 = int(js['data']) & 0b0011
             return HttpResponse('ok!')
         
         if (js['command'] == 'sendStartEvent'):
@@ -124,3 +165,7 @@ def index(request):
                 i = i + 1
             write_to_reg(REG_START_EVENT, 0)
             return HttpResponse('ok!')
+        
+        if (js['command'] == 'updateConfigOnPage'):
+            response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3})
+            return HttpResponse(response)

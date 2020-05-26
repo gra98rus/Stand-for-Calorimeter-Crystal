@@ -664,5 +664,126 @@ function drawSpectrum(num){
       }
     });
 
+//    $(window).focus(function() { 
+        function funonload(){
+        var trigg_type_but = document.getElementById('force_but').checked;
+        var level_type_but = document.getElementById('level_but').checked;
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var json = {"command" : "updateConfigOnPage",
+                    "regNumber" : "",
+                    "data" : ""};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var json = JSON.parse(this.responseText);
+                console.log(this.responseText);
+                console.log("receive json");
+                if (json.trigger_type == "1"){
+                    console.log("pipiska");
+                    document.getElementById('force_but').checked = true;
+                    document.getElementById('css_force_but').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_level_but').setAttribute("class", "btn btn-primary");
+                }
+                else{
+                    document.getElementById('force_but').checked = false;
+                    document.getElementById('css_force_but').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_level_but').setAttribute("class", "btn btn-primary active");
+                }
+                document.getElementById('level0').checked = json.selected_level&1 ? true : false;
+                document.getElementById('level1').checked = json.selected_level&2 ? true : false;
+                document.getElementById('level2').checked = json.selected_level&4 ? true : false;
+                document.getElementById('level3').checked = json.selected_level&8 ? true : false;
+                document.getElementById('triggLevel0').value = json.trigger_level_0;
+                document.getElementById('triggLevel1').value = json.trigger_level_1 & 0x3FFF;
+                document.getElementById('triggLevel2').value = json.trigger_level_2 & 0x3FFF;
+                document.getElementById('triggLevel3').value = json.trigger_level_3 & 0x3FFF;
+                if(json.shapers_config_0 == 1){
+                    document.getElementById('first_channel_01').checked = true;
+                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_0 == 2){
+                    document.getElementById('first_channel_02').checked = true;
+                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_0 == 3){
+                    document.getElementById('first_channel_05').checked = true;
+                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.shapers_config_1 == 1){
+                    document.getElementById('second_channel_01').checked = true;
+                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_1 == 2){
+                    document.getElementById('second_channel_01').checked = true;
+                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_1 == 3){
+                    document.getElementById('second_channel_01').checked = true;
+                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.shapers_config_2 == 1){
+                    document.getElementById('third_channel_01').checked = true;
+                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_2 == 2){
+                    document.getElementById('third_channel_01').checked = true;
+                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_2 == 3){
+                    document.getElementById('third_channel_01').checked = true;
+                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.shapers_config_3 == 1){
+                    document.getElementById('fourth_channel_01').checked = true;
+                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_3 == 2){
+                    document.getElementById('fourth_channel_01').checked = true;
+                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.shapers_config_3 == 3){
+                    document.getElementById('fourth_channel_01').checked = true;
+                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary active");
+                }
+            }
+        }
+    };
+//function funonload() {
+//    $("#block").css("background-color", "yellow");
+//}
+window.onfocus  = funonload; 
+window.onload = funonload;
   });
 console.log($("input[type=radio]"))
