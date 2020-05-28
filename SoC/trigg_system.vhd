@@ -26,7 +26,6 @@ end trigg_system;
 architecture Behavioral of trigg_system is
 ------------------------------------------------------------------------
 signal read_ena_s : std_logic := '0';
-shared variable compare_ena : integer := 0;
 
 signal start_event_delay : std_logic := '0';
 signal start_event_result : std_logic := '0';
@@ -51,6 +50,7 @@ begin
 end process;
 
 process (clk_100)
+variable compare_ena : integer := 0;
 begin
     if clk_100'event and clk_100='1' then
         if read_ena_s = '1' and complete_read = '1' then

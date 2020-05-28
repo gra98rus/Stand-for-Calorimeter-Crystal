@@ -13,12 +13,13 @@ generic(
 Port (
     clk            : in std_logic;
     cmd            : in std_logic;
-    num_of_basket  : in std_logic_vector (2 downto 0);
-    selected_point : in std_logic_vector (6 downto 0);
-    adc_data       : in adc_data_ltt;
-    adc_data_valid : in std_logic;
+   -- num_of_basket  : in std_logic_vector (2 downto 0);
+   -- selected_point : in std_logic_vector (6 downto 0);
+    spectra_params : in std_logic_vector(9 downto 0);
+    adc_data       : in adc_data_lt;
+    adc_data_valid : in std_logic
 
-    spectrum       : out spectrum_t
+    --spectrum       : out spectrum_t
     
 );
 end spectrum_creator;
@@ -32,11 +33,13 @@ architecture Behavioral of spectrum_creator is
     signal current_basket: std_logic_vector(11 downto 0) := (others => '0');
     signal current_basket_int: integer := 0;
 
-    
-    signal adc_data_valid_delay : std_logic := '0';
+    signal num_of_basket  : std_logic_vector (2 downto 0) := (others => '0');
+    signal selected_point : std_logic_vector (6 downto 0) := (others => '0');
+     
+    signal adc_data_valid_delay  : std_logic := '0';
     signal adc_data_valid_result : std_logic := '0';
     
-    signal spectrum_i : spectrum_t := (others => (others => '0'));
+    --signal spectrum_i : spectrum_t := (others => (others => '0'));
     function toInteger (s : std_logic_vector) return integer is
     begin
         if s = "00" then 
@@ -78,8 +81,8 @@ begin
                 new_max <= current_max;
                 current_max <= (others => '0');
                 --status_of_max <= 1;
-        elsif adc_data(toInteger(channel))(counter) > current_max then
-                current_max <= adc_data(toInteger(channel))(counter);
+        elsif adc_data(counter) > current_max then
+                current_max <= adc_data(counter);
             end if;
         end if;
         
@@ -91,7 +94,7 @@ begin
     if clk'event and clk='1' then
 
         if cmd = '1' and adc_data_valid_result = '1' and type_of_spectrum = '0' then
-            new_max <= adc_data(toInteger(channel))(to_integer(unsigned(selected_point)));
+            new_max <= adc_data(to_integer(unsigned(selected_point)));
         end if;
         
     end if;
@@ -120,12 +123,12 @@ begin
             elsif num_of_basket = "111" then
                 current_basket <= "0000000" & new_max(13 downto 9);
             end if;
-            spectrum_i(toInteger12(current_basket)) <= spectrum_i(toInteger12(current_basket)) + 1;
+            --spectrum_i(toInteger12(current_basket)) <= spectrum_i(toInteger12(current_basket)) + 1;
         end if;
         
     end if;
 end process;
 
-spectrum <= spectrum_i;
+--spectrum <= spectrum_i;
 
 end Behavioral;

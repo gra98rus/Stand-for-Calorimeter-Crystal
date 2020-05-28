@@ -26,7 +26,6 @@ port(
     data_B : out std_logic_vector(13 downto 0);
     data_C : out std_logic_vector(13 downto 0);
     data_D : out std_logic_vector(13 downto 0);
-    --data_test : out std_logic_vector(13 downto 0);
     
     status_signals     : out std_logic_vector(3 downto 0);
           
@@ -371,7 +370,7 @@ begin
 end process;
 ----------------------------------------------------------------------
 --data_A <= IntDatDA0_p & IntDatDA0_n & IntDatDA1_p & IntDatDA1_n & IntDatDB0_p & IntDatDB0_n & IntDatDB1_p & IntDatDB1_n &
---         IntDatDD0_p & IntDatDD0_n & IntDatDD1_p & IntDatDD1_n & B"00";--data_A_r;             --out
+--         IntDatDD0_p & IntDatDD0_n & IntDatDD1_p & IntDatDD1_n & B"00";--data_A_r;
 data_A <= data_A_r;             --out
 data_B <= data_test_r(13 downto 0);             --out
 data_C <= data_test_r(26 downto 13);           --out
@@ -384,7 +383,6 @@ status_signals(0) <= IntBitClkDone;    --out
 status_signals(3) <= IntClkSwapMux;    --out
 status_signals(1) <= '0';
 
---data_test <= data_test_r;
 ----------------------------------------------------------------------
 
 end behavioral;

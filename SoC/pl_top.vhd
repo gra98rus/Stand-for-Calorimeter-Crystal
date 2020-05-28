@@ -16,7 +16,6 @@ port(
     ps_clk_50mhz    : in std_logic;
     adc_ctrl_cmd    : in std_logic;
     clk_gen_lock : in std_logic;
-    Data_read_ena : in std_logic;
     Buffer_state : out std_logic;
     pll_clk_p_125mhz : out std_logic;
     pll_clk_n_125mhz : out std_logic;
@@ -96,8 +95,6 @@ port(
     data_bram_clk  : out std_logic;
     data_bram_din  : out std_logic_vector(31 downto 0);
     data_bram_we   : out std_logic
-        
-    
     );
 
 end pl_top;
@@ -144,8 +141,6 @@ architecture Behavioral of pl_top is
     signal Data_out: std_logic_vector (63 downto 0) := (others=>'0');
     
     signal cmd_start_top : std_logic := '0';
---    signal sts_in_prog_top : std_logic := '0';
---    signal sts_done_top : std_logic := '0';
     
     signal data_bram_we_top   : std_logic := '0';
     signal data_bram_addr_top : std_logic_vector(31 downto 0) := (others => '0');
@@ -156,17 +151,15 @@ architecture Behavioral of pl_top is
     signal adc_data_top_test : adc_data_ltt  := (others=>(others=>(others=>'0')));
     signal adc_data_valid_top : std_logic := '0';
     
-    signal temp_for_pack : std_logic := '0';
-    
     signal START_TYPE  : std_logic := '0';
     signal START_EVENT : std_logic := '0';
     signal COMPARE_DATA : std_logic_vector (55 downto 0) := (others => '0');
     signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
     
-    signal data_for_pack_state_top : std_logic := '0';
-    
     signal array_state_top : std_logic := '0';
     
+    signal spectra_params :  std_logic_vector(9 downto 0) := (others => '0');
+    signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -232,15 +225,9 @@ buffers_block_i : entity work.buffers_block             --ring and simple buffer
 port map(
     clk_ring => adc_deser_clock,               --in
     clk_simple => ps_clk_50mhz,         --in 
-                                                
     adc_data_write => dataIn_buf,            --in
-    
     trigg_ena => read_buf_ena,--START_EVENT,
-    read_simple_ena => Data_read_ena,        --in
-    
     simple_buffer_state => simple_buffer_state, --out
-    
-    data_for_pack_state => data_for_pack_state_top,
     adc_data => adc_data_top,
     array_state => array_state_top
 );
@@ -285,8 +272,6 @@ port map (
     regWE => regWE,
     
     cmd_start => cmd_start_top,
---    sts_in_prog => sts_in_prog_top,
---    sts_done => sts_done_top,
     data_ready => array_state_top,
     start_event => START_EVENT,
     trigger_type => START_TYPE,
@@ -299,7 +284,6 @@ port map (
 pack_i: entity work.packager
     port map (
     clock => ps_clk_50mhz,
-    --off_adc_data_valid => temp_for_pack,
     adc_data => adc_data_top,--adc_data_t_test,
     adc_data_valid => array_state_top,--data_for_pack_state_top,--temp_for_pack,--adc_data_valid_top,
     
@@ -309,19 +293,28 @@ pack_i: entity work.packager
     data_bram_we => data_bram_we_top
     );
 
-spectrum_i: entity work.spectrum_creator
-    generic map(
-    channel => "01",
-    type_of_spectrum => '1'
-    )
-    port map (
+--spectrum_i: entity work.spectrum_creator
+--    generic map(
+--    channel => "01",
+--    type_of_spectrum => '1'
+--    )
+--    port map (
+--    clk => ps_clk_50mhz,
+--    num_of_basket => "000",
+--    adc_data_valid => array_state_top,
+--    selected_point => "0000000",
+--    cmd => '1',
+--    adc_data => adc_data_top
+--    );
+
+spectra_contriller_i: entity work.spectra_controller
+port map(
     clk => ps_clk_50mhz,
-    num_of_basket => "000",
-    adc_data_valid => array_state_top,
-    selected_point => "0000000",
-    cmd => '1',
-    adc_data => adc_data_top
-    );
+    spectrum_spec => spectra_params,
+    spectra_commands => spectra_commands,
+    adc_data => adc_data_top,
+    adc_data_valid => array_state_top
+);
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
 begin
@@ -332,18 +325,7 @@ begin
     ALT_04 <= '0';      --out
     ALT_05 <= '0';      --out
     ALT_06 <= '0';      --out
---    ALT_07 <= '0';
---    ALT_08 <= '1';
---    ALT_09 <= '1';
---    ALT_10 <= '1';
---    ALT_11 <= '1';
---    ALT_12 <= '0';        --signals are controlled by shaper controller
---    ALT_13 <= '1';
---    ALT_14 <= '0';
---    ALT_15 <= '1';
---    ALT_16 <= '1';
---    ALT_17 <= '0';
---    ALT_18 <= '1';
+
     
     if JMP2 = '0' and JMP1 = '0' then           
         ALT_01 <= '0';
@@ -420,9 +402,7 @@ dataIn_buf <= adc_data;                     --in
                                                                                      
 write_clk <= adc_deser_clock;                 --in                                   
 read_clk <= adc_deser_clock;                  --in                                   
-                                                                                     
---shapers_config_top <= ALT_CT_8 & ALT_CT_7 & ALT_CT_6 & ALT_CT_5
---                & ALT_CT_4 & ALT_CT_3 & ALT_CT_2 & ALT_CT_1;    --in                 
+             
                                                                                     
 ALT_07 <= shapers_controll(0);              --out                                   
 ALT_08 <= shapers_controll(1);              --out                                   

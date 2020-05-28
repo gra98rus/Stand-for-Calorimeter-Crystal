@@ -12,6 +12,6 @@ package new_types is
     type adc_data_ltt is array(0 to ADC_NB - 1) of adc_data_lt;
     
     type spectrum_t is array(0 to baskets - 1) of std_logic_vector(23 downto 0);
-    type spectrum_params is array(0 to num_of_spectra - 1) of std_logic_vector(10 downto 0);  --cmd(10 downto 10) & num_of_basket (9 downto 7) & selected_point (6 downto 0)
+    type spectrum_params is array(0 to num_of_spectra - 1) of std_logic_vector(9 downto 0);  --num_of_basket (9 downto 7) & selected_point (6 downto 0)
 
 end new_types;

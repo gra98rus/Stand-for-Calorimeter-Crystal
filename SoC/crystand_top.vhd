@@ -220,7 +220,6 @@ pl_top_i : entity work.pl_top
             reset => reset,
             adc_ctrl_cmd => '0',
             clk_gen_lock => '0',
-            Data_read_ena => '1',
             
             pll_clk_p_125mhz => ADC_CLK_P,
             pll_clk_n_125mhz => ADC_CLK_N,
