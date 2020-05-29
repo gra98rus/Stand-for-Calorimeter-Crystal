@@ -134,6 +134,14 @@ architecture STRUCTURE of crystand_top is
     BRAM_PORTA_rst : in STD_LOGIC;
     BRAM_PORTA_we : in STD_LOGIC_VECTOR ( 3 downto 0 );
     
+    SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 20 downto 0 );
+    SPECTRA_BRAM_PORTA_clk : out STD_LOGIC;
+    SPECTRA_BRAM_PORTA_din : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    SPECTRA_BRAM_PORTA_dout : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    SPECTRA_BRAM_PORTA_en : out STD_LOGIC;
+    SPECTRA_BRAM_PORTA_rst : out STD_LOGIC;
+    SPECTRA_BRAM_PORTA_we : out STD_LOGIC_VECTOR ( 3 downto 0 );
+
     regWE : out STD_LOGIC;
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
     dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -156,7 +164,15 @@ architecture STRUCTURE of crystand_top is
   signal data_bram_en   : std_logic := '1';
   signal data_bram_we_v : std_logic_vector(3 downto 0) := (others=>'0');
   signal data_bram_we_top   : std_logic := '0';
-  signal data_bram_rst  : std_logic := '0';
+  signal data_bram_rst  : std_logic := '0';  
+  
+  signal spectra_bram_addr_top : std_logic_vector(20 downto 0) := (others=>'0');
+  signal spectra_bram_clk_top  : std_logic := '0';
+  signal spectra_bram_din_top  : std_logic_vector(31 downto 0) := (others=>'0');
+  signal spectra_bram_dout_top : std_logic_vector(31 downto 0) := (others=>'0');
+  signal spectra_bram_en   : std_logic := '1';
+  signal spectra_bram_we_v : std_logic_vector(3 downto 0) := (others=>'0');
+  signal spectra_bram_rst  : std_logic := '0';
   
   signal reg_regWE      : STD_LOGIC := '0';
   signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
@@ -202,6 +218,14 @@ ps_top_i: component ps_top
       BRAM_PORTA_en => data_bram_en,
       BRAM_PORTA_rst => data_bram_rst,
       BRAM_PORTA_we(3 downto 0) => data_bram_we_v,
+            
+      SPECTRA_BRAM_PORTA_addr(20 downto 0) => spectra_bram_addr_top,
+      SPECTRA_BRAM_PORTA_clk => spectra_bram_clk_top,
+      SPECTRA_BRAM_PORTA_din(31 downto 0) => spectra_bram_din_top,
+      SPECTRA_BRAM_PORTA_dout(31 downto 0) => spectra_bram_dout_top,
+      SPECTRA_BRAM_PORTA_en => spectra_bram_en,
+      SPECTRA_BRAM_PORTA_rst => spectra_bram_rst,
+      SPECTRA_BRAM_PORTA_we(3 downto 0) => spectra_bram_we_v,
             
       dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
@@ -294,7 +318,11 @@ pl_top_i : entity work.pl_top
             data_bram_clk  => data_bram_clk_top,
             data_bram_din  => data_bram_din_top,
             data_bram_we   => data_bram_we_top,
-            
+                    
+            spectra_bram_addr => spectra_bram_addr_top,
+            spectra_bram_clk  => spectra_bram_clk_top,
+            spectra_bram_dout  => spectra_bram_dout_top,
+          
             regWE   =>  reg_regWE,
             regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
             dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),

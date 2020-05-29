@@ -7,7 +7,7 @@ use work.new_types.all;
 
 entity spectrum_creator is
 generic(
-    channel          : std_logic_vector (1 downto 0);
+    --channel          : std_logic_vector (1 downto 0);
     type_of_spectrum : std_logic                     -- 0 - selected point; 1 - max value
 );
 Port (

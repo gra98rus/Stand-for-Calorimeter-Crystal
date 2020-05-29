@@ -94,7 +94,11 @@ port(
     data_bram_addr : out std_logic_vector(31 downto 0);
     data_bram_clk  : out std_logic;
     data_bram_din  : out std_logic_vector(31 downto 0);
-    data_bram_we   : out std_logic
+    data_bram_we   : out std_logic;
+        
+    spectra_bram_addr : in std_logic_vector(20 downto 0);
+    spectra_bram_clk  : in std_logic;
+    spectra_bram_dout  : out std_logic_vector(31 downto 0)
     );
 
 end pl_top;
@@ -310,10 +314,12 @@ pack_i: entity work.packager
 spectra_contriller_i: entity work.spectra_controller
 port map(
     clk => ps_clk_50mhz,
+    bram_ctrl_clk => spectra_bram_clk,
     spectrum_spec => spectra_params,
     spectra_commands => spectra_commands,
     adc_data => adc_data_top,
-    adc_data_valid => array_state_top
+    adc_data_valid => array_state_top,
+    PS_addr => spectra_bram_addr
 );
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
