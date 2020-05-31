@@ -1,12 +1,24 @@
+\usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}%включаем свою кодировку: koi8-r или utf8 в UNIX, cp1251 в Windows
 \usepackage[english,russian]{babel}%используем русский и английский языки с переносами
 \usepackage{amssymb,amsfonts,amsmath,mathtext,enumerate,float} %подключаем нужные пакеты расширений
 \usepackage{graphicx}
 \usepackage{cmap}
 \usepackage{verbatim}
-%\usepackage[T2A]{fontenc}
 \graphicspath{{images/}}%путь к рисункам
-
+\bibliographystyle{gost-numeric.bbx}
+\usepackage[parentracker=true,
+            backend=biber,
+            bibencoding=utf8,
+            style=numeric-comp,
+            language=auto,
+%            autolang=other,
+            citestyle=gost-numeric,
+%            defernumbers=true,
+            bibstyle=gost-numeric,
+            sorting=none
+]{biblatex}
+\addbibresource{sections/bibliography.bib}
 \usepackage{geometry} % Меняем поля страницы
 \geometry{left=3cm}% левое поле
 \geometry{right=2cm}% правое поле
@@ -14,8 +26,9 @@
 \geometry{bottom=2cm}% нижнее поле
 
 \geometry{marginparwidth=2.5cm} % Ширина заметок на полях.
+\usepackage{biblatex}
 
-\usepackage{cite}
+%\usepackage{cite}
 
 \makeatletter
 \renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку:
@@ -92,16 +105,3 @@
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
 \newcommand{\abs}[1]{\left|#1\right|}
 \renewcommand{\phi}{\varphi}
-
-% % % % % % % % % % % % % % % % % % %
-% Библиография
-% % % % % % % % % % % % % % % % % % %
-
-%\usepackage[backend=biber,style=unsrt]{biblatex}
-%\addbibresource{bibliography.bib}
-
-%\bibliographystyle{unsrt}
-
-% https://tex.stackexchange.com/questions/26575/bibtex-how-can-i-automatically-reduce-long-author-lists-to-xxx-et-al
-\bibliographystyle{unsrtLimauthors.bst}
-%\bibliographystyle{ugost2008}

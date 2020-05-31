@@ -18,8 +18,10 @@
 \input{subsections/title.tex}
 
 \tableofcontents
+\thispagestyle{empty}
 \newpage
 
+\setcounter{page}{3}
 \section*{Введение}
 \addcontentsline{toc}{section}{Введение}
     \input{sections/Introduction.tex}
@@ -72,7 +74,12 @@
     \input{sections/Conclusion.tex}
     \newpage
 
-\section*{Список литературы}
+%\inputencoding{T2A}
+%\usepackage[koi8-r]{inputenc}
+%\bibliographystyle{utf8gost705u}
+\printbibliography
+%\printbibliography{sections/bibliography}
+%\inputencoding{utf8}
+    
 \addcontentsline{toc}{section}{Список литературы}
-
 \end{document}
