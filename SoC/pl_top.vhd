@@ -95,8 +95,8 @@ port(
     data_bram_clk  : out std_logic;
     data_bram_din  : out std_logic_vector(31 downto 0);
     data_bram_we   : out std_logic;
-        
-    spectra_bram_addr : in std_logic_vector(20 downto 0);
+            
+    spectra_bram_addr : in std_logic_vector(15 downto 0);
     spectra_bram_clk  : in std_logic;
     spectra_bram_dout  : out std_logic_vector(31 downto 0)
     );
@@ -297,6 +297,7 @@ pack_i: entity work.packager
     data_bram_we => data_bram_we_top
     );
 
+
 --spectrum_i: entity work.spectrum_creator
 --    generic map(
 --    channel => "01",
@@ -310,17 +311,25 @@ pack_i: entity work.packager
 --    cmd => '1',
 --    adc_data => adc_data_top
 --    );
-
-spectra_contriller_i: entity work.spectra_controller
+spectra_controller_i: entity work.spectra_controller
 port map(
     clk => ps_clk_50mhz,
     bram_ctrl_clk => spectra_bram_clk,
     spectrum_spec => spectra_params,
-    spectra_commands => spectra_commands,
+    spectra_statuses => spectra_commands,
     adc_data => adc_data_top,
     adc_data_valid => array_state_top,
-    PS_addr => spectra_bram_addr
+    PS_addr => spectra_bram_addr,
+    PS_data => spectra_bram_dout
 );
+--spectra_contriller_i: entity work.spectra_controller
+--port map(
+--    clk => ps_clk_50mhz,
+--    spectrum_spec => spectra_params,
+--    spectra_commands => spectra_commands,
+--    adc_data => adc_data_top,
+--    adc_data_valid => array_state_top
+--);
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
 begin

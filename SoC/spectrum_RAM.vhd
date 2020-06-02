@@ -38,13 +38,15 @@ constant C_RAM_DEPTH : integer := 4096;
 constant C_RAM_PERFORMANCE : string := "LOW_LATENCY";
 
 signal dinb  : std_logic_vector(C_RAM_WIDTH-1 downto 0);
-signal web   : std_logic;
+signal web   : std_logic := '0';
 
 type ram_type is array (C_RAM_DEPTH-1 downto 0) of std_logic_vector (C_RAM_WIDTH-1 downto 0);      -- 2D Array Declaration for RAM signal
 signal ram_data_a : std_logic_vector(C_RAM_WIDTH-1 downto 0) ;
 signal ram_data_b : std_logic_vector(C_RAM_WIDTH-1 downto 0) ;
 
-shared variable ram_name : ram_type := (others => (others => '0'));
+--shared variable ram_name : ram_type := (others => (others => '0'));
+signal ram_name : ram_type := (others => (others => '0'));
+
 begin
 
 process(clka)
@@ -52,7 +54,7 @@ begin
     if(clka'event and clka = '1') then
         if(ena = '1') then
             if(wea = '1') then
-                ram_name(to_integer(unsigned(addra))) := dina;
+                ram_name(to_integer(unsigned(addra))) <= dina;
                 ram_data_a <= dina;
             else
                 ram_data_a <= ram_name(to_integer(unsigned(addra)));
@@ -66,7 +68,7 @@ begin
     if(clkb'event and clkb = '1') then
         if(enb = '1') then
             if(web = '1') then
-                ram_name(to_integer(unsigned(addrb))) := dinb;
+                ram_name(to_integer(unsigned(addrb))) <= dinb;
                 ram_data_b <= dinb;
             else
                 ram_data_b <= ram_name(to_integer(unsigned(addrb)));

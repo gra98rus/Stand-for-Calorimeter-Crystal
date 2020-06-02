@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 
-
 use work.new_types.all;
 
 entity spectra_memory is
@@ -29,7 +28,7 @@ architecture Behavioral of spectra_memory is
 
 begin
 
-    spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.spectrum_RAM
+    spectra_mem: for i in 1 to 1 generate spectrum_RAM_ii: entity work.spectrum_RAM
         port map(
             clka => clka,
             clkb => clkb,
@@ -38,11 +37,12 @@ begin
             dina => dina(i),
             wea => wea(i),
             ena => ena(i),
-            enb => enb(i)
+            enb => enb(i),
+            douta => douta(i),
+            doutb => PS_data
         );
-    end generate;
-
- --       addrb(to_integer(unsigned(PS_addr(15 downto 12)))) <= PS_addr(11 downto 0);
+    end generate spectra_mem;
+        
 enb(0)  <= '1' when PS_addr(15 downto 12) = B"0000" else '0';
 enb(1)  <= '1' when PS_addr(15 downto 12) = B"0001" else '0';
 enb(2)  <= '1' when PS_addr(15 downto 12) = B"0010" else '0';
@@ -56,4 +56,5 @@ enb(9)  <= '1' when PS_addr(15 downto 12) = B"1001" else '0';
 enb(10) <= '1' when PS_addr(15 downto 12) = B"1010" else '0';
 enb(11) <= '1' when PS_addr(15 downto 12) = B"1011" else '0';
 
+addrb <= PS_addr(11 downto 0);
 end Behavioral;

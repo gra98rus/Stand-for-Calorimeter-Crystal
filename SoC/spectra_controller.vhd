@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 use work.new_types.all;
 
@@ -8,10 +9,10 @@ Port (
     clk            : in std_logic;
     bram_ctrl_clk  : in std_logic;
     spectrum_spec  : in std_logic_vector(9 downto 0);
-    spectra_commands : in std_logic_vector(11 downto 0);
+    spectra_statuses : in std_logic_vector(11 downto 0);
     adc_data       : in adc_data_ltt;
     adc_data_valid : in std_logic;
-    PS_addr : in std_logic_vector(20 downto 0);
+    PS_addr : in std_logic_vector(15 downto 0);
     PS_data : out std_logic_vector(31 downto 0)
 
 );
@@ -28,7 +29,12 @@ architecture Behavioral of spectra_controller is
     signal enb : std_logic_vector(11 downto 0) := (others => '0');
     signal doutb : spectra_data := (others => (others => '0'));
 
-
+    signal increase_status : std_logic_vector(11 downto 0) := (others => '0');
+    signal bins : bins := (others => (others => '0'));
+    
+    signal read : std_logic_vector(11 downto 0) := (others => '0');
+    signal written : std_logic_vector(11 downto 0) := (others => '0');
+    
 begin
 
 spectra_memory_i: entity work.spectra_memory
@@ -40,10 +46,23 @@ port map(
     dina => data_to_mem,
     wea => wea,
     ena => ena,
---    enb => enb,
+    --enb => enb,
     douta => data_from_mem,
     PS_data => PS_data
 );
+
+--     spectrum_RAM_ii: entity work.spectrum_RAM
+--        port map(
+--            clka => clk,
+--            clkb => bram_ctrl_clk,
+--            addra => B"000000000000",
+--            addrb => PS_addr(11 downto 0),
+--            dina => B"00000000000000000000000000000110",
+--            wea => '1',
+--            ena => '1',
+--            enb => '1',
+--            doutb => PS_data
+--        );
 
 spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.spectrum_creator
     generic map(
@@ -51,10 +70,12 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
     )
     port map(
         clk => clk,
-        cmd =>spectra_commands(0),
-        spectra_params => spectra_params(0),
+        status =>spectra_statuses(i+8),
+        spectra_params => spectra_params(i+8),
         adc_data => adc_data(0),
-        adc_data_valid => adc_data_valid
+        adc_data_valid => adc_data_valid,
+        bin => bins(i+8),
+        increase_status => increase_status(i+8)
     );
 end generate;
 
@@ -64,155 +85,80 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
     )
     port map(
         clk => clk,
-        cmd =>spectra_commands(0),
-        spectra_params => spectra_params(0),
+        status => '1',--spectra_statuses(i),
+        spectra_params => B"1000000000",--spectra_params(i),
         adc_data => adc_data(0),
-        adc_data_valid => adc_data_valid
+        adc_data_valid => adc_data_valid,
+        bin => bins(i),
+        increase_status => increase_status(i)
     );
 end generate;
 
---spectrum_creator_0max_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '1'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(0),
---    spectra_params => spectra_params(0),
---    adc_data => adc_data(0),
---    adc_data_valid => adc_data_valid
---);
+--process(clk)     
+--begin
+--    if clk'event and clk='1' then
+--        PL_addr(1) <= B"000000000001";--
+--        data_to_mem(1) <= B"00000000000000000000000000011110";
+--        ena(1) <= '1';
+--        wea(1) <= '1';
+--    end if;
+--end process;
 
---spectrum_creator_0point0_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(1),
---    spectra_params => spectra_params(1),
---    adc_data => adc_data(0),
---    adc_data_valid => adc_data_valid
---);
+process(clk)                  --find active creator + read
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            if increase_status(i) = '1' then
+            --if adc_data_valid = '1' then
+                PL_addr(i) <= bins(i);--B"000000000000";--
+                ena(i) <= '1';
+                wea(i) <= '0';
+                read(i) <= '1';
+            elsif read(i) = '1' then                             --write if it necessary
+                data_to_mem(i) <=  std_logic_vector(unsigned(data_from_mem(i)) + 1);--B"00000000000000000000000000001110";--
+                ena(i) <= '1';
+                wea(i) <= '1';
+                read(i) <= '0';
+                written(i) <= '1';
+            elsif written(i) = '1' then                           --set default status
+                ena(i) <= '0';
+                wea(i) <= '0';
+                read(i) <= '0';
+                written(i) <= '0';
+            end if;
+        end loop;
+    end if;
+end process;
 
---spectrum_creator_0point1_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(2),
---    spectra_params => spectra_params(2),
---    adc_data => adc_data(0),
---    adc_data_valid => adc_data_valid
---);
+--process(clk)                  --write if it necessary
+--begin
+--    if clk'event and clk='1' then
+--        for i in 0 to 11 loop
+--            if read(i) = '1' then
+--                data_to_mem(i) <= std_logic_vector(unsigned(data_from_mem(i)) + 1);
+--                ena(i) <= '1';
+--                wea(i) <= '1';
+--                read(i) <= '0';
+--                written(i) <= '1';
+--            end if;
+--        end loop;
+--    end if;
+--end process;
 
---spectrum_creator_1max_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '1'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(3),
---    spectra_params => spectra_params(3),
---    adc_data => adc_data(1),
---    adc_data_valid => adc_data_valid
---);
+--process(clk)                  --set default status
+--begin
+--    if clk'event and clk='1' then
+--        for i in 0 to 11 loop
+--            if written(i) = '1' then
+--                ena(i) <= '0';
+--                wea(i) <= '0';
+--                read(i) <= '0';
+--                written(i) <= '0';
+--            end if;
+--        end loop;
+--    end if;
+--end process;
 
---spectrum_creator_1point0_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(4),
---    spectra_params => spectra_params(4),
---    adc_data => adc_data(1),
---    adc_data_valid => adc_data_valid
---);
 
---spectrum_creator_1point1_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(5),
---    spectra_params => spectra_params(5),
---    adc_data => adc_data(1),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_2max_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '1'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(6),
---    spectra_params => spectra_params(6),
---    adc_data => adc_data(2),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_2point0_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(7),
---    spectra_params => spectra_params(7),
---    adc_data => adc_data(2),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_2point1_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(8),
---    spectra_params => spectra_params(8),
---    adc_data => adc_data(2),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_3max_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '1'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(9),
---    spectra_params => spectra_params(9),
---    adc_data => adc_data(3),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_3point0_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(10),
---    spectra_params => spectra_params(10),
---    adc_data => adc_data(3),
---    adc_data_valid => adc_data_valid
---);
-
---spectrum_creator_3point1_i : entity work.spectrum_creator 
---generic map(
---    type_of_spectrum => '0'
---)
---port map(
---    clk => clk,
---    cmd =>spectra_commands(11),
---    spectra_params => spectra_params(11),
---    adc_data => adc_data(3),
---    adc_data_valid => adc_data_valid
---);
 
 end Behavioral;

@@ -17,4 +17,6 @@ package new_types is
     type spectra_addr is array(0 to 11) of std_logic_vector(11 downto 0);
     type spectra_data is array(0 to 11) of std_logic_vector(31 downto 0);
 
+    type bins is array(0 to 11) of std_logic_vector(11 downto 0);
+    
 end new_types;
