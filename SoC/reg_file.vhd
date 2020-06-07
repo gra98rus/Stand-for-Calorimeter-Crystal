@@ -158,7 +158,7 @@ begin
             elsif dataIn(3 downto 2) = "10" then
                 shapers_config_r(5 downto 4) <= dataIn(1 downto 0);
             elsif dataIn(3 downto 2) = "11" then
-                shapers_config_r(5 downto 6) <= dataIn(1 downto 0);
+                shapers_config_r(7 downto 6) <= dataIn(1 downto 0);
             end if;
         end if;
         

@@ -25,13 +25,16 @@ architecture Behavioral of spectra_controller is
     signal data_to_mem : spectra_data := (others => (others => '0'));
     signal data_from_mem : spectra_data := (others => (others => '0'));
     signal wea : std_logic_vector(11 downto 0) := (others => '0');
-    signal ena : std_logic_vector(11 downto 0) := (others => '0');
+    signal ena : std_logic_vector(11 downto 0) := (others => '1');
     signal enb : std_logic_vector(11 downto 0) := (others => '0');
     signal doutb : spectra_data := (others => (others => '0'));
 
     signal increase_status : std_logic_vector(11 downto 0) := (others => '0');
+    signal increase_status_buf1 : std_logic_vector(11 downto 0) := (others => '0');
+    signal increase_status_buf2 : std_logic_vector(11 downto 0) := (others => '0');
     signal bins : bins := (others => (others => '0'));
     
+    signal clock_read : std_logic_vector(11 downto 0) := (others => '0');
     signal read : std_logic_vector(11 downto 0) := (others => '0');
     signal written : std_logic_vector(11 downto 0) := (others => '0');
     
@@ -86,7 +89,7 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
     port map(
         clk => clk,
         status => '1',--spectra_statuses(i),
-        spectra_params => B"1000000000",--spectra_params(i),
+        spectra_params => B"0100000000",--spectra_params(i),
         adc_data => adc_data(0),
         adc_data_valid => adc_data_valid,
         bin => bins(i),
@@ -97,60 +100,33 @@ end generate;
 --process(clk)     
 --begin
 --    if clk'event and clk='1' then
---        PL_addr(1) <= B"000000000001";--
---        data_to_mem(1) <= B"00000000000000000000000000011110";
---        ena(1) <= '1';
---        wea(1) <= '1';
+--        PL_addr(2) <= B"000000001000";
+--        data_to_mem(2) <= B"00000000000000000000000000011110";
+--        ena(2) <= '1';
+--        wea(2) <= '1';
 --    end if;
 --end process;
 
-process(clk)                  --find active creator + read
-begin
-    if clk'event and clk='1' then
-        for i in 0 to 11 loop
-            if increase_status(i) = '1' then
-            --if adc_data_valid = '1' then
-                PL_addr(i) <= bins(i);--B"000000000000";--
-                ena(i) <= '1';
-                wea(i) <= '0';
-                read(i) <= '1';
-            elsif read(i) = '1' then                             --write if it necessary
-                data_to_mem(i) <=  std_logic_vector(unsigned(data_from_mem(i)) + 1);--B"00000000000000000000000000001110";--
-                ena(i) <= '1';
-                wea(i) <= '1';
-                read(i) <= '0';
-                written(i) <= '1';
-            elsif written(i) = '1' then                           --set default status
-                ena(i) <= '0';
-                wea(i) <= '0';
-                read(i) <= '0';
-                written(i) <= '0';
-            end if;
-        end loop;
-    end if;
-end process;
-
---process(clk)                  --write if it necessary
+--process(clk)                  --find active creator + read
 --begin
 --    if clk'event and clk='1' then
 --        for i in 0 to 11 loop
---            if read(i) = '1' then
---                data_to_mem(i) <= std_logic_vector(unsigned(data_from_mem(i)) + 1);
+--            if increase_status(i) = '1' then
+--            --if adc_data_valid = '1' then
+--                PL_addr(i) <= bins(i);--B"000000000000";--
+--                ena(i) <= '1';
+--                wea(i) <= '0';
+--                read(i) <= '1';
+--            elsif read(i) = '1' then                             --write if it necessary
+--                PL_addr(i) <= bins(i);
+--                data_to_mem(i) <=  std_logic_vector(unsigned(data_from_mem(i)) + 1);--B"00000000000000000000000000001110";--
 --                ena(i) <= '1';
 --                wea(i) <= '1';
 --                read(i) <= '0';
+--                clock_read(i) <= '0';
 --                written(i) <= '1';
---            end if;
---        end loop;
---    end if;
---end process;
-
---process(clk)                  --set default status
---begin
---    if clk'event and clk='1' then
---        for i in 0 to 11 loop
---            if written(i) = '1' then
---                ena(i) <= '0';
+--            elsif written(i) = '1' then                           --set default status
+--                ena(i) <= '1';
 --                wea(i) <= '0';
 --                read(i) <= '0';
 --                written(i) <= '0';
@@ -159,6 +135,52 @@ end process;
 --    end if;
 --end process;
 
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            increase_status_buf1(i) <= increase_status(i);
+        end loop;
+    end if;
+end process;
+
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            increase_status_buf2(i) <= increase_status_buf1(i);
+        end loop;
+    end if;
+end process;
+
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            wea(i) <= increase_status_buf2(i);
+        end loop;
+    end if;
+end process;
+
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            if increase_status(i) = '1' then
+                PL_addr(i) <= bins(i);
+            end if;
+        end loop;
+    end if;
+end process;
+
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            data_to_mem(i) <=  std_logic_vector(unsigned(data_from_mem(i)) + 1);
+        end loop;
+    end if;
+end process;
 
 
 end Behavioral;

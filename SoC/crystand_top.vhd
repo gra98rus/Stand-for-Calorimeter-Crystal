@@ -134,7 +134,7 @@ architecture STRUCTURE of crystand_top is
     BRAM_PORTA_rst : in STD_LOGIC;
     BRAM_PORTA_we : in STD_LOGIC_VECTOR ( 3 downto 0 );
     
-    SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 15 downto 0 );
+    SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 17 downto 0 );
     SPECTRA_BRAM_PORTA_clk : out STD_LOGIC;
     SPECTRA_BRAM_PORTA_din : out STD_LOGIC_VECTOR ( 31 downto 0 );
     SPECTRA_BRAM_PORTA_dout : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -166,7 +166,7 @@ architecture STRUCTURE of crystand_top is
   signal data_bram_we_top   : std_logic := '0';
   signal data_bram_rst  : std_logic := '0';  
   
-  signal spectra_bram_addr_top : std_logic_vector(15 downto 0) := (others=>'0');
+  signal spectra_bram_addr_top : std_logic_vector(17 downto 0) := (others=>'0');
   signal spectra_bram_clk_top  : std_logic := '0';
   signal spectra_bram_din_top  : std_logic_vector(31 downto 0) := (others=>'0');
   signal spectra_bram_dout_top : std_logic_vector(31 downto 0) := (others=>'0');
@@ -219,7 +219,7 @@ ps_top_i: component ps_top
       BRAM_PORTA_rst => data_bram_rst,
       BRAM_PORTA_we(3 downto 0) => data_bram_we_v,
             
-      SPECTRA_BRAM_PORTA_addr(15 downto 0) => spectra_bram_addr_top,
+      SPECTRA_BRAM_PORTA_addr(17 downto 0) => spectra_bram_addr_top,
       SPECTRA_BRAM_PORTA_clk => spectra_bram_clk_top,
       SPECTRA_BRAM_PORTA_din(31 downto 0) => spectra_bram_din_top,
       SPECTRA_BRAM_PORTA_dout(31 downto 0) => spectra_bram_dout_top,
@@ -319,7 +319,7 @@ pl_top_i : entity work.pl_top
             data_bram_din  => data_bram_din_top,
             data_bram_we   => data_bram_we_top,
                     
-            spectra_bram_addr => spectra_bram_addr_top,
+            spectra_bram_addr => spectra_bram_addr_top(17 downto 2),
             spectra_bram_clk  => spectra_bram_clk_top,
             spectra_bram_dout  => spectra_bram_dout_top,
           

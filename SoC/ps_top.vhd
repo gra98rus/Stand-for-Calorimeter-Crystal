@@ -1,7 +1,7 @@
 --Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2016.4 (lin64) Build 1756540 Mon Jan 23 19:11:19 MST 2017
---Date        : Mon Jun  1 11:09:36 2020
+--Date        : Wed Jun  3 12:52:31 2020
 --Host        : deva2.inp.nsk.su running 64-bit Scientific Linux release 6.7 (Carbon)
 --Command     : generate_target ps_top.bd
 --Design      : ps_top
@@ -2282,7 +2282,7 @@ entity ps_top is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
-    SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 15 downto 0 );
+    SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 17 downto 0 );
     SPECTRA_BRAM_PORTA_clk : out STD_LOGIC;
     SPECTRA_BRAM_PORTA_din : out STD_LOGIC_VECTOR ( 31 downto 0 );
     SPECTRA_BRAM_PORTA_dout : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2500,7 +2500,7 @@ architecture STRUCTURE of ps_top is
     s_axi_aclk : in STD_LOGIC;
     s_axi_aresetn : in STD_LOGIC;
     s_axi_awid : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    s_axi_awaddr : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    s_axi_awaddr : in STD_LOGIC_VECTOR ( 17 downto 0 );
     s_axi_awlen : in STD_LOGIC_VECTOR ( 7 downto 0 );
     s_axi_awsize : in STD_LOGIC_VECTOR ( 2 downto 0 );
     s_axi_awburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -2519,7 +2519,7 @@ architecture STRUCTURE of ps_top is
     s_axi_bvalid : out STD_LOGIC;
     s_axi_bready : in STD_LOGIC;
     s_axi_arid : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    s_axi_araddr : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    s_axi_araddr : in STD_LOGIC_VECTOR ( 17 downto 0 );
     s_axi_arlen : in STD_LOGIC_VECTOR ( 7 downto 0 );
     s_axi_arsize : in STD_LOGIC_VECTOR ( 2 downto 0 );
     s_axi_arburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -2538,7 +2538,7 @@ architecture STRUCTURE of ps_top is
     bram_clk_a : out STD_LOGIC;
     bram_en_a : out STD_LOGIC;
     bram_we_a : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    bram_addr_a : out STD_LOGIC_VECTOR ( 15 downto 0 );
+    bram_addr_a : out STD_LOGIC_VECTOR ( 17 downto 0 );
     bram_wrdata_a : out STD_LOGIC_VECTOR ( 31 downto 0 );
     bram_rddata_a : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
@@ -2730,7 +2730,7 @@ architecture STRUCTURE of ps_top is
   signal ps_top_reg_interface_ip_0_0_0_dataOut : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ps_top_reg_interface_ip_0_0_0_regNum : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ps_top_reg_interface_ip_0_0_0_regWE : STD_LOGIC;
-  signal spectra_bram_ctrl_BRAM_PORTA_ADDR : STD_LOGIC_VECTOR ( 15 downto 0 );
+  signal spectra_bram_ctrl_BRAM_PORTA_ADDR : STD_LOGIC_VECTOR ( 17 downto 0 );
   signal spectra_bram_ctrl_BRAM_PORTA_CLK : STD_LOGIC;
   signal spectra_bram_ctrl_BRAM_PORTA_DIN : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal spectra_bram_ctrl_BRAM_PORTA_DOUT : STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2765,7 +2765,7 @@ begin
   BRAM_PORTA_1_WE(3 downto 0) <= BRAM_PORTA_we(3 downto 0);
   BRAM_PORTA_dout(31 downto 0) <= BRAM_PORTA_1_DOUT(31 downto 0);
   FCLK_CLK0 <= processing_system7_0_FCLK_CLK0;
-  SPECTRA_BRAM_PORTA_addr(15 downto 0) <= spectra_bram_ctrl_BRAM_PORTA_ADDR(15 downto 0);
+  SPECTRA_BRAM_PORTA_addr(17 downto 0) <= spectra_bram_ctrl_BRAM_PORTA_ADDR(17 downto 0);
   SPECTRA_BRAM_PORTA_clk <= spectra_bram_ctrl_BRAM_PORTA_CLK;
   SPECTRA_BRAM_PORTA_din(31 downto 0) <= spectra_bram_ctrl_BRAM_PORTA_DIN(31 downto 0);
   SPECTRA_BRAM_PORTA_en <= spectra_bram_ctrl_BRAM_PORTA_EN;
@@ -3112,7 +3112,7 @@ ps_top_reg_interface_ip_0_0_0: component ps_top_ps_top_reg_interface_ip_0_0_0_0
     );
 spectra_bram_ctrl: component ps_top_axi_bram_ctrl_1_0
      port map (
-      bram_addr_a(15 downto 0) => spectra_bram_ctrl_BRAM_PORTA_ADDR(15 downto 0),
+      bram_addr_a(17 downto 0) => spectra_bram_ctrl_BRAM_PORTA_ADDR(17 downto 0),
       bram_clk_a => spectra_bram_ctrl_BRAM_PORTA_CLK,
       bram_en_a => spectra_bram_ctrl_BRAM_PORTA_EN,
       bram_rddata_a(31 downto 0) => spectra_bram_ctrl_BRAM_PORTA_DOUT(31 downto 0),
@@ -3120,7 +3120,7 @@ spectra_bram_ctrl: component ps_top_axi_bram_ctrl_1_0
       bram_we_a(3 downto 0) => spectra_bram_ctrl_BRAM_PORTA_WE(3 downto 0),
       bram_wrdata_a(31 downto 0) => spectra_bram_ctrl_BRAM_PORTA_DIN(31 downto 0),
       s_axi_aclk => processing_system7_0_FCLK_CLK0,
-      s_axi_araddr(15 downto 0) => ps7_0_axi_periph_M02_AXI_ARADDR(15 downto 0),
+      s_axi_araddr(17 downto 0) => ps7_0_axi_periph_M02_AXI_ARADDR(17 downto 0),
       s_axi_arburst(1 downto 0) => ps7_0_axi_periph_M02_AXI_ARBURST(1 downto 0),
       s_axi_arcache(3 downto 0) => ps7_0_axi_periph_M02_AXI_ARCACHE(3 downto 0),
       s_axi_aresetn => proc_sys_reset_0_peripheral_aresetn(0),
@@ -3131,7 +3131,7 @@ spectra_bram_ctrl: component ps_top_axi_bram_ctrl_1_0
       s_axi_arready => ps7_0_axi_periph_M02_AXI_ARREADY,
       s_axi_arsize(2 downto 0) => ps7_0_axi_periph_M02_AXI_ARSIZE(2 downto 0),
       s_axi_arvalid => ps7_0_axi_periph_M02_AXI_ARVALID,
-      s_axi_awaddr(15 downto 0) => ps7_0_axi_periph_M02_AXI_AWADDR(15 downto 0),
+      s_axi_awaddr(17 downto 0) => ps7_0_axi_periph_M02_AXI_AWADDR(17 downto 0),
       s_axi_awburst(1 downto 0) => ps7_0_axi_periph_M02_AXI_AWBURST(1 downto 0),
       s_axi_awcache(3 downto 0) => ps7_0_axi_periph_M02_AXI_AWCACHE(3 downto 0),
       s_axi_awid(11 downto 0) => ps7_0_axi_periph_M02_AXI_AWID(11 downto 0),
