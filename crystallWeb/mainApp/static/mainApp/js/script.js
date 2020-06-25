@@ -86,40 +86,7 @@ function start() {
       }
       var copy = chartsData;
       allChartsData.push(copy);
-      function addValueToSpectra(chartsData, spectraList){
-        for (var i = 0; i < spectraList.length; i++) {
-          var channel = parseInt(spectraList[i].channel);
-          if (spectraList[i].mode == "point") {
-            var point = parseInt(spectraList[i].point);
-            var value = chartsData[(channel-1)*ADC_WIDTH+point];
-            for (var j = 0; j < parseInt(spectraList[i].basketNum) - 1; j++) {
-              var minEdge = 4096/spectraList[i].basketNum*j;
-              var maxEdge = 4096/spectraList[i].basketNum*(j+1);
-              if (value > minEdge & value <= maxEdge) {
-                spectraList[i].data[j+1] += 1;
-                break;
-              }
-            }
-          }
-          if (spectraList[i].mode == "maxAmpl") {
-            var value = chartsData[(channel-1)*ADC_WIDTH];
-            for (l = 0; l < ADC_WIDTH; l++) {
-              if (value < chartsData[(channel-1)*ADC_WIDTH+l])
-                value = chartsData[(channel-1)*ADC_WIDTH+l];
-            }
-            for (var j = 0; j < parseInt(spectraList[i].basketNum) - 1; j++) {
-              var minEdge = 4096/spectraList[i].basketNum*j;
-              var maxEdge = 4096/spectraList[i].basketNum*(j+1);
-              if (value > minEdge & value <= maxEdge) {
-                spectraList[i].data[j+1] += 1;
-                break;
-              }
-            }
-          }
-        }
-      };
 
-      addValueToSpectra(chartsData, spectraList);
       drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
       drawADC("adc_graph_1_1",1,chartsData);
       drawADC("adc_graph_2_2",2,chartsData);
@@ -243,7 +210,7 @@ function drawSpectra() {
   }
 
 
-function addSpectrum(channel, point, basketNum, mode){
+function addSpectrum(channel, point, bin_num, mode){
   var elem = document.createElement('a');
   elem.setAttribute("class","dropdown-item");
   var href = "#" + (spectraList.length+1) + "-spectrum-tab-pane"
@@ -278,11 +245,7 @@ function addSpectrum(channel, point, basketNum, mode){
   document.getElementById(id).setAttribute("style","height:800px;")
 
 
-  var maxAmpl = 100;
-  var dat = []
-  for (var i = 0; i < basketNum; i++)
-    dat.push(0);
-  var sp = {channel : channel, point : point, basketNum: basketNum, mode: mode ,data : dat}
+  var sp = {channel : channel, point : point, bin_num: bin_num, mode: mode}
   spectraList.push(sp)
 
   console.log(spectraList)
@@ -357,10 +320,9 @@ function drawSpectrum(num){
   var x = [];
   var y = [];
   var spectrumData = [];
-  for (i = 0; i < spectraList[num-1].data.length; i++) {
-    //data.addRow([i,chartsData[ADC_WIDTH*(num-1)+i]]);
+  for (i = 0; i < spectraList[num-1].bin_num; i++) {
     x.push(i);
-    y.push(spectraList[num-1].data[i]);
+    y.push(i);
   }
   var data = [
     {
