@@ -4,6 +4,8 @@ var chartsData = []
 var spectraList = []
 var allChartsData = []
 
+var spectrum_data = []
+
 var chartType = "bar"
 //setInterval(readStatus, 1000);
 
@@ -88,16 +90,38 @@ function start() {
       allChartsData.push(copy);
 
       drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
-      drawADC("adc_graph_1_1",1,chartsData);
-      drawADC("adc_graph_2_2",2,chartsData);
-      drawADC("adc_graph_3_3",3,chartsData);
-      drawADC("adc_graph_4_4",4,chartsData);
+   //   drawADC("adc_graph_1_1",1,chartsData);
+   //   drawADC("adc_graph_2_2",2,chartsData);
+   //   drawADC("adc_graph_3_3",3,chartsData);
+   //   drawADC("adc_graph_4_4",4,chartsData);
+    }
+    
+  request = new XMLHttpRequest();
+  request.open("POST", "", true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.responseType = 'text';
+
+  json = {"command" : "readSpectrum"};
+  str = JSON.stringify(json);
+  request.send(str);
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var json = JSON.parse(this.responseText);
+      spectrum_data = [];
+      for (var i = 0; i < 4*ADC_WIDTH; i++) {
+        spectrum_data[i] = json[i];
+      }
+      var copy = spectrum_data;
+      allChartsData.push(copy);
+
       for (var i = 0; i < spectraList.length; i++)
         drawSpectrum(i+1);
       //readStatus();
       }
     }
   }
+}
 
 function someStart() {
   var startCount = document.getElementById("startCount").value;
@@ -105,8 +129,6 @@ function someStart() {
     for (var i = 0; i < startCount; i++)
       start();
 }
-
-
 
 function drawADC(id,num,chartsData) {
   var x = [];
@@ -153,9 +175,48 @@ function drawCharts() {
         drawADC("adc_graph_4",4,chartsData);
 }
 
+function drawSpectrum(num){
+  var x = [];
+  var y = [];
+  var spectrumData = [];
+  for (i = 0; i < spectraList[num-1].bin_num; i++) {
+    x.push(i);
+    y.push(spectrum_data[i]);
+  }
+
+  if (chartType=="line")
+    type="scatter";
+  if (chartType=="bar")
+    type="bar";
+
+  var data = [
+    {
+      x: x,
+      y: y,
+      type: type
+    }
+  ];
+
+  var layout = {
+    title: "Амплитудный спектр " + num,
+    showlegend: false
+  };
+  console.log(data)
+  Plotly.newPlot("spectrum_graph_" + num, data, layout);
+
+  document.getElementById("spectrumInfo").removeAttribute("hidden");
+  document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectraList[num-1].channel;
+  document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectraList[num-1].mode;
+  if (spectraList[num-1].mode == "point")
+    document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectraList[num-1].point;
+  if (spectraList[num-1].mode == "maxAmpl")
+  document.getElementById("pointInfo").innerHTML = "Опорной точки нет ";
+  document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectraList[num-1].bin_num;
+}
+
 function drawSpectra() {
-  for (var i = 0; i < (spectraList.length+1); i++)
-    drawSpectrum(i);
+  for (var i = 0; i < (spectraList.length); i++)
+    drawSpectrum(i+1);
 }
 
   function saveCharts() {
@@ -250,55 +311,56 @@ function addSpectrum(channel, point, bin_num, mode){
 
   console.log(spectraList)
 }
+
 function sendTriggLevel() {
     
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var level  = parseInt(document.getElementById('triggLevel0').value, 10);
-        var json = {"command" : "setTriggerLevel",
-                    "regNumber" : "",
-                    "data" : level};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+    var request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    var level  = parseInt(document.getElementById('triggLevel0').value, 10);
+    var json = {"command" : "setTriggerLevel",
+                "regNumber" : "",
+                "data" : level};
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
         
-        request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        level  = parseInt(document.getElementById('triggLevel1').value, 10) + 16384;
-        var json = {"command" : "setTriggerLevel",
-                    "regNumber" : "",
-                    "data" : level};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+    request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    level  = parseInt(document.getElementById('triggLevel1').value, 10) + 16384;
+    var json = {"command" : "setTriggerLevel",
+                "regNumber" : "",
+                "data" : level};
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
            
-        request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        level  = parseInt(document.getElementById('triggLevel2').value, 10) + 32768;
-        var json = {"command" : "setTriggerLevel",
-                    "regNumber" : "",
-                    "data" : level};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-        
-        request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        level  = parseInt(document.getElementById('triggLevel3').value, 10) + 49152;
-        var json = {"command" : "setTriggerLevel",
-                    "regNumber" : "",
-                    "data" : level};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+    request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    level  = parseInt(document.getElementById('triggLevel2').value, 10) + 32768;
+    var json = {"command" : "setTriggerLevel",
+                "regNumber" : "",
+                "data" : level};
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
+    
+    request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    level  = parseInt(document.getElementById('triggLevel3').value, 10) + 49152;
+    var json = {"command" : "setTriggerLevel",
+                "regNumber" : "",
+                "data" : level};
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
 }
 
 function deleteSpectrum(channel, point){
@@ -316,39 +378,6 @@ function deleteSpectrum(channel, point){
   console.log(elem)
 }
 
-function drawSpectrum(num){
-  var x = [];
-  var y = [];
-  var spectrumData = [];
-  for (i = 0; i < spectraList[num-1].bin_num; i++) {
-    x.push(i);
-    y.push(i);
-  }
-  var data = [
-    {
-      x: x,
-      y: y,
-      type: "bar"
-    }
-  ];
-
-  var layout = {
-    title: "Амплитудный спектр " + num,
-    showlegend: false
-  };
-  console.log(data)
-  Plotly.newPlot("spectrum_graph_" + num, data, layout);
-
-  document.getElementById("spectrumInfo").removeAttribute("hidden");
-  document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectraList[num-1].channel;
-  document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectraList[num-1].mode;
-  if (spectraList[num-1].mode == "point")
-    document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectraList[num-1].point;
-  if (spectraList[num-1].mode == "maxAmpl")
-  document.getElementById("pointInfo").innerHTML = "Опорной точки нет ";
-  document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectraList[num-1].basketNum;
-
-}
 
   $(document).ready(function(){
     drawCharts();
@@ -472,10 +501,11 @@ function drawSpectrum(num){
       if (value == false)
         chartType="line";
       drawCharts();
-      drawADC("adc_graph_1_1",1,chartsData);
-      drawADC("adc_graph_2_2",2,chartsData);
-      drawADC("adc_graph_3_3",3,chartsData);
-      drawADC("adc_graph_4_4",4,chartsData);
+      drawSpectra();
+//      drawADC("adc_graph_1_1",1,chartsData);
+//      drawADC("adc_graph_2_2",2,chartsData);
+//      drawADC("adc_graph_3_3",3,chartsData);
+//      drawADC("adc_graph_4_4",4,chartsData);
     });
 
     $("input[name='trigger_type']").change( function() {

@@ -28,7 +28,7 @@ architecture Behavioral of spectra_memory is
 
 begin
 
-    spectra_mem: for i in 1 to 1 generate spectrum_RAM_ii: entity work.spectrum_RAM
+    spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.spectrum_RAM
         port map(
             clka => clka,
             clkb => clkb,
@@ -39,7 +39,7 @@ begin
             ena => ena(i),
             enb => enb(i),
             douta => douta(i),
-            doutb => PS_data
+            doutb => doutb(i)
         );
     end generate spectra_mem;
         
@@ -55,6 +55,24 @@ enb(8)  <= '1' when PS_addr(15 downto 12) = B"1000" else '0';
 enb(9)  <= '1' when PS_addr(15 downto 12) = B"1001" else '0';
 enb(10) <= '1' when PS_addr(15 downto 12) = B"1010" else '0';
 enb(11) <= '1' when PS_addr(15 downto 12) = B"1011" else '0';
+
+
+with enb select
+    PS_data <= doutb(0)  when B"000000000001",
+               doutb(1)  when B"000000000010",
+               doutb(2)  when B"000000000100",
+               doutb(3)  when B"000000001000",
+               doutb(4)  when B"000000010000",
+               doutb(5)  when B"000000100000",
+               doutb(6)  when B"000001000000",
+               doutb(7)  when B"000010000000",
+               doutb(8)  when B"000100000000",
+               doutb(9)  when B"001000000000",
+               doutb(10) when B"010000000000",
+               doutb(11) when B"100000000000",
+               (others => '0') when others;
+			
+			
 
 addrb <= PS_addr(11 downto 0);
 end Behavioral;

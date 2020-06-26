@@ -75,7 +75,7 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
         clk => clk,
         status =>spectra_statuses(i+8),
         spectra_params => spectra_params(i+8),
-        adc_data => adc_data(0),
+        adc_data => adc_data(i),
         adc_data_valid => adc_data_valid,
         bin => bins(i+8),
         increase_status => increase_status(i+8)
@@ -90,50 +90,12 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
         clk => clk,
         status => '1',--spectra_statuses(i),
         spectra_params => B"0100000000",--spectra_params(i),
-        adc_data => adc_data(0),
+        adc_data => adc_data(i/2),
         adc_data_valid => adc_data_valid,
         bin => bins(i),
         increase_status => increase_status(i)
     );
 end generate;
-
---process(clk)     
---begin
---    if clk'event and clk='1' then
---        PL_addr(2) <= B"000000001000";
---        data_to_mem(2) <= B"00000000000000000000000000011110";
---        ena(2) <= '1';
---        wea(2) <= '1';
---    end if;
---end process;
-
---process(clk)                  --find active creator + read
---begin
---    if clk'event and clk='1' then
---        for i in 0 to 11 loop
---            if increase_status(i) = '1' then
---            --if adc_data_valid = '1' then
---                PL_addr(i) <= bins(i);--B"000000000000";--
---                ena(i) <= '1';
---                wea(i) <= '0';
---                read(i) <= '1';
---            elsif read(i) = '1' then                             --write if it necessary
---                PL_addr(i) <= bins(i);
---                data_to_mem(i) <=  std_logic_vector(unsigned(data_from_mem(i)) + 1);--B"00000000000000000000000000001110";--
---                ena(i) <= '1';
---                wea(i) <= '1';
---                read(i) <= '0';
---                clock_read(i) <= '0';
---                written(i) <= '1';
---            elsif written(i) = '1' then                           --set default status
---                ena(i) <= '1';
---                wea(i) <= '0';
---                read(i) <= '0';
---                written(i) <= '0';
---            end if;
---        end loop;
---    end if;
---end process;
 
 process (clk)
 begin
