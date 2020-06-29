@@ -7,7 +7,7 @@ use work.new_types.all;
 
 entity spectrum_creator is
 generic(
-    type_of_spectrum : std_logic                     -- 0 - selected point; 1 - max value
+    type_of_spectrum : std_logic                     -- 1 - selected point; 0 - max value
 );
 Port (
     clk            : in std_logic;
@@ -58,7 +58,7 @@ process (clk)
 begin
     if clk'event and clk='1' then
 
-        if status = '1' and adc_data_valid_result = '1' and type_of_spectrum = '1' then
+        if status = '1' and adc_data_valid_result = '1' and type_of_spectrum = '0' then
             if counter = 127 then
                 counter <= 0;
                 new_value <= current_max;
@@ -68,7 +68,7 @@ begin
                 current_max <= adc_data(counter);
                 status_of_val <= 0;
             end if;
-        elsif status = '1' and adc_data_valid_result = '1' and type_of_spectrum = '0' then
+        elsif status = '1' and adc_data_valid_result = '1' and type_of_spectrum = '1' then
             new_value <= adc_data(to_integer(unsigned(selected_point)));
             status_of_val <= 1;
         else

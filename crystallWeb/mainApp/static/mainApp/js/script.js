@@ -1,8 +1,13 @@
 var ADC_WIDTH = 128;
 
 var chartsData = []
-var spectraList = []
 var allChartsData = []
+
+var spectra_list = []
+for(var i = 0; i < 12; i++){
+    var sp = {channel : -1, point : -1, bin_num: -1, mode: -1}
+    spectra_list.push(sp);
+}
 
 var spectrum_data = []
 
@@ -96,30 +101,15 @@ function start() {
    //   drawADC("adc_graph_4_4",4,chartsData);
     }
     
-  request = new XMLHttpRequest();
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
 
-  json = {"command" : "readSpectrum"};
-  str = JSON.stringify(json);
-  request.send(str);
-
-  request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var json = JSON.parse(this.responseText);
-      spectrum_data = [];
-      for (var i = 0; i < 4*ADC_WIDTH; i++) {
-        spectrum_data[i] = json[i];
-      }
       var copy = spectrum_data;
       allChartsData.push(copy);
 
-      for (var i = 0; i < spectraList.length; i++)
+      for (var i = 0; i < spectra_list.length; i++)
         drawSpectrum(i+1);
       //readStatus();
-      }
-    }
+    //  }
+   // }
   }
 }
 
@@ -175,11 +165,32 @@ function drawCharts() {
         drawADC("adc_graph_4",4,chartsData);
 }
 
-function drawSpectrum(num){
+function drawSpectrum(num){  
+ 
+  request = new XMLHttpRequest();
+  request.open("POST", "", true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.responseType = 'text';
+
+  json = {"command"      : "readSpectrum",
+          "spectrum_num" : num
+  };
+  str = JSON.stringify(json);
+  request.send(str);
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var json = JSON.parse(this.responseText);
+      spectrum_data = [];
+      for (var i = 0; i < 4*ADC_WIDTH; i++) {
+        spectrum_data[i] = json[i];
+      }
+    }
+  }
   var x = [];
   var y = [];
   var spectrumData = [];
-  for (i = 0; i < spectraList[num-1].bin_num; i++) {
+  for (i = 0; i < spectra_list[num].bin_num; i++) {
     x.push(i);
     y.push(spectrum_data[i]);
   }
@@ -205,18 +216,20 @@ function drawSpectrum(num){
   Plotly.newPlot("spectrum_graph_" + num, data, layout);
 
   document.getElementById("spectrumInfo").removeAttribute("hidden");
-  document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectraList[num-1].channel;
-  document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectraList[num-1].mode;
-  if (spectraList[num-1].mode == "point")
-    document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectraList[num-1].point;
-  if (spectraList[num-1].mode == "maxAmpl")
+  document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectra_list[num].channel;
+  document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectra_list[num].mode;
+  if (spectra_list[num].mode == "point")
+    document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectra_list[num].point;
+  if (spectra_list[num].mode == "maxAmpl")
   document.getElementById("pointInfo").innerHTML = "Опорной точки нет ";
-  document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectraList[num-1].bin_num;
+  document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectra_list[num].bin_num;
 }
 
 function drawSpectra() {
-  for (var i = 0; i < (spectraList.length); i++)
-    drawSpectrum(i+1);
+  for (var i = 0; i < (spectra_list.length); i++){
+        if(spectra_list[i].channel != -1)
+            drawSpectrum(i);
+    }
 }
 
   function saveCharts() {
@@ -227,9 +240,9 @@ function drawSpectra() {
         txt += j + " " + allChartsData[i][j] + "\r\n";
       }
     }
-    for (var i = 0; i < spectraList.length; i++) {
-      for (var j = 0; j < spectraList[i].data.length; j++) {
-        txt += j + " " + spectraList[i].data[j] + "\r\n";
+    for (var i = 0; i < spectra_list.length; i++) {
+      for (var j = 0; j < spectra_list[i].data.length; j++) {
+        txt += j + " " + spectra_list[i].data[j] + "\r\n";
       }
     }
     console.log(txt);
@@ -271,12 +284,24 @@ function drawSpectra() {
   }
 
 
-function addSpectrum(channel, point, bin_num, mode){
+function addSpectrum(channel, point, bin_num, mode, spectrum_num){
+  var request = new XMLHttpRequest();
+  request.open("POST", "", true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.responseType = 'text';
+  var json = {"command" : "set_spectrum_conf",
+              "spectrum_num" : spectrum_num,
+              "point"   : point,
+              "bins_num": bin_num};
+  var str = JSON.stringify(json)
+  request.send(str);
+  console.log("send POST")
+            
   var elem = document.createElement('a');
   elem.setAttribute("class","dropdown-item");
-  var href = "#" + (spectraList.length+1) + "-spectrum-tab-pane"
+  var href = "#" + (spectrum_num) + "-spectrum-tab-pane"
   elem.setAttribute("href", href);
-  elem.innerHTML='Спектр '+ (spectraList.length+1) + ' (Канал:' + channel + ', режим:' + mode + ')';
+  elem.innerHTML='Спектр '+ (spectrum_num) + ' (Канал:' + channel + ', режим:' + mode + ')';
   elem.addEventListener('click',function(event){
     var i = event.target.href.split("/")[3].replace(/\D+/g,"");
     drawSpectrum(i);
@@ -289,11 +314,11 @@ function addSpectrum(channel, point, bin_num, mode){
   var sp_item = document.getElementById("add-spectrum-item")
   sp_item.className = "dropdown-item";
 
-  var id = "spectrum_graph_" + (spectraList.length+1);
+  var id = "spectrum_graph_" + (spectrum_num);
   var text = '<table class="table table-bordered"><tbody><tr><td width="100%"><div id="' + id + '"></div></td></table>';
   var elem1 = document.createElement('div');
   elem1.setAttribute("class","tab-pane fade");
-  elem1.setAttribute("id",+ (spectraList.length+1) + "-spectrum-tab-pane");
+  elem1.setAttribute("id",+ (spectrum_num) + "-spectrum-tab-pane");
   elem1.innerHTML += text
   $('a[href="'+href+'"]').on('shown.bs.tab', function (event) {
     var i = event.target.href.split("/")[3].replace(/\D+/g,"");
@@ -307,9 +332,9 @@ function addSpectrum(channel, point, bin_num, mode){
 
 
   var sp = {channel : channel, point : point, bin_num: bin_num, mode: mode}
-  spectraList.push(sp)
+  spectra_list[spectrum_num] = sp
 
-  console.log(spectraList)
+  console.log(spectra_list)
 }
 
 function sendTriggLevel() {
@@ -371,7 +396,7 @@ function deleteSpectrum(channel, point){
 
   elem.setAttribute("class","dropdown-item");
   elem.setAttribute("href","#");
-  elem.innerHTML='Спектр '+ (spectraList.length+1)
+  elem.innerHTML='Спектр '+ (spectra_list.length+1)
   sp.appendChild(elem);
   add.className = "dropdown-item";
 
@@ -388,7 +413,7 @@ function deleteSpectrum(channel, point){
 
     $('.nav-tabs a[href="#delete-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
       var num = prompt("Введите номер спектра", "");
-      if (num == null || num == "" || num <= 0 || num > (spectraList.length+1)) {
+      if (num == null || num == "" || num <= 0 || num > (spectra_list.length+1)) {
           txt = "Неверное значение";
       } else {
         deleteSpectrum(channel,point);
@@ -440,6 +465,7 @@ function deleteSpectrum(channel, point){
       var mode;
       var pt;
       var smpl;
+      var spectrum_num;
       if ($('#channelADC1').prop("checked") == true)
         ch = 1;
       if ($('#channelADC2').prop("checked") == true)
@@ -449,11 +475,11 @@ function deleteSpectrum(channel, point){
       if ($('#channelADC4').prop("checked") == true)
         ch = 4;
       if ($('#pointMode').prop("checked") == true) {
-        mode = "point";
+        mode = 1;
         pt = $("#pointADC").val();
       }
       if ($('#maxAmplMode').prop("checked") == true) {
-        mode = "maxAmpl";
+        mode = 0;
         pt = null;
       }
       smpl = $("#basketNumber > .active").text();
@@ -472,18 +498,12 @@ function deleteSpectrum(channel, point){
           } else {
             console.log("create Spectra");
             
-            var request = new XMLHttpRequest();
-            request.open("POST", "", true);
-            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            request.responseType = 'text';
-            var json = {"command" : "setBasketNum",
-                        "regNumber" : "",
-                        "data" : smpl};
-            var str = JSON.stringify(json)
-            request.send(str);
-            console.log("send POST")
+            spectrum_num = (ch-1)*3 + mode;
             
-            addSpectrum(ch,pt,smpl,mode);
+            if(spectra_list[spectrum_num].channel == -1)
+                addSpectrum(ch, pt, smpl, mode, spectrum_num);
+            else if (mode == 1 && spectra_list[spectrum_num+1].channel == -1)
+                addSpectrum(ch, pt, smpl, mode, spectrum_num + 1);
           }
         }
       }

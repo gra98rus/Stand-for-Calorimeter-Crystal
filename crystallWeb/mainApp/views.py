@@ -18,6 +18,7 @@ REG_TRIGGER_LEVEL = 0x0101
 REG_SELECTED_CHANNELS = 0x0110
 REG_BASKET_NUM = 0x0111
 REG_SHAPER = 0x1000
+REG_SPECTRUM_SPEC = 0x1001
 
 COMMAND_START = 0x0001
 
@@ -62,9 +63,9 @@ def read_charts ():
     #    data__.append(struct.unpack("I", data)[i])
     return data_
 
-def read_spectrum():
+def read_spectrum(spectrum_num):
     mem = MMIO (SPECTRA_MEM_ADDRESS, SPECTRA_MEM_SIZE)
-    data = mem.read(0x4000, 2048)
+    data = mem.read(0x4000 * spectrum_num, 2048)
     mem.close()
     data_ = struct.unpack("512I",data)
     return data_
@@ -119,7 +120,7 @@ def index(request):
 
         if (js['command'] == 'readSpectrum'):                               
             response = {}                                                 
-            data = read_spectrum()                                          
+            data = read_spectrum(int(js['spectrum_num']))                                          
             for i in range(0,512):                                        
                 response[str(i)] = data[i]                                
             response = JsonResponse(response)                             
@@ -184,3 +185,7 @@ def index(request):
         if (js['command'] == 'updateConfigOnPage'):
             response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3})
             return HttpResponse(response)
+
+        if (js['command'] == 'set_spectrum_conf'):
+            write_to_reg(REG_SPECTRUM_SPEC, 3<<7 | int(js['point']))
+            return HttpResponse('ok!')

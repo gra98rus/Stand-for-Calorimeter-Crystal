@@ -69,7 +69,7 @@ port map(
 
 spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.spectrum_creator
     generic map(
-        type_of_spectrum => '1'
+        type_of_spectrum => '0'
     )
     port map(
         clk => clk,
@@ -84,12 +84,12 @@ end generate;
 
 spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity work.spectrum_creator
     generic map(
-        type_of_spectrum => '0'
+        type_of_spectrum => '1'
     )
     port map(
         clk => clk,
         status => '1',--spectra_statuses(i),
-        spectra_params => B"0100000000",--spectra_params(i),
+        spectra_params => B"0110000000",--spectra_params(i),
         adc_data => adc_data(i/2),
         adc_data_valid => adc_data_valid,
         bin => bins(i),
