@@ -73,12 +73,12 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
     )
     port map(
         clk => clk,
-        status =>spectra_statuses(i+8),
-        spectra_params => spectra_params(i+8),
+        status => '1',
+        spectra_params => B"0110000000",
         adc_data => adc_data(i),
         adc_data_valid => adc_data_valid,
-        bin => bins(i+8),
-        increase_status => increase_status(i+8)
+        bin => bins(i*3),
+        increase_status => increase_status(i*3)
     );
 end generate;
 
@@ -92,8 +92,8 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
         spectra_params => B"0110000000",--spectra_params(i),
         adc_data => adc_data(i/2),
         adc_data_valid => adc_data_valid,
-        bin => bins(i),
-        increase_status => increase_status(i)
+        bin => bins(i + i/2 + 1),
+        increase_status => increase_status(i + i/2 + 1)
     );
 end generate;
 

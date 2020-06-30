@@ -105,8 +105,10 @@ function start() {
       var copy = spectrum_data;
       allChartsData.push(copy);
 
-      for (var i = 0; i < spectra_list.length; i++)
-        drawSpectrum(i+1);
+      for (var i = 0; i < spectra_list.length; i++){
+          if(spectra_list[i].channel != -1)
+        drawSpectrum(i);
+      }
       //readStatus();
     //  }
    // }
@@ -388,19 +390,21 @@ function sendTriggLevel() {
     console.log("send POST")
 }
 
-function deleteSpectrum(channel, point){
-  var add = document.getElementById("add-spectrum-item")
-  var sp = document.getElementById("spectra-menu")
-  var elem = document.createElement('a');
+function deleteSpectrum(num){
+    var add = document.getElementById("add-spectrum-item")
+    var sp = document.getElementById("spectra-menu")
+    var elem = document.createElement('a');
 
 
-  elem.setAttribute("class","dropdown-item");
-  elem.setAttribute("href","#");
-  elem.innerHTML='Спектр '+ (spectra_list.length+1)
-  sp.appendChild(elem);
-  add.className = "dropdown-item";
+    elem.setAttribute("class","dropdown-item");
+    elem.setAttribute("href","#");
+    elem.innerHTML='Спектр '+ (num)
+    sp.appendChild(elem);
+    add.className = "dropdown-item";
 
-  console.log(elem)
+    spectra_list[num].channel = -1;
+
+    console.log(elem)
 }
 
 
@@ -413,10 +417,10 @@ function deleteSpectrum(channel, point){
 
     $('.nav-tabs a[href="#delete-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
       var num = prompt("Введите номер спектра", "");
-      if (num == null || num == "" || num <= 0 || num > (spectra_list.length+1)) {
+      if (num == null || num == "" || num <= 0 || num > (spectra_list.length) || spectra_list[num].channel == -1) {
           txt = "Неверное значение";
       } else {
-        deleteSpectrum(channel,point);
+        deleteSpectrum(num);
       }
     });
 
@@ -694,9 +698,7 @@ function deleteSpectrum(channel, point){
             if (this.readyState == 4 && this.status == 200) {
                 var json = JSON.parse(this.responseText);
                 console.log(this.responseText);
-                console.log("receive json");
                 if (json.trigger_type == "1"){
-                    console.log("pipiska");
                     document.getElementById('force_but').checked = true;
                     document.getElementById('css_force_but').setAttribute("class", "btn btn-primary active");
                     document.getElementById('css_level_but').setAttribute("class", "btn btn-primary");
