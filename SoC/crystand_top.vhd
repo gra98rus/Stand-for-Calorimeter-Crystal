@@ -205,9 +205,9 @@ ps_top_i: component ps_top
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
       UART_0_rxd => UART_RX,
       UART_0_txd => UART_TX,
-      ADC_SPI_sck_o => SPI_SCLK,
-      ADC_SPI_io0_o => SPI_SDIO,
-      ADC_SPI_ss_o => SPI_CSB,
+     -- ADC_SPI_sck_o => SPI_SCLK,
+     -- ADC_SPI_io0_o => SPI_SDIO,
+     -- ADC_SPI_ss_o => SPI_CSB,
       FCLK_CLK0 => FCLK_CLK0,
       reset => reset,
             
@@ -328,7 +328,7 @@ pl_top_i : entity work.pl_top
             dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
             dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)
             );    
-              --  SPI_CSB <= '1';
-              --  SPI_SCLK <= '0';
-              --  SPI_SDIO <= '1';
+                SPI_CSB <= '1';
+                SPI_SCLK <= '0';
+                SPI_SDIO <= '1';
 end STRUCTURE;

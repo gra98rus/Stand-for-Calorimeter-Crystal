@@ -24,6 +24,7 @@ port(
     trigger_level: out std_logic_vector(55 downto 0);
     selected_channels: out std_logic_vector(3 downto 0);
     shapers_config: out std_logic_vector(7 downto 0);
+    spectrum_spec: out std_logic_vector(13 downto 0);
         
     adc_data      : out adc_data_ltt
   	);
@@ -160,6 +161,10 @@ begin
             elsif dataIn(3 downto 2) = "11" then
                 shapers_config_r(7 downto 6) <= dataIn(1 downto 0);
             end if;
+        end if;
+        
+        if regNum = REG_SPECTRUM_SPEC and regWE = '1' then
+            spectrum_spec <= dataIn(13 downto 0);
         end if;
         
 		if cmd_start_ena_r='1' then

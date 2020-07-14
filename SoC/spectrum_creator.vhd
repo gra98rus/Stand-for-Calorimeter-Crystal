@@ -54,6 +54,7 @@ if clk'event and clk='1' then
 end if;
 end process;
 
+
 process (clk)
 begin
     if clk'event and clk='1' then
@@ -94,28 +95,27 @@ begin
 
         if status_of_val = 1 then
             --status_of_val <= 0;
-            if num_of_basket = "000" then
+            if num_of_basket = "111" then
                 current_bin <= new_value(13 downto 2);
-            elsif num_of_basket = "001" then
-                current_bin <= "0" & new_value(13 downto 3);
-            elsif num_of_basket = "010" then
-                current_bin <= "00" & new_value(13 downto 4);
-            elsif num_of_basket = "011" then
-                current_bin <= "000" & new_value(13 downto 5);
-            elsif num_of_basket = "100" then
-                current_bin <= "0000" & new_value(13 downto 6);
-            elsif num_of_basket = "101" then
-                current_bin <= "00000" & new_value(13 downto 7);
             elsif num_of_basket = "110" then
+                current_bin <= "0" & new_value(13 downto 3);
+            elsif num_of_basket = "101" then
+                current_bin <= "00" & new_value(13 downto 4);
+            elsif num_of_basket = "100" then
+                current_bin <= "000" & new_value(13 downto 5);
+            elsif num_of_basket = "011" then
+                current_bin <= "0000" & new_value(13 downto 6);
+            elsif num_of_basket = "010" then
+                current_bin <= "00000" & new_value(13 downto 7);
+            elsif num_of_basket = "001" then
                 current_bin <= "000000" & new_value(13 downto 8);
-            elsif num_of_basket = "111" then
+            elsif num_of_basket = "000" then
                 current_bin <= "0000000" & new_value(13 downto 9);
             end if;
         increase_status_r <= '1';    
         elsif increase_status_r = '1' then
             increase_status_r <= '0';
         end if;
-        
         
     end if;
 end process;

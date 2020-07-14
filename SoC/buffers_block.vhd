@@ -85,7 +85,7 @@ end component;
 
 -----------------------------------------------------------------
 begin
-dina_ring <= adc_data_write(4) & adc_data_write(3) & adc_data_write(2) & test_value2;
+dina_ring <= adc_data_write(4) & adc_data_write(3) & adc_data_write(2) & adc_data_write(1);
 -----------------------------------------------------------------
 ring_mem_gen_i : blk_mem_gen_0                 --ring memory module
 port map(                                       --port A - write port

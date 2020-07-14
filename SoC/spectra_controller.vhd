@@ -8,7 +8,7 @@ entity spectra_controller is
 Port ( 
     clk            : in std_logic;
     bram_ctrl_clk  : in std_logic;
-    spectrum_spec  : in std_logic_vector(9 downto 0);
+    spectrum_spec  : in std_logic_vector(13 downto 0);
     spectra_statuses : in std_logic_vector(11 downto 0);
     adc_data       : in adc_data_ltt;
     adc_data_valid : in std_logic;
@@ -74,7 +74,7 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
     port map(
         clk => clk,
         status => '1',
-        spectra_params => B"0110000000",
+        spectra_params => spectra_params(i),
         adc_data => adc_data(i),
         adc_data_valid => adc_data_valid,
         bin => bins(i*3),
@@ -89,7 +89,7 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
     port map(
         clk => clk,
         status => '1',--spectra_statuses(i),
-        spectra_params => B"0110000000",--spectra_params(i),
+        spectra_params => spectra_params(i),--spectra_params(i),
         adc_data => adc_data(i/2),
         adc_data_valid => adc_data_valid,
         bin => bins(i + i/2 + 1),
@@ -102,27 +102,29 @@ begin
     if clk'event and clk='1' then
         for i in 0 to 11 loop
             increase_status_buf1(i) <= increase_status(i);
-        end loop;
-    end if;
-end process;
-
-process (clk)
-begin
-    if clk'event and clk='1' then
-        for i in 0 to 11 loop
             increase_status_buf2(i) <= increase_status_buf1(i);
-        end loop;
-    end if;
-end process;
-
-process (clk)
-begin
-    if clk'event and clk='1' then
-        for i in 0 to 11 loop
             wea(i) <= increase_status_buf2(i);
         end loop;
     end if;
 end process;
+
+--process (clk)
+--begin
+--    if clk'event and clk='1' then
+--        for i in 0 to 11 loop
+--            increase_status_buf2(i) <= increase_status_buf1(i);
+--        end loop;
+--    end if;
+--end process;
+
+--process (clk)
+--begin
+--    if clk'event and clk='1' then
+--        for i in 0 to 11 loop
+--            wea(i) <= increase_status_buf2(i);
+--        end loop;
+--    end if;
+--end process;
 
 process (clk)
 begin
@@ -144,5 +146,15 @@ begin
     end if;
 end process;
 
+process (clk)
+begin
+    if clk'event and clk='1' then
+        for i in 0 to 11 loop
+            if spectrum_spec(13 downto 10) = std_logic_vector(to_unsigned(i, 4)) then
+                spectra_params(i) <= spectrum_spec(9 downto 0);
+            end if;
+        end loop;
+    end if;
+end process;
 
 end Behavioral;

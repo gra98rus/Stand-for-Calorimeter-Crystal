@@ -116,7 +116,7 @@ architecture Behavioral of pl_top is
     signal adc_data_b : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_c : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_d : std_logic_vector(13 downto 0) := (others=>'0');
-    signal adc_data_test : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data_test : std_logic_vector(13 downto 0) := (others=>'0');
     signal adc_data_t_test : adc_data_ltt;
     
     signal adc_status_signals : std_logic_vector (3 downto 0) := (others=>'0');
@@ -126,9 +126,6 @@ architecture Behavioral of pl_top is
 
     signal cmd_reset_adc_deser  : std_logic := '0';
     signal cmd_resync_adc_deser : std_logic := '0';
-     
-    signal write_clk : std_logic := '0';
-    signal read_clk : std_logic := '0';
     
     signal dataIn_buf: adc_data_t;
         
@@ -162,8 +159,12 @@ architecture Behavioral of pl_top is
     
     signal array_state_top : std_logic := '0';
     
-    signal spectra_params :  std_logic_vector(9 downto 0) := (others => '0');
+    signal spectra_params :  std_logic_vector(13 downto 0) := (others => '0');
     signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
+    
+    signal dco_divider_top : std_logic := '0';
+    signal fco_divider_top : std_logic := '0';
+
 -----------------------------------------------------------------   
 begin
 -----------------------------------------------------------------
@@ -223,7 +224,14 @@ adc_deser_i : entity work.adc_deser                         --deser_block
         FC0N => ADC_FC0_N,      --in
                           
         DC0P => ADC_DC0_P,      --in
-        DC0N => ADC_DC0_N);     --in
+        DC0N => ADC_DC0_N,
+        
+        
+        
+        fco_divider_out => fco_divider_top,
+        dco_divider_out => dco_divider_top
+        
+        );     --in
 ------------------------------------------------------------------
 buffers_block_i : entity work.buffers_block             --ring and simple buffers block
 port map(
@@ -282,7 +290,8 @@ port map (
     selected_channels => selected_channels_top,
     shapers_config => shapers_config_top,
     --adc_data =>adc_data_top,
-    trigger_level=> COMPARE_DATA
+    trigger_level=> COMPARE_DATA,
+    spectrum_spec => spectra_params
     );
 ----------------------------------------------------------------
 pack_i: entity work.packager
@@ -322,14 +331,7 @@ port map(
     PS_addr => spectra_bram_addr,
     PS_data => spectra_bram_dout
 );
---spectra_contriller_i: entity work.spectra_controller
---port map(
---    clk => ps_clk_50mhz,
---    spectrum_spec => spectra_params,
---    spectra_commands => spectra_commands,
---    adc_data => adc_data_top,
---    adc_data_valid => array_state_top
---);
+
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
 begin
@@ -381,6 +383,7 @@ begin
     end if;
 end process;
 
+
 -----------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(
@@ -395,8 +398,10 @@ TP3 <= ps_cnt(2);                       --out
 TP4 <= ps_cnt(3);                       --out
 TP5 <= ps_cnt(4);                       --out
 TP6 <= ps_cnt(5);                       --out
-TP7 <= ps_cnt(6);                       --out
-TP8 <= ps_cnt(7);                       --out
+--TP7 <= ps_cnt(6);                       --out
+--TP8 <= ps_cnt(7);                       --out
+TP7 <= dco_divider_top;
+TP8 <= fco_divider_top;
 
 cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
 adc_deser_clock_locked <= clk_gen_lock; --in
@@ -411,13 +416,9 @@ adc_data(4) <= adc_data_d;
 --adc_data(3) <= adc_data_top_test(2)(0);
 --adc_data(4) <= adc_data_top_test(3)(0);
 
-adc_data_test <= "00" & adc_data_top_test(0)(0);              
+adc_data_test <= adc_data_top_test(0)(0);              
 adc_data_t_test <= (others => ( others => adc_data_test));                                                                                     
-dataIn_buf <= adc_data;                     --in
-                                                                                     
-write_clk <= adc_deser_clock;                 --in                                   
-read_clk <= adc_deser_clock;                  --in                                   
-             
+dataIn_buf <= adc_data;                     --in                          
                                                                                     
 ALT_07 <= shapers_controll(0);              --out                                   
 ALT_08 <= shapers_controll(1);              --out                                   
