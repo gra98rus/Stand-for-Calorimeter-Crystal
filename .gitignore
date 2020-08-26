@@ -1,0 +1,24 @@
+# Directories #
+################################################################################
+bin
+build
+.Xil
+#prj/sim/func/work
+#prj/sim/func/wlib
+
+# Files #
+################################################################################
+#cfg_params_generated.svh
+slon5_generated.svh
+webtalk.*
+*.log
+*.jou
+*.str
+*.mif
+*.wlf
+transcript
+*.fv
+modelsim.ini
+*.vpwhistu
+*.vtg
+
