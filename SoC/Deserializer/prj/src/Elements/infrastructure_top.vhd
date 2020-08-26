@@ -27,16 +27,13 @@ end infrastructure_top;
 
 architecture behavioral of infrastructure_top is
 ----------------------------------------------------------------
-component clk_wiz_1                      --pll module
+component pll                                   --pll module
 port
  (
-  clk_in   : in     std_logic;             --input clock signal
+  clk_in1   : in     std_logic;                 --input clock signal
   
-  clk_out1  : out    std_logic;              --output clock signal
-  clk_out2  : out    std_logic;              --output clock signal
-  
-  reset    : in     std_logic;             --control signal
-  locked   : out    std_logic              --status signal
+  clk_out1  : out    std_logic;                 --output clock signal
+  locked    : out    std_logic                  --status signal
  );
 end component;
 -----------------------------------------------------------------
@@ -49,13 +46,11 @@ end component;
 -----------------------------------------------------------------
 begin
 ------------------------------------------------------
-clk_wiz_1_i : clk_wiz_1                     --pll block
+pll_inst : pll                     --pll block
    port map ( 
-    clk_in => ps_clk_50mhz,                    --in
-    clk_out1 => clk_100mhz,                     --out
-    clk_out2 => clk_200mhz,
-    reset  => reset,                        --in
-    locked => ext_clk_pll_locked_s);        --out
+    clk_in1 => ps_clk_50mhz,
+    clk_out1 => clk_100mhz,
+    locked => ext_clk_pll_locked_s);
 -------------------------------------------------------
 idelayctrl_0 : IDELAYCTRL
 port map(
