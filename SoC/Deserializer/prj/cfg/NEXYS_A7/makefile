@@ -11,7 +11,7 @@
 
 DEVICE         := xc7a100tcsg324-1
 TOP_NAME       := pl_top
-TBENCH_NAME    := hw_standalone_tb
+TBENCH_NAME    := tb_pl_top
 
 CFG_DIR        := $(CURDIR)
 REF_DIR        := ../../..
@@ -46,6 +46,7 @@ SRC := $(SRC_DIR)/pl_top.vhd		          			\
 	   $(SRC_DIR)/Elements/reg_ctrl.vhd		   			\
 	   $(SRC_DIR)/Elements/reg_map.vhd	    			\
 	   $(SRC_DIR)/Elements/shaper_controller.vhd		\
+	   $(SRC_DIR)/Elements/Memory.vhd					\
 	   $(SRC_DIR)/Elements/trigg_system.vhd			
 
 #-----------------------------------------------------------
@@ -77,7 +78,7 @@ TRG_DEVICE := "xc7a100t_0"
 #    Sources
 #
 SRC_SIM := $(SRC)\
-           $(SRC_DIR)/sim/func/hw_standalone_tb.sv
+           $(SRC_DIR)/sim/func/tb_pl_top.vhd
 
 SIM_INC_DIRS := $(CFG_DIR) $(SRC_DIR) $(LIB_DIR)
 
@@ -86,6 +87,7 @@ SIM_INC_DIRS := $(CFG_DIR) $(SRC_DIR) $(LIB_DIR)
 #    Options
 #
 VLOG_FLAGS := -O5 -ccflags "-std=c++14" -ccflags "-Wall" -ccflags "-Wpedantic"
+VCOM_FLAGS := -O5 
 VOPT_FLAGS := -O5 -L unifast_ver -L unisims_ver 
 
 #-------------------------------------------------------------------------------

@@ -1,31 +1,8 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 03/06/2019 12:38:26 PM
--- Design Name: 
--- Module Name: ring_buffer - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
 library work;
@@ -49,6 +26,19 @@ port (
 end buffers_block;
 --------------------------------------------------------------
 architecture Behavioral of buffers_block is
+
+function clogb2( depth : natural) return integer is
+variable temp    : integer := depth;
+variable ret_val : integer := 0;
+begin
+    while temp > 1 loop
+        ret_val := ret_val + 1;
+        temp    := temp / 2;
+    end loop;
+
+    return ret_val;
+end function;
+
 component blk_mem_gen_0                         --ring memory block
 port (
 
@@ -78,13 +68,16 @@ port (
     enb : in std_logic);                        --input read_enable signal
 end component;
 ----------------------------------------------------------------
-    constant wea_c : std_logic_vector (0 downto 0) := B"1";
+    constant wea_ring : std_logic_vector (0 downto 0) := B"1";
+    constant web_ring : std_logic_vector (0 downto 0) := B"0";
+    constant ena_ring : std_logic_vector (0 downto 0) := B"0";
     --constant buf_depth : integer := 100;          --buffer depth    
     signal ring_data_out_observer: std_logic_vector (1 downto 0) := (others=>'0');
     signal simple_data_out_observer: std_logic := '0';
     signal simple_buffer_state_s: std_logic := '0';
         
     signal dina_ring : std_logic_vector (63 downto 0) := (others=>'0');
+    signal dinb_ring : std_logic_vector (63 downto 0) := (others=>'0');
     --signal datainA : std_logic_vector (13 downto 0) := (others=>'0');
     --signal datainB : std_logic_vector (13 downto 0) := (others=>'0');
     --signal datainC : std_logic_vector (13 downto 0) := (others=>'0');
@@ -99,38 +92,73 @@ end component;
     signal adc_data_read : std_logic_vector (63 downto 0) := (others=>'0');
 -----------------------------------------------------------------
 begin
---datainA <= adc_data_write(4);
---datainB <= adc_data_write(3);
---datainC <= adc_data_write(2);                          --prepare data to write
---datainD <= adc_data_write(1);
+
+ring_buf: entity work.RAM
+generic map(
+    C_RAM_WIDTH => 64,
+    C_RAM_DEPTH => clogb2(128))
+port map(
+    clka  => write_clk_ring,
+    addra => addra_ring,
+    dina  => dina_ring,
+    wea   => '1',
+    ena   => '0',
+    
+    clkb  => read_clk_ring,
+    addrb => addrb_ring,
+    dinb  => (others => '0'),
+    web   => '0',
+    enb   => read_ring_ena,
+    doutb => adc_data_read);
+
 dina_ring <= adc_data_write(1) & adc_data_write(2) & adc_data_write(3) & adc_data_write(4);
 -----------------------------------------------------------------
-blk_mem_gen_0_i : blk_mem_gen_0                 --ring memory module
-port map(                                       --port A - write port            
-                                                --port B - read port
-    addra => addra_ring,                             --in
-    clka => write_clk_ring,                          --in
-    dina => dina_ring,                               --in           
-    wea => wea_c,                                    --in
-    
-    addrb =>addrb_ring,                              --in     
-    clkb => read_clk_ring,                           --in
-    doutb => adc_data_read,                          --out
-    enb => read_ring_ena);                           --in
+--blk_mem_gen_0_i : blk_mem_gen_0                 --ring memory module
+--port map(                                       --port A - write port            
+--                                                --port B - read port
+--    addra => addra_ring,                             --in
+--    clka => write_clk_ring,                          --in
+--    dina => dina_ring,                               --in           
+--    wea => wea_ring,                                    --in
+--    
+--    addrb =>addrb_ring,                              --in     
+--    clkb => read_clk_ring,                           --in
+--    doutb => adc_data_read,                          --out
+--    enb => read_ring_ena);                           --in
 -----------------------------------------------------------------
-blk_mem_gen_1_i : blk_mem_gen_1                 --ring memory module
-port map(                                       --port A - write port            
-                                                --port B - read port
-    addra => addra_simple,                      --in
-    clka => read_clk_ring,                      --in
-    dina => adc_data_read,                      --in           
-    ena => read_ring_ena,                       --in               
-    wea => wea_c,                               --in
-        
-    addrb =>addrb_simple,                       --in     
-    clkb => read_clk_simple,                    --in
-    doutb => data_read,                         --out
-    enb => read_simple_ena);                    --in
+
+simple_buf: entity work.RAM
+generic map(
+    C_RAM_WIDTH => 64,
+    C_RAM_DEPTH => clogb2(512))
+port map(
+    clka  => read_clk_ring,
+    addra => addra_simple,
+    dina  => adc_data_read,
+    wea   => wea_ring,
+    ena   => read_ring_ena,
+    
+    clkb  => read_clk_simple,
+    addrb => addrb_simple,
+    dinb  => (others => '0'),
+    web   => '0',
+    enb   => read_simple_ena,
+    doutb => data_read);
+
+
+--blk_mem_gen_1_i : blk_mem_gen_1                 --ring memory module
+--port map(                                       --port A - write port            
+--                                                --port B - read port
+--    addra => addra_simple,                      --in
+--    clka => read_clk_ring,                      --in
+--    dina => adc_data_read,                      --in           
+--    ena => read_ring_ena,                       --in               
+--    wea => wea_ring,                               --in
+--        
+--    addrb =>addrb_simple,                       --in     
+--    clkb => read_clk_simple,                    --in
+--    doutb => data_read,                         --out
+--    enb => read_simple_ena);                    --in
 -------------------------------------------------------------------
 
 -------------------------------------------------------------------

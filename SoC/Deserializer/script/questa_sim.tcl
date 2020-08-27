@@ -53,15 +53,28 @@ quietly append vsim_cmd "vsim";
 #
 #     VLOG
 #
-set vlog_flags {}
+#set vlog_flags {}
+#if {[info exists WorkLib]} {
+#        quietly append vlog_flags " -work $WorkLib";
+#}
+#quietly append vlog_flags " -incr";
+#quietly append vlog_flags " +incdir+" "$IncDirs";
+#quietly append vlog_flags " -sv";
+#quietly append vlog_flags " -mfcu";          # (?) is it reaaly need?
+#quietly append vlog_flags " " ${VLOG_FLAGS}
+
+#-----------------------------------------------------------
+#
+#     VCOM
+#
+set vcom_flags {}
 if {[info exists WorkLib]} {
-        quietly append vlog_flags " -work $WorkLib";
+        quietly append vcom_flags " -work $WorkLib ";
 }
-quietly append vlog_flags " -incr";
-quietly append vlog_flags " +incdir+" "$IncDirs";
-quietly append vlog_flags " -sv";
-quietly append vlog_flags " -mfcu";          # (?) is it reaaly need?
-quietly append vlog_flags " " ${VLOG_FLAGS}
+quietly append vcom_flags " -93";
+quietly append vcom_flags " +incdir+" "$IncDirs";
+quietly append vcom_flags " " ${VCOM_FLAGS}
+
 
 #-----------------------------------------------------------
 #
@@ -109,13 +122,17 @@ proc launch_cmd { Cmd Args } {
 #-------------------------------------------------------------------------------
 proc compile {} {
 
-    global vlog_cmd vlog_flags;
+  #  global vlog_cmd vlog_flags;
     global vcom_cmd vcom_flags;
     global vopt_cmd vopt_flags;
     
     global Src
 
-    if {[launch_cmd $vlog_cmd [concat $vlog_flags $Src]] == 0} {
+  #  if {[launch_cmd $vlog_cmd [concat $vlog_flags $Src]] == 0} {
+  #      return;
+  #  }
+    
+    if {[launch_cmd $vcom_cmd [concat $vcom_flags $Src]] == 0} {
         return;
     }
     

@@ -146,7 +146,7 @@ OUT_IP     := $(abspath $(OUT_IP))
 #
 #    Main targets
 #
-.PHONY: all dev_pgm cfgmem_pgm clean clean_all print-% test qs_vlog qs_gui qs_sim
+.PHONY: all dev_pgm cfgmem_pgm clean clean_all print-% test qs_vlog qs_vcom qs_gui qs_sim
 
 all:    build_prj
 
@@ -251,10 +251,16 @@ $(SIM_HANDOFF): | $(PLATFORM_FSIM_DIR)
 	@echo set Src          [list $(foreach f, $(SRC_SIM), {$(abspath $f)})]      >> $(PLATFORM_FSIM_DIR)/$(SIM_HANDOFF)
 	@echo set SIM_INC_DIRS [list $(foreach d, $(SIM_INC_DIRS), {$(abspath $d)})] >> $(PLATFORM_FSIM_DIR)/$(SIM_HANDOFF)
 	@echo set VLOG_FLAGS   [list $(foreach f, $(VLOG_FLAGS), {$f})]              >> $(PLATFORM_FSIM_DIR)/$(SIM_HANDOFF)
+	@echo set VCOM_FLAGS   [list $(foreach f, $(VCOM_FLAGS), {$f})]              >> $(PLATFORM_FSIM_DIR)/$(SIM_HANDOFF)
 	@echo set VOPT_FLAGS   [list $(foreach f, $(VOPT_FLAGS), {$f})]              >> $(PLATFORM_FSIM_DIR)/$(SIM_HANDOFF)
 
 #---------------------------------------------------------------------
 qs_vlog: $(SIM_HANDOFF) $(SIM_WLIB_DIR) $(OUT_IP)
+	@echo Questa Sim compile
+	cd $(PLATFORM_FSIM_DIR) && vsim -c -do $(SCRIPT_DIR)/qs_compile.tcl
+	
+#---------------------------------------------------------------------
+qs_vcom: $(SIM_HANDOFF) $(SIM_WLIB_DIR) $(OUT_IP)
 	@echo Questa Sim compile
 	cd $(PLATFORM_FSIM_DIR) && vsim -c -do $(SCRIPT_DIR)/qs_compile.tcl
 	
