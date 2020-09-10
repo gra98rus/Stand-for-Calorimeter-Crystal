@@ -31,7 +31,9 @@ SIM_WLIB_NAME  := wlib
 #
 #INC := $(SRC_DIR)/params.svh
 
-SRC := $(SRC_DIR)/pl_top.vhd		          			\
+SRC := $(SRC_DIR)/crystand_top.vhd	          			\
+	   $(SRC_DIR)/ps_top.vhd			     			\
+	   $(SRC_DIR)/pl_top.vhd			     			\
 	   $(SRC_DIR)/Deserializer/AdcData.vhd     			\
 	   $(SRC_DIR)/Deserializer/AdcClock.vhd    			\
 	   $(SRC_DIR)/Deserializer/AdcFrame.vhd    			\
