@@ -1,0 +1,942 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/aandreev/pro/v1.5_Deser/v1.5_Deser.sim/sim_1/behav/questa
+Eadc_deser
+Z1 w1598344822
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx6 unisim 11 vcomponents 0 22 RY@nd6:FJlC:3>6`zYYnF2
+Z4 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z5 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z6 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z7 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R0
+Z8 8../../../../v1.5_Deser.srcs/sources_1/new/adc_deser.vhd
+Z9 F../../../../v1.5_Deser.srcs/sources_1/new/adc_deser.vhd
+l0
+L39
+VSNoP?e`V`L5gkVWKE01L`0
+!s100 4[V_bKQna4HzYinJao_dc1
+Z10 OL;C;10.7c;67
+31
+Z11 !s110 1599123382
+!i10b 1
+Z12 !s108 1599123381.000000
+Z13 !s90 -64|-93|-work|work|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd|../../../../v1.5_Deser.srcs/sources_1/new/Memory.vhd|../../../../v1.5_Deser.srcs/sources_1/new/adc_deser.vhd|../../../../v1.5_Deser.srcs/sources_1/new/new_types.vhd|../../../../v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd|../../../../v1.5_Deser.srcs/sources_1/new/buffers_block.vhd|../../../../v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd|../../../../v1.5_Deser.srcs/sources_1/new/trigg_system.vhd|../../../../v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd|../../../../v1.5_Deser.srcs/sim_1/imports/new/tb_adc.vhd|../../../../v1.5_Deser.srcs/sim_1/new/tb_pl_top.vhd|
+Z14 !s107 ../../../../v1.5_Deser.srcs/sim_1/new/tb_pl_top.vhd|../../../../v1.5_Deser.srcs/sim_1/imports/new/tb_adc.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd|../../../../v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd|../../../../v1.5_Deser.srcs/sources_1/new/trigg_system.vhd|../../../../v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd|../../../../v1.5_Deser.srcs/sources_1/new/buffers_block.vhd|../../../../v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd|../../../../v1.5_Deser.srcs/sources_1/new/new_types.vhd|../../../../v1.5_Deser.srcs/sources_1/new/adc_deser.vhd|../../../../v1.5_Deser.srcs/sources_1/new/Memory.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd|../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd|
+!i113 0
+Z15 o-93 -work work
+Z16 tExplicit 1 CvgOpt 0
+Abehavioral
+Z17 DEx4 work 7 adcdata 0 22 OF:1`6<M349QBfE0BMFgF0
+Z18 DPx4 ieee 16 std_logic_textio 0 22 V5TSK`;aJKC<l]CEg1>mz1
+Z19 DEx4 work 8 adcframe 0 22 ;LZMEmLh:cJV?e661NJ=R0
+Z20 DEx4 work 8 adcclock 0 22 JNi7DCC4H:RSNGY_b8We<0
+R2
+R3
+R4
+R5
+R6
+R7
+Z21 DEx4 work 9 adc_deser 0 22 SNoP?e`V`L5gkVWKE01L`0
+l159
+L101
+V7TT@Og;hfK5Ah@dDc`hod0
+!s100 BJMMnYKIVY8Co7O97ec:21
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Eadcclock
+R1
+R2
+R3
+R5
+R4
+R6
+R7
+R0
+Z22 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd
+Z23 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd
+l0
+L85
+VJNi7DCC4H:RSNGY_b8We<0
+!s100 >KGZkmX]gCgdAa`RLA`I32
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Aadcclock_struct
+R2
+R3
+R5
+R4
+R6
+R7
+R20
+l166
+L109
+Vbj>RCmMMgCTaG`SS`d<Mg2
+!s100 _NfJil56R>UG04P>2D2?d0
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Eadcdata
+R1
+R2
+R3
+R5
+R4
+R6
+R7
+R0
+Z24 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd
+Z25 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd
+l0
+L92
+VOF:1`6<M349QBfE0BMFgF0
+!s100 54Ne4Gk?J:n>A6ZL`bIOH1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Aadcdata_struct
+R2
+R3
+R5
+R4
+R6
+R7
+R17
+l176
+L121
+VYSCbdk1o:][G?Wd>z0]:c3
+!s100 A?2:28i4?Gj9_C]HGlSjW1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Eadcframe
+R1
+R2
+R3
+R18
+R5
+R4
+R6
+R7
+R0
+Z26 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd
+Z27 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd
+l0
+L96
+V;LZMEmLh:cJV?e661NJ=R0
+!s100 Z=853FObdRS3o:LE_:`GM1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Aadcframe_struct
+Z28 DEx4 work 8 genpulse 0 22 CfBbQ>aONi4U7zL^^QLem1
+Z29 DEx4 work 18 doublenibbledetect 0 22 0=mUbfM=M42ANNdSkMHBR3
+R2
+R3
+R18
+R5
+R4
+R6
+R7
+R19
+l404
+L124
+VIC_0i?j@Enc2LlY3b2<Sm1
+!s100 PYe:zaBBCB1dM51M4b9kD2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Ebound_comparator
+R1
+Z30 DPx4 work 9 new_types 0 22 g52>lMRA=MX;OUe96mYgj1
+R3
+R2
+R6
+R7
+R0
+Z31 8../../../../v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd
+Z32 F../../../../v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd
+l0
+L36
+Vz[lCj11?FkO6A^G;78a`k1
+!s100 b`Gl?VL=elF;bQPjC<@2Q1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R30
+R3
+R2
+R6
+R7
+Z33 DEx4 work 16 bound_comparator 0 22 z[lCj11?FkO6A^G;78a`k1
+l65
+L48
+VYz[N6HLHVgXlljCH9VH]H1
+!s100 9X9J=kk7W7B`b0nP?18a73
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Ebuffers_block
+Z34 w1598869824
+R30
+R3
+R2
+R6
+R7
+R0
+Z35 8../../../../v1.5_Deser.srcs/sources_1/new/buffers_block.vhd
+Z36 F../../../../v1.5_Deser.srcs/sources_1/new/buffers_block.vhd
+l0
+L11
+V9E^H1j1[<g71X:aD5E^RJ3
+!s100 GNI?JR?BHFnY]l[g5jX;_2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+Z37 DPx4 work 7 ram_pkg 0 22 P`8QjLn7BomHGa8;b5WbX2
+Z38 DEx4 work 3 ram 0 22 KAiZVmIiAYAQRoc`Rg9^@3
+R30
+R3
+R2
+R6
+R7
+Z39 DEx4 work 13 buffers_block 0 22 9E^H1j1[<g71X:aD5E^RJ3
+l94
+L28
+VFILf6OWbTe?Y`MS5CFLU]2
+!s100 oDaJ;LC5ZK8h<lCDlB<o53
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Ec_counter_binary_ch
+Z40 w1598865226
+Z41 DPx25 c_counter_binary_v12_0_12 34 c_counter_binary_v12_0_12_viv_comp 0 22 ?86^_^dk152=bmif>TI4Q0
+DEx25 c_counter_binary_v12_0_12 25 c_counter_binary_v12_0_12 0 22 IK3P=>6fliLRZ>PoO^A4;3
+R2
+R6
+R7
+R0
+Z42 8../../../../v1.5_Deser.ip_user_files/ip/c_counter_binary_ch/sim/c_counter_binary_ch.vhd
+Z43 F../../../../v1.5_Deser.ip_user_files/ip/c_counter_binary_ch/sim/c_counter_binary_ch.vhd
+l0
+L59
+VTl4I?W3RUYi=>V;gblTo01
+!s100 EfdY5MiEaS=8VoWg^1A;l0
+R10
+31
+Z44 !s110 1599123380
+!i10b 1
+Z45 !s108 1599123380.000000
+Z46 !s90 -64|-93|-work|work|../../../../v1.5_Deser.ip_user_files/ip/c_counter_binary_ch/sim/c_counter_binary_ch.vhd|
+Z47 !s107 ../../../../v1.5_Deser.ip_user_files/ip/c_counter_binary_ch/sim/c_counter_binary_ch.vhd|
+!i113 0
+R15
+R16
+Ac_counter_binary_ch_arch
+R41
+R2
+R6
+R7
+DEx4 work 19 c_counter_binary_ch 0 22 Tl4I?W3RUYi=>V;gblTo01
+l113
+L66
+VEP]F4DN65TD`_YGmnKjF00
+!s100 YD][Kj?;[Q[ebOiT:c5S>0
+R10
+31
+R44
+!i10b 1
+R45
+R46
+R47
+!i113 0
+R15
+R16
+vclk_wiz_1
+Z48 !s10a 1598865250
+Z49 !s110 1599122946
+!i10b 1
+!s100 733B<La[<G4Z9T3;KlC_I2
+ITZ51cT5F<EjV_5`9jOg[20
+Z50 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z51 w1598865250
+8../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1.v
+F../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1.v
+L0 71
+Z52 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z53 !s108 1599122946.000000
+Z54 !s107 ../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1.v|../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1_clk_wiz.v|
+Z55 !s90 -64|-incr|-work|work|+incdir+../../../../v1.5_Deser.srcs/sources_1/ip/clk_wiz_1|../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1_clk_wiz.v|../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1.v|
+!i113 0
+Z56 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z57 !s92 -work work +incdir+../../../../v1.5_Deser.srcs/sources_1/ip/clk_wiz_1 -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z58 tCvgOpt 0
+vclk_wiz_1_clk_wiz
+R48
+R49
+!i10b 1
+!s100 OL8bzM]LS<Ag5m>JQdhzK3
+IIHAjJYQg^8;S6cOCMfJF>1
+R50
+R0
+R51
+8../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1_clk_wiz.v
+F../../../../v1.5_Deser.ip_user_files/ip/clk_wiz_1/clk_wiz_1_clk_wiz.v
+L0 69
+R52
+r1
+!s85 0
+31
+R53
+R54
+R55
+!i113 0
+R56
+R57
+R58
+Edoublenibbledetect
+R1
+R2
+R3
+R5
+R4
+R6
+R7
+R0
+Z59 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd
+Z60 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd
+l0
+L92
+V0=mUbfM=M42ANNdSkMHBR3
+!s100 bQXJJ7VVa6Ff:;ILKPRfb3
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Adoublenibbledetect_struct
+R2
+R3
+R5
+R4
+R6
+R7
+R29
+l163
+L107
+VzGm[5DSOEEIXgFd0I0fL<0
+!s100 ]WBkI>hED<40e9C_k>QQJ1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Efdcr
+R1
+R2
+R3
+R5
+R4
+R6
+R7
+R0
+Z61 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd
+Z62 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd
+l0
+L96
+Ve7mGU=3:RXagURCEcW4Om3
+!s100 [fBLh[];_^6Thj3ld6[9J0
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Afdcr_struct
+R2
+R3
+R5
+R4
+R6
+R7
+Z63 DEx4 work 4 fdcr 0 22 e7mGU=3:RXagURCEcW4Om3
+l127
+L109
+VYd46hh5[4o`cA9@nJ4aL;3
+!s100 3:gQ`Tg6CKO=YWR_>^K=T3
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Egenpulse
+R1
+R5
+R4
+R6
+R7
+R0
+Z64 8../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd
+Z65 F../../../../v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd
+l0
+L92
+VCfBbQ>aONi4U7zL^^QLem1
+!s100 N`;VJ070>`B[fJS8lK[QQ2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Agenpulse_struct
+R2
+R3
+R63
+R5
+R4
+R6
+R7
+R28
+l121
+L104
+Vo`fk_U8`M@eBXm^aA0XWE0
+!s100 =@<_l>4N[[Y4eEoL688[11
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+vglbl
+R11
+!i10b 1
+!s100 3kS7KIGVD0WYESC>[50kc3
+IF?W@jFfGaU0lAL[Q;0fZR3
+R50
+R0
+w1529022455
+8glbl.v
+Fglbl.v
+L0 6
+R52
+r1
+!s85 0
+31
+!s108 1599123382.000000
+!s107 glbl.v|
+!s90 -work|work|glbl.v|
+!i113 0
+R56
+R58
+Einfrastructure_top
+R1
+R3
+R2
+R5
+R4
+R6
+R7
+R0
+Z66 8../../../../v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd
+Z67 F../../../../v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd
+l0
+L33
+Vgn8Q204KU<?4l[7M]6mVN1
+!s100 ekogF031IPFz4zF26EE@F1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R3
+R2
+R5
+R4
+R6
+R7
+Z68 DEx4 work 18 infrastructure_top 0 22 gn8Q204KU<?4l[7M]6mVN1
+l71
+L49
+VNLj?b^a1llT>L54RX?gP;3
+!s100 DGQN@=WjVagPnMR8bJgC73
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Pnew_types
+R6
+R7
+R1
+R0
+8../../../../v1.5_Deser.srcs/sources_1/new/new_types.vhd
+F../../../../v1.5_Deser.srcs/sources_1/new/new_types.vhd
+l0
+L4
+Vg52>lMRA=MX;OUe96mYgj1
+!s100 U:RkD]DQRj`[XLGBfn9jg2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Epl_top
+R1
+R30
+R3
+R2
+R6
+R7
+R0
+Z69 8../../../../v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd
+Z70 F../../../../v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd
+l0
+L38
+Vz=`o[M=7]NW47OfgVfcL^3
+!s100 ;?Q;Sz<jolMJT5a^OnMfY2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+Z71 DEx4 work 17 shaper_controller 0 22 fiNUd8zZeR0fA^2RXR62I1
+R33
+Z72 DEx4 work 12 trigg_system 0 22 aKz=`VD>=A:h2AA2Dg0VQ3
+R39
+R21
+R5
+R4
+R68
+R30
+R3
+R2
+R6
+R7
+Z73 DEx4 work 6 pl_top 0 22 z=`o[M=7]NW47OfgVfcL^3
+l203
+L137
+V[bRMIK@JHV[DP7@XC59bP2
+!s100 E?1TeoYY[m_TgIT3aKkaz3
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Eram
+Z74 w1599120967
+R37
+R2
+R6
+R7
+R0
+Z75 8../../../../v1.5_Deser.srcs/sources_1/new/Memory.vhd
+Z76 F../../../../v1.5_Deser.srcs/sources_1/new/Memory.vhd
+l0
+L31
+VKAiZVmIiAYAQRoc`Rg9^@3
+!s100 KQHLl:W_l8miRhlASEPbA1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R37
+R2
+R6
+R7
+R38
+l67
+L53
+Vh?6oLgf>R4IN7d[bf`lg>1
+!s100 ;<F]3HFcZ;TI@_5U>C>RD2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Pram_pkg
+R6
+R7
+R74
+R0
+R75
+R76
+l0
+L4
+VP`8QjLn7BomHGa8;b5WbX2
+!s100 V7VYE5N5hF?BmBQAC7d][0
+R10
+31
+b1
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Bbody
+R37
+R6
+R7
+l0
+L8
+VH^iJQkT8cI:d>DPHPz6bO0
+!s100 iZ7:86eNIohUGPn?Biob20
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Eshaper_controller
+R1
+R6
+R7
+R0
+Z77 8../../../../v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd
+Z78 F../../../../v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd
+l0
+L34
+VfiNUd8zZeR0fA^2RXR62I1
+!s100 foGVbQj>z<A6_[X6egIRJ2
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R6
+R7
+R71
+l46
+L44
+VfPWQ3fi<8OPzGYB9PVd<z1
+!s100 Xig_hZL1kH<@P2nElF7T[0
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Etb_adc
+Z79 w1598344821
+Z80 DPx4 ieee 11 numeric_bit 0 22 G2;d`f^X6V]cQEn8_38:i1
+R2
+R5
+R4
+R6
+R7
+R0
+Z81 8../../../../v1.5_Deser.srcs/sim_1/imports/new/tb_adc.vhd
+Z82 F../../../../v1.5_Deser.srcs/sim_1/imports/new/tb_adc.vhd
+l0
+L41
+VYQNATH]I9R8kWZMGZJ>H>1
+!s100 2i7Kno>9Q8c18?01734HZ1
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R80
+R2
+R5
+R4
+R6
+R7
+Z83 DEx4 work 6 tb_adc 0 22 YQNATH]I9R8kWZMGZJ>H>1
+l134
+L81
+Vz6z0Ff_U^iGYc1UgE7]cJ1
+!s100 V0NPX6iZ>PEkNB96LREg00
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Etb_pl_top
+R79
+R3
+R5
+R4
+R2
+R6
+R7
+R0
+Z84 8../../../../v1.5_Deser.srcs/sim_1/new/tb_pl_top.vhd
+Z85 F../../../../v1.5_Deser.srcs/sim_1/new/tb_pl_top.vhd
+l0
+L38
+V^VUR0:o8JnmYGni2Oi@b@1
+!s100 <]4Eg]KTO^dSLAkl3Ke<k3
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R80
+R83
+R30
+R73
+R3
+R5
+R4
+R2
+R6
+R7
+DEx4 work 9 tb_pl_top 0 22 ^VUR0:o8JnmYGni2Oi@b@1
+l141
+L42
+V_c@g=A2MAPlQYX_4dF_SY0
+!s100 AKGcUz:LYfmYcj;]94``22
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Ttb_pl_top_opt
+!s110 1599123387
+V=Zz^=ZS;;lXje]_@hU7lH1
+04 9 10 work tb_pl_top behavioral 1
+04 4 4 work glbl fast 0
+o+acc=npr -L xbip_utils_v3_0_9 -L c_reg_fd_v12_0_5 -L xbip_dsp48_wrapper_v3_0_4 -L xbip_pipe_v3_0_5 -L xbip_dsp48_addsub_v3_0_5 -L xbip_addsub_v3_0_5 -L c_addsub_v12_0_12 -L c_gate_bit_v12_0_5 -L xbip_counter_v3_0_5 -L c_counter_binary_v12_0_12 -L work -L unisims_ver -L unimacro_ver -L secureip -L xpm -work work
+R58
+ntb_pl_top_opt
+OL;O;10.7c;67
+Etrigg_system
+R1
+R2
+R3
+R6
+R7
+R0
+Z86 8../../../../v1.5_Deser.srcs/sources_1/new/trigg_system.vhd
+Z87 F../../../../v1.5_Deser.srcs/sources_1/new/trigg_system.vhd
+l0
+L34
+VaKz=`VD>=A:h2AA2Dg0VQ3
+!s100 GUl=?]Na>:M;jiP<b=3FJ3
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16
+Abehavioral
+R2
+R3
+R6
+R7
+R72
+l52
+L47
+V;KgC4lkaobhPnSkYDngQj2
+!s100 nTDzK1UU1cihQ:dLB1Pai0
+R10
+31
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 0
+R15
+R16

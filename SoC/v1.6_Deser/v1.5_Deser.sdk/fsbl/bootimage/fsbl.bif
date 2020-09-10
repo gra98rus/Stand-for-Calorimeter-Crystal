@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk/fsbl/Debug/fsbl.elf
+	/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk/crystand_top_hw_platform_0/crystand_top.bit
+	/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk_backup/test_eth/Debug/test_eth.elf
+}

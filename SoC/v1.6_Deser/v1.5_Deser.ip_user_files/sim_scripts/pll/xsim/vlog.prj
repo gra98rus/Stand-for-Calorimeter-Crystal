@@ -1,0 +1,7 @@
+verilog work --include "../../../ipstatic" \
+"../../../ip/pll/pll_clk_wiz.v" \
+"../../../ip/pll/pll.v" \
+
+verilog work "glbl.v"
+
+nosort

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="" key="crystand_top_hw_platform_2-bmmFile"/>
+	<item value="/home/zhulanov/projects/crystand/hardware/adc_stand/v1.0/firmware/v1.0/crystand_hw1_0_fw1_0.sdk/crystand_top_hw_platform_0/crystand_top.bit" key="crystand_top_hw_platform_0-bitFile"/>
+	<item value="" key="crystand_top_hw_platform_3-bmmFile"/>
+	<item value="crystand_top.bit" key="crystand_top_hw_platform_3-bitFile"/>
+	<item value="Local" key="crystand_top_hw_platform_2-target"/>
+	<item value="Local" key="crystand_top_hw_platform_3-target"/>
+	<item value="" key="crystand_top_hw_platform_0-bmmFile"/>
+	<item value="false" key="crystand_top_hw_platform_2-partial_bit"/>
+	<item value="false" key="crystand_top_hw_platform_4-partial_bit"/>
+	<item value="Local" key="crystand_top_hw_platform_4-target"/>
+	<item value="Local" key="crystand_top_hw_platform_0-target"/>
+	<item value="crystand_top.bit" key="crystand_top_hw_platform_2-bitFile"/>
+	<item value="false" key="crystand_top_hw_platform_3-partial_bit"/>
+	<item value="Auto Detect" key="crystand_top_hw_platform_3-device"/>
+	<item value="Auto Detect" key="crystand_top_hw_platform_2-device"/>
+	<item value="false" key="crystand_top_hw_platform_0-partial_bit"/>
+	<item value="Auto Detect" key="crystand_top_hw_platform_4-device"/>
+	<item value="crystand_top.bit" key="crystand_top_hw_platform_4-bitFile"/>
+	<item value="crystand_top_hw_platform_4" key="programfpga.hwplatform"/>
+	<item value="Auto Detect" key="crystand_top_hw_platform_0-device"/>
+	<item value="" key="crystand_top_hw_platform_4-bmmFile"/>
+</section>

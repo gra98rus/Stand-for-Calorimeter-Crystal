@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk" key="bootgen_files_selection"/>
+	<item value="/home/zhulanov/projects/crystand/hardware/adc_stand/v1.0/firmware/v1.0/crystand_hw1_0_fw1_0.sdk/crystand_top_hw_platform_0" key="program_fpga_view_bit_bmm_browse_key"/>
+	<item value="/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk" key="zynq_flash_files_selection"/>
+	<item value="/home/Kashpurovich/Documents/vivado_projects/v1.0/crystand_hw1_0_fw1_0.sdk" key="last_stored_selection"/>
+</section>
