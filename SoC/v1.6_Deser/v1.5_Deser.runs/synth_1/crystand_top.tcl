@@ -23,58 +23,58 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir /home/aandreev/pro/v1.5_Deser/v1.5_Deser.cache/wt [current_project]
-set_property parent.project_path /home/aandreev/pro/v1.5_Deser/v1.5_Deser.xpr [current_project]
+set_property webtalk.parent_dir /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.cache/wt [current_project]
+set_property parent.project_path /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 set_property default_lib work [current_project]
 set_property target_language VHDL [current_project]
 set_property ip_repo_paths {
-  /home/aandreev/pro/ip_repo/ps_pl_connector_new_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.3
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.2
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.1
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/ps_pl_connector_1.0
-  /home/aandreev/pro/ip_repo/PLPSIO_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_io_1.0
-  /home/aandreev/pro/ip_repo/pl_DataReg_ip_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/ps_pl_connector_new_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.3
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.2
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.1
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/ps_pl_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/PLPSIO_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_io_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_DataReg_ip_1.0
 } [current_project]
-set_property ip_output_repo /home/aandreev/pro/v1.5_Deser/v1.5_Deser.cache/ip [current_project]
+set_property ip_output_repo /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_vhdl -library work {
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/Memory.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/adc_deser.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/new_types.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/buffers_block.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/trigg_system.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd
-  /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/imports/hdl/crystand_top.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcClock.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcData.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/DoubleNibbleDetect.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/GenPulse.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/sources_1/import/main/AdcFrame.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/Memory.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/adc_deser.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/new_types.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/bound_comparator.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/buffers_block.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/infrastructure_top.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/trigg_system.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/new/shaper_controller.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/new/pl_top.vhd
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/imports/hdl/crystand_top.vhd
 }
-read_ip -quiet /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xci
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll_board.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll_ooc.xdc]
+read_ip -quiet /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xci
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll_board.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll_ooc.xdc]
 
-add_files /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp.bd
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1_board.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1_ooc.xdc]
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp_ooc.xdc]
+add_files /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp.bd
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1_board.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/ps_topp_proc_sys_reset_0_1_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp_ooc.xdc]
 
-read_ip -quiet /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch.xci
-set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch_ooc.xdc]
+read_ip -quiet /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch.xci
+set_property used_in_implementation false [get_files -all /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch_ooc.xdc]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -84,8 +84,8 @@ set_property used_in_implementation false [get_files -all /home/aandreev/pro/v1.
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc
-set_property used_in_implementation false [get_files /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc]
+read_xdc /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc
+set_property used_in_implementation false [get_files /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc]
 
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]

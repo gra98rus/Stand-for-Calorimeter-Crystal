@@ -1,0 +1,152 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.sim/sim_1/behav/questa
+EO9zlky2BrtA6H4myOUMhiPZbb70D9sM1LlY0fP559mk=
+Z1 w1598865226
+Z2 DPx16 c_reg_fd_v12_0_5 25 c_reg_fd_v12_0_5_viv_comp 0 22 H<YgDf_ncTY=<0g:fH?R63
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R0
+Z5 8../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_reg_fd_v12_0_vh_rfs.vhd
+Z6 F../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_reg_fd_v12_0_vh_rfs.vhd
+l0
+L64
+VFniIOnJ9zjRmKRe9dkgO_2
+!s100 ?fFPk@gbf_gbn_7<IUHkX3
+Z7 OL;C;10.7c;67
+!i119 1
+!i8a 2111307456
+31
+Z8 !s110 1599823912
+!i10b 1
+Z9 !s108 1599823912.000000
+Z10 !s90 -64|-93|-work|c_reg_fd_v12_0_5|../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_reg_fd_v12_0_vh_rfs.vhd|
+Z11 !s107 ../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_reg_fd_v12_0_vh_rfs.vhd|
+!i113 0
+Z12 o-93 -work c_reg_fd_v12_0_5
+Z13 tExplicit 1 CvgOpt 0
+n29546c5
+AHUdq8f7j8U54yK3zlPl/lg==
+R2
+R3
+R4
+Z14 DEx4 work 16 c_reg_fd_v12_0_5 0 22 FniIOnJ9zjRmKRe9dkgO_2
+l64
+L64
+Z15 V>SXL7VbMEW]50VPXCJeH90
+Z16 !s100 @Dh`UGDn4fRNUI7EN;E`Z0
+R7
+!i119 1
+!i8a 1795621296
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Z17 n7f03058
+PELj4PIGg+g0I5SMIdA/CHUWSK93GU7BFG9Hxy+XG0jM=
+R3
+R4
+R1
+R0
+R5
+R6
+l0
+L64
+Vk6TQB2EMaDZUe1oO@7iSK0
+!s100 7QJ5m2cdf4Bhh_KEXl;H12
+R7
+!i119 1
+!i8a 771805200
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+nc9cd220
+Er3E5DgjN6lfw9ruWnOqfxED07ryWf2YJZxb9IY5Kn1A=
+R1
+Z18 DPx17 xbip_utils_v3_0_9 21 xbip_utils_v3_0_9_pkg 0 22 6SfkPNT;DO9^n_3hG>gbC1
+R3
+R4
+R0
+R5
+R6
+l0
+L64
+VK11E]chRPdJ5k8GR64_Wd2
+!s100 gfoO>_7_TZLD8?Lcm?>^a0
+R7
+!i119 1
+!i8a 1535782432
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n6c9fa46
+AGjz0cUnf9ROUKxiOADW9KA==
+R18
+R3
+R4
+Z19 DEx4 work 20 c_reg_fd_v12_0_5_viv 0 22 K11E]chRPdJ5k8GR64_Wd2
+l64
+L64
+Z20 V@dnae7D1;3GlECn21P<991
+Z21 !s100 COVh5J3GU0Oz`K5MbSSQF1
+R7
+!i119 1
+!i8a 2132518672
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Z22 nbac63ec
+PSC1FA59M6VBx/PAQXtjG2zk9LhZNZyXBIDs8Vh8Ikec=
+R3
+R4
+R1
+R0
+R5
+R6
+l0
+L64
+VH<YgDf_ncTY=<0g:fH?R63
+!s100 kL0bj0<nS7X_U2d8Qb2mm1
+R7
+!i119 1
+!i8a 949878224
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n4e91be0

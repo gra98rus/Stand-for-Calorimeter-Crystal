@@ -1,0 +1,271 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.sim/sim_1/behav/questa
+EwekULdn1ZdsIbxjCw5SBBWZiuuUJdDJiu14nOshucbI=
+Z1 w1598865226
+Z2 DPx25 c_counter_binary_v12_0_12 34 c_counter_binary_v12_0_12_viv_comp 0 22 ?86^_^dk152=bmif>TI4Q0
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R0
+Z5 8../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_counter_binary_v12_0_vh_rfs.vhd
+Z6 F../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_counter_binary_v12_0_vh_rfs.vhd
+l0
+L64
+VIK3P=>6fliLRZ>PoO^A4;3
+!s100 _emNYl16>VTdGl5:7h>aM0
+Z7 OL;C;10.7c;67
+!i119 1
+!i8a 1361446176
+31
+Z8 !s110 1599823915
+!i10b 1
+Z9 !s108 1599823915.000000
+Z10 !s90 -64|-93|-work|c_counter_binary_v12_0_12|../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_counter_binary_v12_0_vh_rfs.vhd|
+Z11 !s107 ../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/c_counter_binary_v12_0_vh_rfs.vhd|
+!i113 0
+Z12 o-93 -work c_counter_binary_v12_0_12
+Z13 tExplicit 1 CvgOpt 0
+n375c002
+AgYlXgthYmnxZreXmOv49pw==
+R2
+R3
+R4
+Z14 DEx4 work 25 c_counter_binary_v12_0_12 0 22 IK3P=>6fliLRZ>PoO^A4;3
+l64
+L64
+Z15 Vb@YWTnjW;SB1C;zmPQbjV3
+Z16 !s100 BzbLC^gQJk;AUBU>IH8[53
+R7
+!i119 1
+!i8a 715199200
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Z17 n7f03058
+P2/dfSmsY8mF/rNJ7xjbdNVyTCAh8slxaLr78beMN1Yo=
+R3
+R4
+R1
+R0
+R5
+R6
+l0
+L64
+Vc9Nboo_8cj@E80e;b;HoW0
+!s100 40Z<TbTzbEKUEFK6dPGhm0
+R7
+!i119 1
+!i8a 1880997600
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n52da40
+E6YAyJc9F3Vp0QV1gYCLqAxhrb6YiRiJ9bgKfTWQf9+JITbPWy88xjEyUCL/sQNta
+R1
+Z18 DPx17 c_addsub_v12_0_12 28 c_addsub_v12_0_12_pkg_legacy 0 22 @13aOdLgKg<hEHmcdccRe1
+Z19 DPx17 xbip_utils_v3_0_9 21 xbip_utils_v3_0_9_pkg 0 22 6SfkPNT;DO9^n_3hG>gbC1
+Z20 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z21 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z22 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+R3
+R4
+R0
+R5
+R6
+l0
+L64
+VCX2b>5EN7bfM27QzlZMO01
+!s100 lONZEaB3GzKdCbM@dOPH92
+R7
+!i119 1
+!i8a 1582656384
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n377d7f9
+AtjynB4DM+oToxtP09djJWA==
+R18
+R19
+R20
+R21
+R22
+R3
+R4
+Z23 DEx4 work 32 c_counter_binary_v12_0_12_legacy 0 22 CX2b>5EN7bfM27QzlZMO01
+l64
+L64
+Z24 Vn]fB>E3jbYeT3<77B8biV3
+Z25 !s100 KDb>NFI`Y5`i8bfdLRANB2
+R7
+!i119 1
+!i8a 716181584
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Z26 n7b05a8
+PxOoTNCPf7tV8qKaG/3yohGXTKxFvspbnZsgbmxs4/JU=
+R21
+R22
+Z27 DPx19 xbip_counter_v3_0_5 23 xbip_counter_v3_0_5_pkg 0 22 Y]6VLIc=5384Me2_oR9k03
+R19
+R3
+R4
+R1
+R0
+R5
+R6
+l0
+L64
+V5;01OSamnC_MOPnV:CHhn2
+!s100 9cR6^fUzJSfiz;Na_NDzP3
+R7
+!i119 1
+!i8a 1625475632
+31
+b1
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n514d7
+BZW/sNo3H+T8ibCjKtsunVA==
+Z28 DPx4 work 29 c_counter_binary_v12_0_12_pkg 0 22 5;01OSamnC_MOPnV:CHhn2
+R21
+R22
+R27
+R19
+R3
+R4
+l0
+L64
+Z29 V<^oWZnz[`bfc_cbaSNaEA1
+Z30 !s100 Of@]WP]MRc3z^;]T4hTHK3
+R7
+!i119 1
+!i8a 369772192
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Z31 nbody
+EFExPyKKD9dL1xFg+2FZlGYw2/VrsWuy6vD47xvdULww=
+R1
+R21
+R22
+R27
+Z32 DPx25 c_counter_binary_v12_0_12 29 c_counter_binary_v12_0_12_pkg 0 22 5;01OSamnC_MOPnV:CHhn2
+Z33 DPx19 xbip_counter_v3_0_5 28 xbip_counter_v3_0_5_viv_comp 0 22 [:izCM6UfWG^`cAek^^Yd1
+R19
+R3
+R4
+R0
+R5
+R6
+l0
+L64
+VYg?h1ZmeIFe9gW7KH]YS12
+!s100 PDAAAoWHWlR>b4lW^`^T30
+R7
+!i119 1
+!i8a 2050114400
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+n51ac6
+As7jw93Gjl7c+RaVlVd6fMQ==
+R21
+R22
+R27
+R32
+R33
+R19
+R3
+R4
+Z34 DEx4 work 29 c_counter_binary_v12_0_12_viv 0 22 Yg?h1ZmeIFe9gW7KH]YS12
+l64
+L64
+Z35 V]nT9<IeBR3RC_GS<f<T;a0
+Z36 !s100 JUJLK80XJZbkL9ZRYUgXC0
+R7
+!i119 1
+!i8a 2051134400
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+R26
+Pb6jGQ8BKTxRpX+jo3izHpe0+aB8Gl960ry2cgZ9CkbLjOrJeDA+w6PrgXehsISgY
+R3
+R4
+R1
+R0
+R5
+R6
+l0
+L64
+V?86^_^dk152=bmif>TI4Q0
+!s100 80ln^d13j44h2<Ra5QkO82
+R7
+!i119 1
+!i8a 1495812144
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+ncc5d5e0

@@ -68,32 +68,32 @@ set rc [catch {
   create_project -in_memory -part xc7z020clg400-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir /home/aandreev/pro/v1.5_Deser/v1.5_Deser.cache/wt [current_project]
-  set_property parent.project_path /home/aandreev/pro/v1.5_Deser/v1.5_Deser.xpr [current_project]
+  set_property webtalk.parent_dir /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.cache/wt [current_project]
+  set_property parent.project_path /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.xpr [current_project]
   set_property ip_repo_paths {
-  /home/aandreev/pro/ip_repo/ps_pl_connector_new_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.3
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.2
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.1
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_connector_1.0
-  /home/aandreev/pro/ip_repo/ps_pl_connector_1.0
-  /home/aandreev/pro/ip_repo/PLPSIO_1.0
-  /home/aandreev/pro/ip_repo/pl_ps_io_1.0
-  /home/aandreev/pro/ip_repo/pl_DataReg_ip_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/ps_pl_connector_new_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.3
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.2
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.1
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/ps_pl_connector_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/PLPSIO_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_ps_io_1.0
+  /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/ip_repo/pl_DataReg_ip_1.0
 } [current_project]
-  set_property ip_output_repo /home/aandreev/pro/v1.5_Deser/v1.5_Deser.cache/ip [current_project]
+  set_property ip_output_repo /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
-  add_files -quiet /home/aandreev/pro/v1.5_Deser/v1.5_Deser.runs/synth_1/crystand_top.dcp
+  add_files -quiet /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.runs/synth_1/crystand_top.dcp
   set_msg_config -source 4 -id {BD 41-1661} -limit 0
   set_param project.isImplRun true
-  read_ip -quiet /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xci
-  add_files /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp.bd
-  read_ip -quiet /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch.xci
+  read_ip -quiet /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/pll/pll.xci
+  add_files /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/bd/ps_topp/ps_topp.bd
+  read_ip -quiet /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/sources_1/ip/c_counter_binary_ch/c_counter_binary_ch.xci
   set_param project.isImplRun false
-  read_xdc /home/aandreev/pro/v1.5_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc
+  read_xdc /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.srcs/constrs_1/new/top.xdc
   set_param project.isImplRun true
   link_design -top crystand_top -part xc7z020clg400-1
   set_param project.isImplRun false

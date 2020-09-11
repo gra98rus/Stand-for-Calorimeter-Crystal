@@ -1,0 +1,98 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.sim/sim_1/behav/questa
+P1rtYjUPDPYtZNyx3AfrXBoOuo79ierqtVkyXiUPmXHs=
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+Z3 w1598865226
+R0
+Z4 8../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/xbip_utils_v3_0_vh_rfs.vhd
+Z5 F../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/xbip_utils_v3_0_vh_rfs.vhd
+l0
+L64
+V6SfkPNT;DO9^n_3hG>gbC1
+!s100 ^f6Fc4g053DUGm42n95Gk0
+Z6 OL;C;10.7c;67
+!i119 1
+!i8a 1842548064
+31
+b1
+!s110 1599823911
+!i10b 1
+Z7 !s108 1599823911.000000
+Z8 !s90 -64|-93|-work|xbip_utils_v3_0_9|../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/xbip_utils_v3_0_vh_rfs.vhd|
+Z9 !s107 ../../../../v1.5_Deser.ip_user_files/ipstatic/hdl/xbip_utils_v3_0_vh_rfs.vhd|
+!i113 0
+Z10 o-93 -work xbip_utils_v3_0_9
+Z11 tExplicit 1 CvgOpt 0
+n7df4c47
+BwIe3p7s1EIyzNCnjKld5Rw==
+Z12 DPx4 work 21 xbip_utils_v3_0_9_pkg 0 22 6SfkPNT;DO9^n_3hG>gbC1
+R1
+R2
+l0
+L64
+Z13 V@IFd9^@W9Q>V1e2BH?Km?2
+Z14 !s100 iVcCLP0Q5H9=FUK`8cBJ`3
+R6
+!i119 1
+!i8a 1533643520
+31
+Z15 !s110 1599823912
+!i10b 1
+R7
+R8
+R9
+!i113 0
+R10
+R11
+Z16 nbody
+PJmwyWWab9Q9xyJszmrKi0w==
+R3
+R0
+R4
+R5
+l0
+L64
+V9SN>PQJ;YegRgolO011[I2
+!s100 OVdazG<Z>ll6gD<hO47YH0
+R6
+!i119 1
+!i8a 1875833120
+31
+b1
+R15
+!i10b 1
+R7
+R8
+R9
+!i113 0
+R10
+R11
+na205600
+Bc3+lNy5DS76b70jP945J3w==
+Z17 DPx4 work 14 xcc_utils_v3_0 0 22 9SN>PQJ;YegRgolO011[I2
+l0
+L64
+Z18 V_hSz:zbL`aQl<3<l=zKoB0
+Z19 !s100 lZ3Aiak?iWHdLCYbXk>NY0
+R6
+!i119 1
+!i8a 145734800
+31
+R15
+!i10b 1
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R16

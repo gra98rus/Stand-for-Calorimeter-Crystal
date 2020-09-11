@@ -1,6 +1,0 @@
-verilog work  \
-"../../../ip/blk_mem_gen_1/sim/blk_mem_gen_1.v" \
-
-verilog work "glbl.v"
-
-nosort

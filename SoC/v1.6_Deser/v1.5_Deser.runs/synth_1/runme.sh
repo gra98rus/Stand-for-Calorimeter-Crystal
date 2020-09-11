@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/aandreev/pro/v1.5_Deser/v1.5_Deser.runs/synth_1'
+HD_PWD='/home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.6_Deser/v1.5_Deser.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
