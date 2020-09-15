@@ -1,34 +1,9 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 10/27/2017 12:21:27 PM
--- Design Name: 
--- Module Name: pl_top - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
 
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
 
@@ -55,9 +30,6 @@ port(
     --clock to adc
     pll_clk_p_100mhz : out std_logic;                               
     pll_clk_n_100mhz : out std_logic;
-    
-    START_EVENT : in std_logic;                                     --signal to start measure
-    START_TYPE  : in std_logic;                                     --measure type
     
     --ADC signals
         --data
@@ -127,9 +99,12 @@ port(
     ALT_15 : out std_logic;
     ALT_16 : out std_logic;
     ALT_17 : out std_logic;
-    ALT_18 : out std_logic
-    --end shapers control signals
-
+    ALT_18 : out std_logic;
+        
+    regWE   : in std_logic;
+    regNum  : in std_logic_vector(15 downto 0);
+    dataIn  : in std_logic_vector(15 downto 0);
+    dataOut : out std_logic_vector(15 downto 0)
     );
 
 end pl_top;
@@ -164,7 +139,7 @@ end component;
     signal cmd_reset_adc_deser  : std_logic := '0';
     signal cmd_resync_adc_deser : std_logic := '0';
      
-    signal write_clk : std_logic := '0';
+    signal adc_clk : std_logic := '0';
     signal read_clk : std_logic := '0';
     
     signal dataIn_buf: adc_data_t;
@@ -199,6 +174,14 @@ end component;
     
     signal trigger_ena : std_logic_vector(1 downto 0) := "00";
     
+    signal start_type  : std_logic := '0';
+    signal start_event : std_logic := '0';
+    signal cmd_start_top : std_logic := '0';
+    signal array_state_top : std_logic := '0';
+    signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
+    signal shapers_config_top : std_logic_vector (7 downto 0);
+    signal spectra_params :  std_logic_vector(13 downto 0) := (others => '0');
+
 -----------------------------------------------------------------   
 begin
 st_buf : ibuf
@@ -276,32 +259,31 @@ port map(
     DC0P => ADC_DC0_P,      --in
     DC0N => ADC_DC0_N);     --in
 ----------------------------------------------------------------
-buffers_block_i : entity work.buffers_block             --ring and simple buffers block
+buffers_block_i : entity work.buffers_block
 port map(
-    clk_ring => write_clk,                --in
-    clk_simple => ps_clk_50mhz,            --in 
-                                                
-    adc_data_write => dataIn_buf,               --in
-    data_read => dataOut_buf,                   --out
-    trigg_ena => read_buf_ena,--START_EVENT,
+    clk_ring => adc_clk,
+    clk_simple => ps_clk_50mhz,
+
+    adc_data_write => dataIn_buf,
+    data_read => dataOut_buf,
+    trigg_signal => read_buf_ena,
     read_simple_ena => Data_read_ena_s
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block (is not finished, need changes)
 port map(
-    clk => read_clk,                    --in
-
-    start_type  => START_TYPE,          --in
-    start_event => START_EVENT,         --in    
-    confirm_match => confirm_match_s,   --in
-    trigger_state => trigger_ena,
+    clk => adc_clk,                    --in
+    rst => reset,
+    start_type  => start_type,          --in
+    start_event => start_event,         --in    
+    threshold_pass => confirm_match_s,   --in
     
-    read_ena => read_buf_ena            --in
+    trigg_signal => read_buf_ena            --in
 );
 ----------------------------------------------------------------
 bound_comparator_i : entity work.bound_comparator   --comparators block
 port map(
-    clk => write_clk,                   --in
+    clk => adc_clk,                   --in
      
     adc_buf_data => adc_data,           --in
     data_to_compare => compare_data,    --in
@@ -316,6 +298,24 @@ port map (
     shapers_config => shapers_config,       --in
     
     shapers_controll => shapers_controll    --out
+);
+----------------------------------------------------------------
+reg_i : entity work.reg_file
+port map (
+    clock => ps_clk_50mhz,
+    dataIn => dataIn,
+    dataOut => dataOut,
+    regNum => regNum,
+    regWE => regWE,
+    
+    cmd_start => cmd_start_top,
+    data_ready => array_state_top,
+    start_event => start_event,
+    trigger_type => start_type,
+    selected_channels => selected_channels_top,
+    shapers_config => shapers_config_top,
+    trigger_level=> COMPARE_DATA,
+    spectrum_spec => spectra_params
 );
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
@@ -372,27 +372,6 @@ begin
        
 end process;
 -----------------------------------------------------------------
-process(ps_clk_50mhz)
-begin
-
-    if ps_clk_50mhz'event and ps_clk_50mhz='1' then
-        ps_cnt <= ps_cnt + 1;                   --counter_increment
-    end if;
-    
-    if ps_clk_50mhz'event and ps_clk_50mhz='1' then
-        if channal_num = b"00" then
-            compare_data(13 downto 0) <= channal_compare_data;
-        elsif channal_num = b"01" then
-            compare_data(27 downto 14) <= channal_compare_data;
-        elsif channal_num = b"10" then
-            compare_data(41 downto 28) <= channal_compare_data;
-        elsif channal_num = b"11" then
-            compare_data(55 downto 42) <= channal_compare_data;
-        end if;    
-    end if;
-    
-end process;
------------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(
     I => adc_deser_clock,
@@ -442,7 +421,7 @@ adc_data(4) <= adc_data_a;              --in
 
 dataIn_buf <= adc_data;                     --in
 
-write_clk <= deser_out_clk;                 --in
+adc_clk <= deser_out_clk;                 --in
 read_clk <= adc_deser_clock;                  --in
 
 shapers_config <= ALT_CT; --ALT_CT(7) & ALT_CT(6) & ALT_CT(5) & ALT_CT(4)

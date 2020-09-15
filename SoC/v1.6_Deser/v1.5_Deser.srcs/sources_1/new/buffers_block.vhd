@@ -13,7 +13,7 @@ port (
     clk_simple          : in std_logic;
     adc_data_write      : in  adc_data_t;
     read_simple_ena     : in std_logic;
-    trigg_ena           : in std_logic;
+    trigg_signal        : in std_logic;
     
     data_read           : out std_logic_vector (63 downto 0)
      );
@@ -94,7 +94,7 @@ begin
         
         case (state) is
             when STT_WAIT =>
-                if trigg_ena = '1' then
+                if trigg_signal = '1' then
                     state           <= STT_SET_ADDR;
                     write_simple_ena<= '0';
                 end if;

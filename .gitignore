@@ -5,7 +5,9 @@ build
 .Xil
 #prj/sim/func/work
 #prj/sim/func/wlib
-*.cache/
+*.cache
+questa_lib/
+*.runs
 
 # Files #
 ################################################################################

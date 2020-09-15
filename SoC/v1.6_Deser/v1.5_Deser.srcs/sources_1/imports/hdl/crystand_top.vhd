@@ -142,6 +142,11 @@ architecture STRUCTURE of crystand_top is
   signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
   signal alt_ct : std_logic_vector (7 downto 0) := (others=>'0');
     
+    signal reg_regWE      : STD_LOGIC := '0';
+    signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+    signal reg_dataInPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+    signal reg_regNum :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
+    
 begin
 ps_topp_i: component ps_topp
      port map (
@@ -179,9 +184,7 @@ pl_top_i : entity work.pl_top
             Data_read_ena => pl_reg(2),
             CHANNAL_NUM => chNum,
             channal_compare_data => ch_comp_data,
-            start_event => pl_reg(4),
-            start_type => pl_reg(3),
-            
+           
             DATA_OUT_1 => DataOut1,
             DATA_OUT_2 => DataOut2,
             
@@ -245,8 +248,12 @@ pl_top_i : entity work.pl_top
             ADC_DC0_N => ADC_DC0_N,
                 
             ADC_FC0_P => ADC_FC0_P,
-            ADC_FC0_N => ADC_FC0_N
-            
+            ADC_FC0_N => ADC_FC0_N,
+
+            regWE   =>  reg_regWE,
+            regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
+            dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
+            dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)            
             );    
     
 end STRUCTURE;

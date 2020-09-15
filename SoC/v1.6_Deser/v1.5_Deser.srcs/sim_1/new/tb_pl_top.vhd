@@ -1,35 +1,8 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 09/25/2018 12:34:31 PM
--- Design Name: 
--- Module Name: tb_pl_top - behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 USE ieee.std_logic_unsigned.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
 library work;
@@ -137,7 +110,11 @@ architecture behavioral of tb_pl_top is
     --00101101101100000110000111000011111001110000000000000000
 
     signal BufferState : std_logic := '1';
-    
+    signal regWE   : std_logic;
+    signal regNum  : std_logic_vector(15 downto 0);
+    signal dataIn  : std_logic_vector(15 downto 0);
+    signal dataOut : std_logic_vector(15 downto 0);
+
 begin
 
 pl_top_i : entity work.pl_top
@@ -158,9 +135,6 @@ port map(
     Buffer_state => BufferState,
     pll_clk_p_100mhz => pll_clk_p_100mhz,
     pll_clk_n_100mhz => pll_clk_n_100mhz,
-    
-    START_EVENT => start_event,
-    START_TYPE => start_type,
     
     JMP1 => JMP1, 
     JMP2 => JMP2,
@@ -222,7 +196,13 @@ port map(
     ADC_DC0_N => ADC_DC0_N,
     
     ADC_FC0_P => ADC_FC0_P,
-    ADC_FC0_N => ADC_FC0_N);  
+    ADC_FC0_N => ADC_FC0_N,
+    
+    regWE     => regWE,
+    regNum    => regNum,
+    dataIn    => dataIn,
+    dataOut   => dataOut
+);  
 
 sleep_proc: process
 begin
@@ -249,7 +229,7 @@ generic map(
 	adc_del_db   => ADC_DEL_DB,
 	adc_del_dc   => ADC_DEL_DC,
 	adc_del_dd   => ADC_DEL_DD,
-	adc_data_file => "adc2.txt")
+	adc_data_file => "adc1.txt")
 port map(
 
     CLKP => ADC_CLK_P,
