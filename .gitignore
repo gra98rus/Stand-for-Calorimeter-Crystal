@@ -5,11 +5,10 @@ build
 .Xil
 #prj/sim/func/work
 #prj/sim/func/wlib
+*.cache/
 
 # Files #
 ################################################################################
-#cfg_params_generated.svh
-slon5_generated.svh
 webtalk.*
 *.log
 *.jou
@@ -21,4 +20,3 @@ transcript
 modelsim.ini
 *.vpwhistu
 *.vtg
-

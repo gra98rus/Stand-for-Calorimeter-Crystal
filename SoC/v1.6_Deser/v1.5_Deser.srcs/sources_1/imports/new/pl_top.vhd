@@ -278,18 +278,13 @@ port map(
 ----------------------------------------------------------------
 buffers_block_i : entity work.buffers_block             --ring and simple buffers block
 port map(
-    write_clk_ring => write_clk,                --in
-    read_clk_ring => read_clk,                  --in
-    read_clk_simple => ps_clk_50mhz,            --in 
+    clk_ring => write_clk,                --in
+    clk_simple => ps_clk_50mhz,            --in 
                                                 
     adc_data_write => dataIn_buf,               --in
     data_read => dataOut_buf,                   --out
-    
-    read_ring_ena => read_buf_ena,              --in
-    read_simple_ena => Data_read_ena_s,         --in
-    
-    simple_buffer_state => simple_buffer_state,  --out
-    data_transfer_end => trigger_ena --out
+    trigg_ena => read_buf_ena,--START_EVENT,
+    read_simple_ena => Data_read_ena_s
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system           --trigger_block (is not finished, need changes)

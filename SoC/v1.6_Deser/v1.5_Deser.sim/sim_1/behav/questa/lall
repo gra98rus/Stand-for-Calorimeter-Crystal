@@ -1,2 +1,4 @@
-./compile.sh | grep rror
-./elaborate.sh | grep rror
+echo Compile
+./compile.sh | grep "Error\|Warning" --color
+echo Elaborate
+./elaborate.sh | grep "Error\|Warning" --color
