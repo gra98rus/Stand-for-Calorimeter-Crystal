@@ -1,8 +1,6 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
 
 library UNISIM;
 use UNISIM.VComponents.all;
@@ -270,7 +268,7 @@ port map(
     read_simple_ena => Data_read_ena_s
 );
 ----------------------------------------------------------------
-trigg_system_i : entity work.trigg_system           --trigger_block (is not finished, need changes)
+trigg_system_i : entity work.trigg_system
 port map(
     clk => adc_clk,                    --in
     rst => reset,
@@ -281,23 +279,21 @@ port map(
     trigg_signal => read_buf_ena            --in
 );
 ----------------------------------------------------------------
-bound_comparator_i : entity work.bound_comparator   --comparators block
+threshold_comparator_i : entity work.threshold_comparator
 port map(
-    clk => adc_clk,                   --in
-     
-    adc_buf_data => adc_data,           --in
-    data_to_compare => compare_data,    --in
+    clk => adc_clk,
+    adc_buf_data => adc_data,
+    data_to_compare => compare_data,
     
-    confirm_match => confirm_match_s    --out
+    threshold_pass => confirm_match_s
 );
 ----------------------------------------------------------------
-shaper_controller_i : entity work.shaper_controller     --shaper controller block
+shaper_controller_i : entity work.shaper_controller
 port map (
-    clk => ps_clk_50mhz,                    --in
+    clk => ps_clk_50mhz,
+    shapers_config => shapers_config,
     
-    shapers_config => shapers_config,       --in
-    
-    shapers_controll => shapers_controll    --out
+    shapers_controll => shapers_controll
 );
 ----------------------------------------------------------------
 reg_i : entity work.reg_file
