@@ -1,8 +1,8 @@
-set_property IOSTANDARD LVCMOS33 [get_ports UART_TX]
-set_property PACKAGE_PIN U5 [get_ports UART_TX]
+#set_property IOSTANDARD LVCMOS33 [get_ports UART_TX]
+#set_property PACKAGE_PIN U5 [get_ports UART_TX]
 
-set_property IOSTANDARD LVCMOS33 [get_ports UART_RX]
-set_property PACKAGE_PIN V5 [get_ports UART_RX]
+#set_property IOSTANDARD LVCMOS33 [get_ports UART_RX]
+#set_property PACKAGE_PIN V5 [get_ports UART_RX]
 
 set_property IOSTANDARD LVCMOS33 [get_ports TP1]
 set_property PACKAGE_PIN Y6 [get_ports TP1]

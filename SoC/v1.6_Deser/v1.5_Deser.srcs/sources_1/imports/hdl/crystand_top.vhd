@@ -1,12 +1,3 @@
---Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
-----------------------------------------------------------------------------------
---Tool Version: Vivado v.2016.4 (lin64) Build 1733598 Wed Dec 14 22:35:42 MST 2016
---Date        : Fri Sep 21 17:33:27 2018
---Host        : devz.inp.nsk.su running 64-bit unknown
---Command     : generate_target ps_top_wrapper.bd
---Design      : ps_top_wrapper
---Purpose     : IP block netlist
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
@@ -34,8 +25,8 @@ entity crystand_top is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
-    UART_RX : in STD_LOGIC;
-    UART_TX : out STD_LOGIC;
+--    UART_RX : in STD_LOGIC;
+--    UART_TX : out STD_LOGIC;
     
     JMP1 : in std_logic;
     JMP2 : in std_logic;
@@ -121,32 +112,66 @@ architecture STRUCTURE of crystand_top is
   DDR_ras_n : inout STD_LOGIC;
   DDR_reset_n : inout STD_LOGIC;
   DDR_we_n : inout STD_LOGIC;
-  FCLK_CLK0_0 : out STD_LOGIC;
+  FCLK_CLK0 : out STD_LOGIC;
   FIXED_IO_ddr_vrn : inout STD_LOGIC;
   FIXED_IO_ddr_vrp : inout STD_LOGIC;
   FIXED_IO_mio : inout STD_LOGIC_VECTOR ( 53 downto 0 );
   FIXED_IO_ps_clk : inout STD_LOGIC;
   FIXED_IO_ps_porb : inout STD_LOGIC;
-  FIXED_IO_ps_srstb : inout STD_LOGIC
+  FIXED_IO_ps_srstb : inout STD_LOGIC;
+  OSCILLOGRAMS_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 11 downto 0 );
+  OSCILLOGRAMS_BRAM_PORTA_clk : out STD_LOGIC;
+  OSCILLOGRAMS_BRAM_PORTA_din : out STD_LOGIC_VECTOR ( 63 downto 0 );
+  OSCILLOGRAMS_BRAM_PORTA_dout : in STD_LOGIC_VECTOR ( 63 downto 0 );
+  OSCILLOGRAMS_BRAM_PORTA_en : out STD_LOGIC;
+  OSCILLOGRAMS_BRAM_PORTA_rst : out STD_LOGIC;
+  OSCILLOGRAMS_BRAM_PORTA_we : out STD_LOGIC_VECTOR ( 7 downto 0 );
+  SPECTRA_BRAM_PORTA_addr : out STD_LOGIC_VECTOR ( 17 downto 0 );
+  SPECTRA_BRAM_PORTA_clk : out STD_LOGIC;
+  SPECTRA_BRAM_PORTA_din : out STD_LOGIC_VECTOR ( 31 downto 0 );
+  SPECTRA_BRAM_PORTA_dout : in STD_LOGIC_VECTOR ( 31 downto 0 );
+  SPECTRA_BRAM_PORTA_en : out STD_LOGIC;
+  SPECTRA_BRAM_PORTA_rst : out STD_LOGIC;
+  SPECTRA_BRAM_PORTA_we : out STD_LOGIC_VECTOR ( 3 downto 0 );
+  dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
+  dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
+  regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
+  regWE : out STD_LOGIC;
+  reset : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component ps_topp;
   
-  signal FCLK_CLK0 : std_logic := '0';
+    signal FCLK_CLK0 : std_logic := '0';
   
-  signal reset : std_logic := '0';
+    signal reset : std_logic := '0';
   
-  signal pl_reg : std_logic_vector (12 downto 0);
-  signal chNum : std_logic_vector (1 downto 0);
-  signal ch_comp_data : std_logic_vector (13 downto 0);
-  signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
-  signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
-  signal alt_ct : std_logic_vector (7 downto 0) := (others=>'0');
+    signal pl_reg : std_logic_vector (12 downto 0);
+    signal chNum : std_logic_vector (1 downto 0);
+    signal ch_comp_data : std_logic_vector (13 downto 0);
+    signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
+    signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
+    signal alt_ct : std_logic_vector (7 downto 0) := (others=>'0');
     
     signal reg_regWE      : STD_LOGIC := '0';
     signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
     signal reg_dataInPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
     signal reg_regNum :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
     
+    signal spectra_bram_addr_top : std_logic_vector(17 downto 0) := (others=>'0');
+    signal spectra_bram_clk_top  : std_logic := '0';
+    signal spectra_bram_din_top  : std_logic_vector(31 downto 0) := (others=>'0');
+    signal spectra_bram_dout_top : std_logic_vector(31 downto 0) := (others=>'0');
+    signal spectra_bram_en   : std_logic := '1';
+    signal spectra_bram_we   : std_logic_vector(3 downto 0) := (others=>'0');
+    signal spectra_bram_rst  : std_logic := '0';
+    
+    signal oscillograms_bram_addr_top : std_logic_vector(11 downto 0) := (others=>'0');
+    signal oscillograms_bram_clk_top  : std_logic := '0';
+    signal oscillograms_bram_din_top  : std_logic_vector(63 downto 0) := (others=>'0');
+    signal oscillograms_bram_dout_top : std_logic_vector(63 downto 0) := (others=>'0');
+    signal oscillograms_bram_en   : std_logic := '1';
+    signal oscillograms_bram_we   : std_logic_vector(7 downto 0) := (others=>'0');
+    signal oscillograms_bram_rst  : std_logic := '0';    
 begin
 ps_topp_i: component ps_topp
      port map (
@@ -171,8 +196,28 @@ ps_topp_i: component ps_topp
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
-      FCLK_CLK0_0 => FCLK_CLK0
-    );
+      FCLK_CLK0 => FCLK_CLK0,
+      SPECTRA_BRAM_PORTA_addr => spectra_bram_addr_top,
+      SPECTRA_BRAM_PORTA_clk  => spectra_bram_clk_top,
+      SPECTRA_BRAM_PORTA_din  => spectra_bram_din_top,
+      SPECTRA_BRAM_PORTA_dout => spectra_bram_dout_top,
+      SPECTRA_BRAM_PORTA_en   => spectra_bram_en,
+      SPECTRA_BRAM_PORTA_rst  => spectra_bram_rst,
+      SPECTRA_BRAM_PORTA_we   => spectra_bram_we,
+      
+      OSCILLOGRAMS_BRAM_PORTA_addr => oscillograms_bram_addr_top,
+      OSCILLOGRAMS_BRAM_PORTA_clk  => oscillograms_bram_clk_top,
+      OSCILLOGRAMS_BRAM_PORTA_din  => oscillograms_bram_din_top,
+      OSCILLOGRAMS_BRAM_PORTA_dout => oscillograms_bram_dout_top,
+      OSCILLOGRAMS_BRAM_PORTA_en   => oscillograms_bram_en,
+      OSCILLOGRAMS_BRAM_PORTA_rst  => oscillograms_bram_rst,
+      OSCILLOGRAMS_BRAM_PORTA_we   => oscillograms_bram_we,
+                  
+      dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
+      dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
+      regNum(31 downto 0) => reg_regNum(31 downto 0),
+      regWE => reg_regWE  
+      );
     
 pl_top_i : entity work.pl_top
     port map(
@@ -253,7 +298,13 @@ pl_top_i : entity work.pl_top
             regWE   =>  reg_regWE,
             regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
             dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
-            dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0)            
+            dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0),
+            
+            oscillograms_bram_clk  => oscillograms_bram_clk_top,
+            oscillograms_bram_addr => oscillograms_bram_addr_top(9 downto 3),
+            oscillograms_bram_din  => oscillograms_bram_din_top,
+            oscillograms_bram_en   => oscillograms_bram_en
+            
             );    
     
 end STRUCTURE;

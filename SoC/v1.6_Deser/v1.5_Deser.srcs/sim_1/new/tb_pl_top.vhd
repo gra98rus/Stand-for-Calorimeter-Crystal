@@ -114,7 +114,13 @@ architecture behavioral of tb_pl_top is
     signal regNum  : std_logic_vector(15 downto 0);
     signal dataIn  : std_logic_vector(15 downto 0);
     signal dataOut : std_logic_vector(15 downto 0);
-
+    signal oscillograms_bram_addr_top : std_logic_vector(6 downto 0) := (others=>'0');
+    signal oscillograms_bram_clk_top  : std_logic := '0';
+    signal oscillograms_bram_din_top  : std_logic_vector(63 downto 0) := (others=>'0');
+    signal oscillograms_bram_dout_top : std_logic_vector(63 downto 0) := (others=>'0');
+    signal oscillograms_bram_en   : std_logic := '1';
+    signal oscillograms_bram_we   : std_logic_vector(7 downto 0) := (others=>'0');
+    signal oscillograms_bram_rst  : std_logic := '0';  
 begin
 
 pl_top_i : entity work.pl_top
@@ -201,7 +207,12 @@ port map(
     regWE     => regWE,
     regNum    => regNum,
     dataIn    => dataIn,
-    dataOut   => dataOut
+    dataOut   => dataOut,
+                
+    oscillograms_bram_clk  => oscillograms_bram_clk_top,
+    oscillograms_bram_addr => oscillograms_bram_addr_top,
+    oscillograms_bram_din  => oscillograms_bram_din_top,
+    oscillograms_bram_en   => oscillograms_bram_en
 );  
 
 sleep_proc: process

@@ -54,7 +54,6 @@ architecture Behavioral of RAM is
 
 constant C_RAM_WIDTH : integer := RAM_WIDTH;
 constant C_RAM_DEPTH : integer := RAM_DEPTH;
-constant C_RAM_PERFORMANCE : string := "LOW_LATENCY";
 
 
 type ram_type is array (C_RAM_DEPTH-1 downto 0) of std_logic_vector (C_RAM_WIDTH-1 downto 0);      -- 2D Array Declaration for RAM signal
@@ -94,9 +93,7 @@ begin
     end if;
 end process;
 
-no_output_register : if C_RAM_PERFORMANCE = "LOW_LATENCY" generate
-    douta <= ram_data_a;
-    doutb <= ram_data_b;
-end generate;
+douta <= ram_data_a;
+doutb <= ram_data_b;
 
 end Behavioral;

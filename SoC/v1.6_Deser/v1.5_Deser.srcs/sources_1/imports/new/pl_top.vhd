@@ -11,11 +11,11 @@ use work.new_types.all;
 entity pl_top is
 port(
 
-    ps_clk_50mhz    : in std_logic;     --system clock
-    reset           : in std_logic;     -- system reset (clocking wizard)
-    adc_ctrl_cmd    : in std_logic;     --adc reset
-    clk_gen_lock    : in std_logic;     --adc clock enable 
-    Data_read_ena   : in std_logic;     --processor data read enable
+    ps_clk_50mhz    : in std_logic;
+    reset           : in std_logic;
+    adc_ctrl_cmd    : in std_logic;
+    clk_gen_lock    : in std_logic;
+    Data_read_ena   : in std_logic;
     
     CHANNAL_NUM          : in std_logic_vector (1 downto 0);        --data to compare module (channel info)
     CHANNAL_COMPARE_DATA : in std_logic_vector (13 downto 0);       --data to compare module (treshold info)
@@ -102,7 +102,13 @@ port(
     regWE   : in std_logic;
     regNum  : in std_logic_vector(15 downto 0);
     dataIn  : in std_logic_vector(15 downto 0);
-    dataOut : out std_logic_vector(15 downto 0)
+    dataOut : out std_logic_vector(15 downto 0);
+    
+    oscillograms_bram_clk  : in  std_logic;
+    oscillograms_bram_addr : in  std_logic_vector(6 downto 0);
+    oscillograms_bram_din  : out std_logic_vector(63 downto 0);
+    oscillograms_bram_en   : in  std_logic
+    
     );
 
 end pl_top;
@@ -182,21 +188,7 @@ end component;
 
 -----------------------------------------------------------------   
 begin
-st_buf : ibuf
-port map (
-    I => start_type,
-    O => start_type_s
-);
-se_buf : ibuf
-port map (
-    I => start_event,
-    O => start_event_s
-);
-dre_buf : ibuf
-port map (
-    I => Data_read_ena,
-    O => Data_read_ena_s
-);
+
 -----------------------------------------------------------------
 infrastructure_top_i : entity work.infrastructure_top       --pll_block
 port map(     
@@ -259,13 +251,14 @@ port map(
 ----------------------------------------------------------------
 buffers_block_i : entity work.buffers_block
 port map(
-    clk_ring => adc_clk,
-    clk_simple => ps_clk_50mhz,
+    ring_clk        => adc_clk,
+    adc_data_write  => dataIn_buf,
+    simple_clk      => oscillograms_bram_clk,
+    simple_addr     => oscillograms_bram_addr,
+    simple_ena      => oscillograms_bram_en,
+    simple_dout     => oscillograms_bram_din,
 
-    adc_data_write => dataIn_buf,
-    data_read => dataOut_buf,
-    trigg_signal => read_buf_ena,
-    read_simple_ena => Data_read_ena_s
+    trigg_signal    => read_buf_ena
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system
@@ -396,8 +389,8 @@ end process;
 -----------------------------------------------------------------
 TP1 <= synq;                            --out
 TP2 <= adc_deser_clock;                       --out
-TP3 <= ps_cnt(2);                       --out
-TP4 <= ps_cnt(3);                       --out
+TP3 <= ps_cnt(0);                       --out
+TP4 <= ps_cnt(0);                       --out
 TP5 <= ps_cnt(4);                       --out
 TP6 <= ps_cnt(5);                       --out
 TP7 <= ps_cnt(6);                       --out
