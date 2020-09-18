@@ -53,13 +53,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="74"/>
-    <Option Name="WTModelSimExportSim" Val="74"/>
-    <Option Name="WTQuestaExportSim" Val="74"/>
-    <Option Name="WTIesExportSim" Val="74"/>
-    <Option Name="WTVcsExportSim" Val="74"/>
-    <Option Name="WTRivieraExportSim" Val="74"/>
-    <Option Name="WTActivehdlExportSim" Val="74"/>
+    <Option Name="WTXSimExportSim" Val="75"/>
+    <Option Name="WTModelSimExportSim" Val="75"/>
+    <Option Name="WTQuestaExportSim" Val="75"/>
+    <Option Name="WTIesExportSim" Val="75"/>
+    <Option Name="WTVcsExportSim" Val="75"/>
+    <Option Name="WTRivieraExportSim" Val="75"/>
+    <Option Name="WTActivehdlExportSim" Val="75"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -90,9 +90,6 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
-          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
-        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_ps_top_reg_interface_0_1/ps_topp_ps_top_reg_interface_0_1.xci">
           <Proxy FileSetName="ps_topp_ps_top_reg_interface_0_1"/>
         </CompFileExtendedInfo>
@@ -104,6 +101,9 @@
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_xbar_0/ps_topp_xbar_0.xci">
           <Proxy FileSetName="ps_topp_xbar_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
+          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
         </CompFileExtendedInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/threshold_comparator.vhd">

@@ -1,7 +1,7 @@
 onbreak {quit -f}
 onerror {quit -f}
 
-vsim -voptargs="+acc" -t 1ps -L xil_defaultlib -L xpm -L work -L unisims_ver -L unimacro_ver -L secureip -lib work work.pll work.glbl
+vsim -voptargs="+acc" -t 1ps -L xilinx_vip -L xil_defaultlib -L xpm -L work -L xilinx_vip -L unisims_ver -L unimacro_ver -L secureip -lib work work.pll work.glbl
 
 do {wave.do}
 

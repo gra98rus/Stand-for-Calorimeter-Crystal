@@ -211,7 +211,7 @@ port map(
                 
     oscillograms_bram_clk  => oscillograms_bram_clk_top,
     oscillograms_bram_addr => oscillograms_bram_addr_top,
-    oscillograms_bram_din  => oscillograms_bram_din_top,
+    oscillograms_bram_dout => oscillograms_bram_dout_top,
     oscillograms_bram_en   => oscillograms_bram_en
 );  
 

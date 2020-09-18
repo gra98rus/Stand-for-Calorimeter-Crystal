@@ -56,7 +56,8 @@
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
 //----------------------------------------------------------------------------
-// clk_out1___100.000______0.000______50.0______175.200____161.614
+// clk_out1___100.000______0.000______50.0______162.035____164.985
+// clk_out2___200.000______0.000______50.0______142.107____164.985
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -70,6 +71,7 @@ module pll_clk_wiz
  (// Clock in ports
   // Clock out ports
   output        clk_out1,
+  output        clk_out2,
   // Status and control signals
   input         reset,
   output        locked,
@@ -108,7 +110,6 @@ wire clk_in2_pll;
   wire        clkfbout_pll;
   wire        clkfbout_buf_pll;
   wire        clkfboutb_unused;
-   wire clkout1_unused;
    wire clkout2_unused;
    wire clkout3_unused;
    wire clkout4_unused;
@@ -123,18 +124,21 @@ wire clk_in2_pll;
     .COMPENSATION         ("ZHOLD"),
     .STARTUP_WAIT         ("FALSE"),
     .DIVCLK_DIVIDE        (1),
-    .CLKFBOUT_MULT        (18),
+    .CLKFBOUT_MULT        (20),
     .CLKFBOUT_PHASE       (0.000),
-    .CLKOUT0_DIVIDE       (9),
+    .CLKOUT0_DIVIDE       (10),
     .CLKOUT0_PHASE        (0.000),
     .CLKOUT0_DUTY_CYCLE   (0.500),
+    .CLKOUT1_DIVIDE       (5),
+    .CLKOUT1_PHASE        (0.000),
+    .CLKOUT1_DUTY_CYCLE   (0.500),
     .CLKIN1_PERIOD        (20.000))
   plle2_adv_inst
     // Output clocks
    (
     .CLKFBOUT            (clkfbout_pll),
     .CLKOUT0             (clk_out1_pll),
-    .CLKOUT1             (clkout1_unused),
+    .CLKOUT1             (clk_out2_pll),
     .CLKOUT2             (clkout2_unused),
     .CLKOUT3             (clkout3_unused),
     .CLKOUT4             (clkout4_unused),
@@ -178,6 +182,10 @@ wire clk_in2_pll;
    (.O   (clk_out1),
     .I   (clk_out1_pll));
 
+
+  BUFG clkout2_buf
+   (.O   (clk_out2),
+    .I   (clk_out2_pll));
 
 
 

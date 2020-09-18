@@ -126,6 +126,7 @@ port
   reset     : in     std_logic;
   
   clk_out1  : out    std_logic;                 --output clock signal
+  clk_out2  : out    std_logic;                 --output clock signal
   locked    : out    std_logic                  --status signal
  );
 end component;
@@ -145,6 +146,7 @@ pll_inst : pll                     --pll block
     reset    => reset,
     
     clk_out1 => clk_100mhz,
+    clk_out2 => clk_200mhz,
     locked   => ext_clk_pll_locked_s);
 -------------------------------------------------------
 idelayctrl_0 : IDELAYCTRL
