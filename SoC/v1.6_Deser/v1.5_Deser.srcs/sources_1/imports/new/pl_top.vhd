@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+USE std.textio.all;
 
 library UNISIM;
 use UNISIM.VComponents.all;
@@ -106,7 +107,7 @@ port(
     
     oscillograms_bram_clk  : in  std_logic;
     oscillograms_bram_addr : in  std_logic_vector(6 downto 0);
-    oscillograms_bram_din  : out std_logic_vector(63 downto 0);
+    oscillograms_bram_dout : out std_logic_vector(63 downto 0);
     oscillograms_bram_en   : in  std_logic
     
     );
@@ -185,11 +186,15 @@ end component;
     signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
     signal shapers_config_top : std_logic_vector (7 downto 0);
     signal spectra_params :  std_logic_vector(13 downto 0) := (others => '0');
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of infrastructure_top_i : label is "yes";
+
 
 -----------------------------------------------------------------   
 begin
 
 -----------------------------------------------------------------
+
 infrastructure_top_i : entity work.infrastructure_top       --pll_block
 port map(     
     
@@ -200,6 +205,8 @@ port map(
     pl_clk_100mhz => adc_deser_clock,               --out
     ext_clk_pll_locked => ext_clk_pll_locked        --out
         ); 
+        
+
 -----------------------------------------------------------------
 adc_deser_i : entity work.adc_deser                         --deser_block
 generic map(
@@ -256,9 +263,9 @@ port map(
     simple_clk      => oscillograms_bram_clk,
     simple_addr     => oscillograms_bram_addr,
     simple_ena      => oscillograms_bram_en,
-    simple_dout     => oscillograms_bram_din,
-
-    trigg_signal    => read_buf_ena
+    trigg_signal    => read_buf_ena,
+    
+    simple_dout     => oscillograms_bram_dout
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system

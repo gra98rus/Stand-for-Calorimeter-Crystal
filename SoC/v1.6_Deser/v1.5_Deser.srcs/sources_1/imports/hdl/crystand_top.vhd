@@ -302,7 +302,7 @@ pl_top_i : entity work.pl_top
             
             oscillograms_bram_clk  => oscillograms_bram_clk_top,
             oscillograms_bram_addr => oscillograms_bram_addr_top(9 downto 3),
-            oscillograms_bram_din  => oscillograms_bram_din_top,
+            oscillograms_bram_dout  => oscillograms_bram_dout_top,
             oscillograms_bram_en   => oscillograms_bram_en
             
             );    
