@@ -67,7 +67,7 @@ port map(
     enb   => '1',
     doutb => doutb_ring);
 
-dina_ring <= adc_data_write(0) & adc_data_write(1) & adc_data_write(2) & adc_data_write(3);
+dina_ring <= adc_data_write(3) & adc_data_write(2) & adc_data_write(1) & adc_data_write(0);
 -----------------------------------------------------------------
 
 simple_buf: entity work.RAM

@@ -441,10 +441,10 @@ adc_deser_clock_locked <= clk_gen_lock; --in
 DATA_OUT_1 <= dataOut_buf(31 downto 16) & dataOut_buf(15 downto 0);     --out
 DATA_OUT_2 <= dataOut_buf(63 downto 48) & dataOut_buf(47 downto 32);     --dataOut_buf(63 downto 32);                --out
 
-adc_data(0) <= adc_data_d;              --in
-adc_data(1) <= adc_data_c;              --in
-adc_data(2) <= adc_data_b;              --in
-adc_data(3) <= adc_data_a;              --in
+adc_data(3) <= adc_data_d;              --in
+adc_data(2) <= adc_data_c;              --in
+adc_data(1) <= adc_data_b;              --in
+adc_data(0) <= adc_data_a;              --in
 
 
 adc_clk <= deser_out_clk;                 --in
