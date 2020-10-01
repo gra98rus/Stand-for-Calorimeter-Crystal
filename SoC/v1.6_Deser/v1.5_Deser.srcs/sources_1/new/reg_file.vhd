@@ -10,11 +10,11 @@ entity reg_file is
 port(
 	clock      : in  std_logic;
 	regWE      : in  std_logic;
-	regNum     : in  std_logic_vector(15 downto 0);
-	dataIn     : in  std_logic_vector(15 downto 0);
+	regNum     : in  std_logic_vector(31 downto 0);
+	dataIn     : in  std_logic_vector(31 downto 0);
     data_ready : in std_logic;
 	
-	dataOut             : out std_logic_vector(15 downto 0);
+	dataOut             : out std_logic_vector(31 downto 0);
     cmd_start           : out std_logic;
     start_event         : out std_logic;
     trigger_type        : out std_logic;
@@ -27,9 +27,9 @@ port(
 end reg_file;
 
 architecture behavioral of reg_file is
-	signal data_out_r : std_logic_vector(15 downto 0) := (others=>'0');
+	signal data_out_r : std_logic_vector(31 downto 0) := (others=>'0');
 
-	signal echo_reg_r : std_logic_vector(15 downto 0) := (others=>'0');
+	signal echo_reg_r : std_logic_vector(31 downto 0) := (others=>'0');
 	signal reg_echo_ena_r : std_logic := '0';
 	
 	signal cmd_start_ena_r    : std_logic := '0';

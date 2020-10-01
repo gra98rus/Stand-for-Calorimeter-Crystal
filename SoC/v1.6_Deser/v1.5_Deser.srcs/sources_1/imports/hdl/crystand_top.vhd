@@ -86,11 +86,11 @@ entity crystand_top is
     ADC_DC0_N : in std_logic;
         
     ADC_FC0_P : in std_logic;
-    ADC_FC0_N : in std_logic;
+    ADC_FC0_N : in std_logic
     
-    SPI_CSB: out std_logic;
-    SPI_SCLK: out std_logic;
-    SPI_SDIO: out std_logic
+--    SPI_CSB: out std_logic;
+--    SPI_SCLK: out std_logic;
+--    SPI_SDIO: out std_logic
     );
 end crystand_top;
 
@@ -296,14 +296,17 @@ pl_top_i : entity work.pl_top
             ADC_FC0_N => ADC_FC0_N,
 
             regWE   =>  reg_regWE,
-            regNum(15 downto 0)  =>  reg_regNum(15 downto 0),
-            dataIn(15 downto 0)  =>  reg_dataInPL(15 downto 0),
-            dataOut(15 downto 0) =>  reg_dataFromPL(15 downto 0),
+            regNum  =>  reg_regNum,
+            dataIn  =>  reg_dataInPL,
+            dataOut =>  reg_dataFromPL,
+                                
+            spectra_bram_clk  => spectra_bram_clk_top,
+            spectra_bram_addr => spectra_bram_addr_top(17 downto 2),
+            spectra_bram_dout => spectra_bram_dout_top,
             
             oscillograms_bram_clk  => oscillograms_bram_clk_top,
             oscillograms_bram_addr => oscillograms_bram_addr_top(9 downto 3),
-            oscillograms_bram_dout  => oscillograms_bram_dout_top,
-            oscillograms_bram_en   => oscillograms_bram_en
+            oscillograms_bram_dout => oscillograms_bram_dout_top
             
             );    
     

@@ -101,16 +101,19 @@ port(
     ALT_18 : out std_logic;
         
     regWE   : in std_logic;
-    regNum  : in std_logic_vector(15 downto 0);
-    dataIn  : in std_logic_vector(15 downto 0);
-    dataOut : out std_logic_vector(15 downto 0);
+    regNum  : in std_logic_vector(31 downto 0);
+    dataIn  : in std_logic_vector(31 downto 0);
+    dataOut : out std_logic_vector(31 downto 0);
     
     oscillograms_bram_clk  : in  std_logic;
     oscillograms_bram_addr : in  std_logic_vector(6 downto 0);
     oscillograms_bram_dout : out std_logic_vector(63 downto 0);
-    oscillograms_bram_en   : in  std_logic
+                
+    spectra_bram_addr : in std_logic_vector(15 downto 0);
+    spectra_bram_clk  : in std_logic;
+    spectra_bram_dout : out std_logic_vector(31 downto 0)
     
-    );
+);
 
 end pl_top;
 
@@ -129,7 +132,7 @@ end component;
     signal ext_clk_pll_locked : std_logic := '0';
     signal ps_clk_50mhz_s : std_logic := '0';
         
-    signal adc_data : adc_data_t;
+    signal adc_data : adc_data_64_t;
     signal adc_data_a : std_logic_vector(15 downto 0) := (others=>'0');
     signal adc_data_b : std_logic_vector(15 downto 0) := (others=>'0');
     signal adc_data_c : std_logic_vector(15 downto 0) := (others=>'0');
@@ -147,7 +150,6 @@ end component;
     signal adc_clk : std_logic := '0';
     signal read_clk : std_logic := '0';
     
-    signal dataIn_buf: adc_data_t;
     signal dataOut_buf: std_logic_vector (63 downto 0) := (others=>'0');
         
     signal write_buf_ena : std_logic := '0';
@@ -182,13 +184,19 @@ end component;
     signal start_type  : std_logic := '0';
     signal start_event : std_logic := '0';
     signal cmd_start_top : std_logic := '0';
-    signal array_state_top : std_logic := '0';
+    signal buffer_data_valid : std_logic := '0';
     signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
     signal shapers_config_top : std_logic_vector (7 downto 0);
     signal spectra_params :  std_logic_vector(13 downto 0) := (others => '0');
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of infrastructure_top_i : label is "yes";
 
+    signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
+    
+    signal adc_data_spectra : adc_data_56_t;
+    signal addr_spectra     : std_logic_vector(6 downto 0);
+    
+    signal adc_max_value : adc_data_56_t;
 
 -----------------------------------------------------------------   
 begin
@@ -258,14 +266,22 @@ port map(
 ----------------------------------------------------------------
 buffers_block_i : entity work.buffers_block
 port map(
-    ring_clk        => adc_clk,
-    adc_data_write  => dataIn_buf,
-    simple_clk      => oscillograms_bram_clk,
-    simple_addr     => oscillograms_bram_addr,
-    simple_ena      => oscillograms_bram_en,
-    trigg_signal    => read_buf_ena,
+    ring_clk            => adc_clk,
+    adc_data_write      => adc_data,
     
-    simple_dout     => oscillograms_bram_dout
+    simple_clk          => oscillograms_bram_clk,
+    simple_addr         => oscillograms_bram_addr,
+    
+    simple_clk_spectra  => ps_clk_50mhz,
+    simple_addr_spectra => addr_spectra,
+    
+    trigg_signal        => read_buf_ena,
+    
+    simple_dout         => oscillograms_bram_dout,
+    simple_dout_spectra => adc_data_spectra,
+    simple_max_value    => adc_max_value,
+        
+    simple_data_valid   => buffer_data_valid
 );
 ----------------------------------------------------------------
 trigg_system_i : entity work.trigg_system
@@ -298,20 +314,35 @@ port map (
 ----------------------------------------------------------------
 reg_i : entity work.reg_file
 port map (
-    clock => ps_clk_50mhz,
-    dataIn => dataIn,
-    dataOut => dataOut,
-    regNum => regNum,
-    regWE => regWE,
+    clock             => ps_clk_50mhz,
+    dataIn            => dataIn,
+    dataOut           => dataOut,
+    regNum            => regNum,
+    regWE             => regWE,
     
-    cmd_start => cmd_start_top,
-    data_ready => array_state_top,
-    start_event => start_event,
-    trigger_type => start_type,
+    cmd_start         => cmd_start_top,
+    data_ready        => buffer_data_valid,
+    start_event       => start_event,
+    trigger_type      => start_type,
     selected_channels => selected_channels_top,
-    shapers_config => shapers_config_top,
-    trigger_level=> COMPARE_DATA,
-    spectrum_spec => spectra_params
+    shapers_config    => shapers_config_top,
+    trigger_level     => COMPARE_DATA,
+    spectrum_spec     => spectra_params
+);
+
+spectra_controller_i: entity work.Spectra_controller
+port map (
+    clk              => ps_clk_50mhz,
+    bram_ctrl_clk    => spectra_bram_clk,
+    spectrum_spec    => spectra_params,
+    spectra_statuses => spectra_commands,
+    adc_data         => adc_data_spectra,
+    adc_data_valid   => buffer_data_valid,
+    PS_addr          => spectra_bram_addr,
+    adc_max_value    => adc_max_value,
+    
+    simple_buff_addr => addr_spectra,
+    PS_data          => spectra_bram_dout
 );
 ----------------------------------------------------------------
 process(JMP1, JMP2)     --process to choise amplifiers coefficient
@@ -410,12 +441,11 @@ adc_deser_clock_locked <= clk_gen_lock; --in
 DATA_OUT_1 <= dataOut_buf(31 downto 16) & dataOut_buf(15 downto 0);     --out
 DATA_OUT_2 <= dataOut_buf(63 downto 48) & dataOut_buf(47 downto 32);     --dataOut_buf(63 downto 32);                --out
 
-adc_data(1) <= adc_data_d;              --in
-adc_data(2) <= adc_data_c;              --in
-adc_data(3) <= adc_data_b;              --in
-adc_data(4) <= adc_data_a;              --in
+adc_data(0) <= adc_data_d;              --in
+adc_data(1) <= adc_data_c;              --in
+adc_data(2) <= adc_data_b;              --in
+adc_data(3) <= adc_data_a;              --in
 
-dataIn_buf <= adc_data;                     --in
 
 adc_clk <= deser_out_clk;                 --in
 read_clk <= adc_deser_clock;                  --in

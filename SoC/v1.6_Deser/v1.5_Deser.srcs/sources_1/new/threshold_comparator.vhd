@@ -11,7 +11,7 @@ entity threshold_comparator is
 Port ( 
     clk : in std_logic;
 
-    adc_buf_data : in adc_data_t;
+    adc_buf_data : in adc_data_64_t;
     data_to_compare : in std_logic_vector (55 downto 0);
     
     threshold_pass: out std_logic
@@ -38,10 +38,10 @@ architecture Behavioral of threshold_comparator is
 ---------------------------------------------------------------------------------------
 begin
 ---------------------------------------------------------------------------------------
-data_ch_A <= adc_buf_data(1)(13 downto 0);
-data_ch_B <= adc_buf_data(2)(13 downto 0);
-data_ch_C <= adc_buf_data(3)(13 downto 0);
-data_ch_D <= adc_buf_data(4)(13 downto 0);
+data_ch_A <= adc_buf_data(0)(13 downto 0);
+data_ch_B <= adc_buf_data(1)(13 downto 0);
+data_ch_C <= adc_buf_data(2)(13 downto 0);
+data_ch_D <= adc_buf_data(3)(13 downto 0);
 
 data_tc_A <= data_to_compare (13 downto 0);
 data_tc_B <= data_to_compare (27 downto 14);

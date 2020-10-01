@@ -39,7 +39,7 @@ Port (
     addra   : in  std_logic_vector(clogb2(RAM_DEPTH)-1 downto 0);
     addrb   : in  std_logic_vector(clogb2(RAM_DEPTH)-1 downto 0);
     dina    : in  std_logic_vector(RAM_WIDTH-1 downto 0);
-    dinb    : in  std_logic_vector(RAM_WIDTH-1 downto 0);
+--    dinb    : in  std_logic_vector(RAM_WIDTH-1 downto 0);
     wea     : in  std_logic;
 --    web     : in  std_logic;
     ena     : in  std_logic;

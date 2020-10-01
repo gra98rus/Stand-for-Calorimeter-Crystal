@@ -119,12 +119,12 @@ set_property LOC IDELAY_X1Y78 [get_cells pl_top_i/adc_deser_i/AdcClock_i/AdcCloc
 set_property PACKAGE_PIN U14 [get_ports ADC_DC0_P]
 set_property PACKAGE_PIN U15 [get_ports ADC_DC0_N]
 
-set_property IOSTANDARD LVCMOS25 [get_ports SPI_CSB]
-set_property PACKAGE_PIN V13 [get_ports SPI_CSB]
-set_property IOSTANDARD LVCMOS25 [get_ports SPI_SCLK]
-set_property PACKAGE_PIN V18 [get_ports SPI_SCLK]
-set_property IOSTANDARD LVCMOS25 [get_ports SPI_SDIO]
-set_property PACKAGE_PIN W16 [get_ports SPI_SDIO]
+#set_property IOSTANDARD LVCMOS25 [get_ports SPI_CSB]
+#set_property PACKAGE_PIN V13 [get_ports SPI_CSB]
+#set_property IOSTANDARD LVCMOS25 [get_ports SPI_SCLK]
+#set_property PACKAGE_PIN V18 [get_ports SPI_SCLK]
+#set_property IOSTANDARD LVCMOS25 [get_ports SPI_SDIO]
+#set_property PACKAGE_PIN W16 [get_ports SPI_SDIO]
 
 
 set_property DIFF_TERM TRUE [get_ports ADC_D1B_P]
