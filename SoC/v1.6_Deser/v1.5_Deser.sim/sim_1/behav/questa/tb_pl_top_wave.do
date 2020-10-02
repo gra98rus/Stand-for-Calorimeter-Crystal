@@ -41,16 +41,35 @@ add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_c
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareB
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareC
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareD
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_statuses
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/adc_data_valid
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_params
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/num_of_bins
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/selected_point
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/count
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/state
-add wave -noupdate -expand -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/relevant_adc
+add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/selected_channels
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_statuses
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/adc_data_valid
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_params
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/num_of_bins
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/selected_point
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/count
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/state
+add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/relevant_adc
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/data_ready
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/start_event
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/trigger_type
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/trigger_level
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/selected_channels
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/shapers_config
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/spectrum_spec
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/data_out_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/echo_reg_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/reg_echo_ena_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/start_event_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/start_event_delay
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/start_event_result
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/trigger_type_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/trigger_level_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/selected_channels_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/shapers_config_r
+add wave -noupdate -expand -group reg_i /tb_pl_top/pl_top_i/reg_i/data_status
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {18792938580 fs} 0}
+WaveRestoreCursors {{Cursor 1} {17010050000 fs} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 341
 configure wave -valuecolwidth 136
@@ -66,4 +85,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {18489915190 fs} {19237372885 fs}
+WaveRestoreZoom {4681541539 fs} {19753603077 fs}

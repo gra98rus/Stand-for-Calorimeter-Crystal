@@ -181,14 +181,13 @@ end component;
     
     signal trigger_ena : std_logic_vector(1 downto 0) := "00";
     
-    signal start_type  : std_logic := '0';
-    signal start_event : std_logic := '0';
-    signal cmd_start_top : std_logic := '0';
-    signal buffer_data_valid : std_logic := '0';
-    signal selected_channels_top : std_logic_vector (3 downto 0) := (others => '0');
-    signal shapers_config_top : std_logic_vector (7 downto 0);
-    signal spectra_params :  std_logic_vector(13 downto 0) := (others => '0');
-    attribute keep_hierarchy : string;
+    signal start_type            : std_logic                      := '0';
+    signal start_event           : std_logic                      := '0';
+    signal buffer_data_valid     : std_logic                      := '0';
+    signal selected_channels_top : std_logic_vector ( 3 downto 0) := (others => '0');
+    signal shapers_config_top    : std_logic_vector ( 7 downto 0);
+    signal spectra_params        : std_logic_vector (13 downto 0) := (others => '0');
+    attribute keep_hierarchy     : string;
     attribute keep_hierarchy of infrastructure_top_i : label is "yes";
 
     signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
@@ -297,11 +296,12 @@ port map(
 ----------------------------------------------------------------
 threshold_comparator_i : entity work.threshold_comparator
 port map(
-    clk => adc_clk,
-    adc_buf_data => adc_data,
-    data_to_compare => compare_data,
+    clk               => adc_clk,
+    adc_buf_data      => adc_data,
+    data_to_compare   => compare_data,
+    selected_channels => selected_channels_top,
     
-    threshold_pass => confirm_match_s
+    threshold_pass    => confirm_match_s
 );
 ----------------------------------------------------------------
 shaper_controller_i : entity work.shaper_controller
@@ -322,7 +322,6 @@ port map (
     data_ready        => buffer_data_valid,
 
     start_event       => start_event,
-    cmd_start         => cmd_start_top,
     trigger_type      => start_type,
     selected_channels => selected_channels_top,
     shapers_config    => shapers_config_top,

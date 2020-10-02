@@ -11,10 +11,11 @@ entity threshold_comparator is
 Port ( 
     clk : in std_logic;
 
-    adc_buf_data : in adc_data_64_t;
-    data_to_compare : in std_logic_vector (55 downto 0);
+    adc_buf_data     : in  adc_data_64_t;
+    data_to_compare  : in  std_logic_vector (55 downto 0);
+    selected_channels: in  std_logic_vector ( 3 downto 0);
     
-    threshold_pass: out std_logic
+    threshold_pass   : out std_logic
 );
 end threshold_comparator;
 
@@ -52,25 +53,25 @@ process (clk)
 begin
 if clk'event and clk = '1' then
 
-    if data_ch_A >= data_tc_A then
+    if data_ch_A >= data_tc_A and selected_channels(0) = '1' then
         compareA <= '1';
     else
         compareA <= '0';
     end if;
     
-    if data_ch_B >= data_tc_B then
+    if data_ch_B >= data_tc_B and selected_channels(1) = '1' then
         compareB <= '1';
     else
         compareB <= '0';
     end if;
 
-    if data_ch_C >= data_tc_C then
+    if data_ch_C >= data_tc_C and selected_channels(2) = '1' then
         compareC <= '1';
     else
         compareC <= '0';
     end if;
     
-    if data_ch_D >= data_tc_D then
+    if data_ch_D >= data_tc_D and selected_channels(3) = '1' then
         compareD <= '1';
     else
         compareD <= '0';

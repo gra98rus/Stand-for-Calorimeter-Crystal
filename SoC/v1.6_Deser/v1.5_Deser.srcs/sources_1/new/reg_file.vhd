@@ -16,34 +16,30 @@ port(
 	
 	dataOut             : out std_logic_vector(31 downto 0);
     start_event         : out std_logic;
-    cmd_start           : out std_logic;
     trigger_type        : out std_logic;
     trigger_level       : out std_logic_vector(55 downto 0);
-    selected_channels   : out std_logic_vector(3 downto 0);
-    shapers_config      : out std_logic_vector(7 downto 0);
+    selected_channels   : out std_logic_vector( 3 downto 0);
+    shapers_config      : out std_logic_vector( 7 downto 0);
     spectrum_spec       : out std_logic_vector(13 downto 0)
   	);
 	
 end reg_file;
 
 architecture behavioral of reg_file is
-	signal data_out_r : std_logic_vector(31 downto 0) := (others=>'0');
+	signal data_out_r          : std_logic_vector(31 downto 0) := (others=>'0');
 
-	signal echo_reg_r : std_logic_vector(31 downto 0) := (others=>'0');
-	signal reg_echo_ena_r : std_logic := '0';
+	signal echo_reg_r          : std_logic_vector(31 downto 0) := (others=>'0');
+	signal reg_echo_ena_r      : std_logic                     := '0';
 	
-	signal cmd_start_ena_r    : std_logic := '0';
-	signal cmd_start_r   : std_logic := '0';
-	
-    signal start_event_r : std_logic := '0';
-    signal start_event_delay : std_logic := '0';
-    signal start_event_result : std_logic := '0';
-    signal trigger_type_r : std_logic := '1';
-    signal trigger_level_r : std_logic_vector(55 downto 0) := (others => '0');
-    signal selected_channels_r : std_logic_vector(3 downto 0) := (others => '0');
-    signal shapers_config_r : std_logic_vector(7 downto 0) := (others => '0');
+    signal start_event_r       : std_logic                     := '0';
+    signal start_event_delay   : std_logic                     := '0';
+    signal start_event_result  : std_logic                     := '0';
+    signal trigger_type_r      : std_logic                     := '1';
+    signal trigger_level_r     : std_logic_vector(55 downto 0) := (others => '0');
+    signal selected_channels_r : std_logic_vector( 3 downto 0) := (others => '0');
+    signal shapers_config_r    : std_logic_vector( 7 downto 0) := (others => '0');
     
-    signal data_status : std_logic := '0';
+    signal data_status         : std_logic                     := '0';
 
 begin
 
@@ -90,14 +86,6 @@ begin
 			data_out_r <= echo_reg_r;
 		end if;
 		
-		cmd_start_r <= '0';
-		
-		if regNum=REG_COMMAND then
-		    if regWE='1' and dataIn(0)='1' then
-                cmd_start_ena_r <= '1';
-            end if;
-        end if;
-        
 		if regNum = REG_START_EVENT and regWE = '1' then
             start_event_r <= dataIn(0);
         end if;
@@ -137,11 +125,6 @@ begin
         if regNum = REG_SPECTRUM_SPEC and regWE = '1' then
             spectrum_spec <= dataIn(13 downto 0);
         end if;
-        
-		if cmd_start_ena_r='1' then
-		      cmd_start_r <= '1';
-		      cmd_start_ena_r <= '0';
-		end if;
 		
 		if regNum=REG_STATUS then
 		  data_out_r(0) <= data_status;
@@ -150,11 +133,10 @@ begin
 
 end process;
 	
-dataOut      <= data_out_r;
-cmd_start    <= cmd_start_r;
-trigger_type <= trigger_type_r;
-start_event  <= start_event_result;
-trigger_level<= trigger_level_r;
-shapers_config<= shapers_config_r;
+dataOut           <= data_out_r;
+start_event       <= start_event_result;
+trigger_level     <= trigger_level_r;
+trigger_type      <= trigger_type_r;
+shapers_config    <= shapers_config_r;
 selected_channels <= selected_channels_r;
 end architecture;
