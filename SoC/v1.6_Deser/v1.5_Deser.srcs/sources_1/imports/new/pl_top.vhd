@@ -157,7 +157,6 @@ end component;
     
     signal confirm_match_s : std_logic := '0';
     
-    signal shapers_config : std_logic_vector (7 downto 0);
     signal shapers_controll : std_logic_vector (11 downto 0);
     
     signal simple_buffer_state: std_logic := '0';
@@ -307,7 +306,7 @@ port map(
 shaper_controller_i : entity work.shaper_controller
 port map (
     clk => ps_clk_50mhz,
-    shapers_config => shapers_config,
+    shapers_config => shapers_config_top,
     
     shapers_controll => shapers_controll
 );
@@ -449,21 +448,18 @@ adc_data(0) <= adc_data_a;              --in
 adc_clk <= deser_out_clk;                 --in
 read_clk <= adc_deser_clock;                  --in
 
-shapers_config <= ALT_CT; --ALT_CT(7) & ALT_CT(6) & ALT_CT(5) & ALT_CT(4)
-                          --& ALT_CT(3) & ALT_CT(2) & ALT_CT(1) & ALT_CT(0);    --in
-                
-ALT_07 <= shapers_controll(0);              --out
-ALT_08 <= shapers_controll(1);              --out
-ALT_09 <= shapers_controll(2);              --out
-ALT_10 <= shapers_controll(3);              --out
-ALT_11 <= shapers_controll(4);              --out
-ALT_12 <= shapers_controll(5);              --out
-ALT_13 <= shapers_controll(6);              --out
-ALT_14 <= shapers_controll(7);              --out
-ALT_15 <= shapers_controll(8);              --out
-ALT_16 <= shapers_controll(9);              --out
-ALT_17 <= shapers_controll(10);             --out
-ALT_18 <= shapers_controll(11);             --out
+ALT_07 <= shapers_controll( 0);
+ALT_08 <= shapers_controll( 1);
+ALT_09 <= shapers_controll( 2);
+ALT_10 <= shapers_controll( 3);
+ALT_11 <= shapers_controll( 4);
+ALT_12 <= shapers_controll( 5);
+ALT_13 <= shapers_controll( 6);
+ALT_14 <= shapers_controll( 7);
+ALT_15 <= shapers_controll( 8);
+ALT_16 <= shapers_controll( 9);
+ALT_17 <= shapers_controll(10);
+ALT_18 <= shapers_controll(11);
 
 Buffer_state <= simple_buffer_state;        --out
 
