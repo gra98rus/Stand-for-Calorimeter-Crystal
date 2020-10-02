@@ -318,11 +318,11 @@ port map (
     dataIn            => dataIn,
     dataOut           => dataOut,
     regNum            => regNum,
-    regWE             => regWE,
-    
-    cmd_start         => cmd_start_top,
+    regWE             => regWE,    
     data_ready        => buffer_data_valid,
+
     start_event       => start_event,
+    cmd_start         => cmd_start_top,
     trigger_type      => start_type,
     selected_channels => selected_channels_top,
     shapers_config    => shapers_config_top,

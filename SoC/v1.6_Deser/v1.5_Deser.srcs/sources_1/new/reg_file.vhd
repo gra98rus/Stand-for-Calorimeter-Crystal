@@ -8,15 +8,15 @@ use work.new_types.all;
 
 entity reg_file is
 port(
-	clock      : in  std_logic;
-	regWE      : in  std_logic;
-	regNum     : in  std_logic_vector(31 downto 0);
-	dataIn     : in  std_logic_vector(31 downto 0);
-    data_ready : in std_logic;
+	clock               : in  std_logic;
+	regWE               : in  std_logic;
+	regNum              : in  std_logic_vector(31 downto 0);
+	dataIn              : in  std_logic_vector(31 downto 0);
+    data_ready          : in std_logic;
 	
 	dataOut             : out std_logic_vector(31 downto 0);
-    cmd_start           : out std_logic;
     start_event         : out std_logic;
+    cmd_start           : out std_logic;
     trigger_type        : out std_logic;
     trigger_level       : out std_logic_vector(55 downto 0);
     selected_channels   : out std_logic_vector(3 downto 0);
@@ -42,9 +42,6 @@ architecture behavioral of reg_file is
     signal trigger_level_r : std_logic_vector(55 downto 0) := (others => '0');
     signal selected_channels_r : std_logic_vector(3 downto 0) := (others => '0');
     signal shapers_config_r : std_logic_vector(7 downto 0) := (others => '0');
-
-    signal data_ready_delay : std_logic := '0';
-    signal data_ready_result : std_logic := '0';
     
     signal data_status : std_logic := '0';
 
@@ -65,23 +62,11 @@ end process;
 process(clock)
 begin
     if clock'event and clock='1' then
-        data_ready_delay <= data_ready;
-		if data_ready = '1' and data_ready_delay = '0' then
-			data_ready_result <= '1';
-	    else
-	        data_ready_result <= '0';
-		end if;
-	end if;
-end process;
-
-process(clock)
-begin
-    if clock'event and clock='1' then
-    	if start_event_result = '1' and data_ready_result = '0' then
+    	if start_event_result = '1' and data_ready = '0' then
             data_status <= '0';
-        elsif start_event_result = '1' and data_ready_result = '1' then
+        elsif start_event_result = '1' and data_ready = '1' then
 	        data_status <= '0';
-	    elsif start_event_result = '0'  and data_ready_result = '1' then
+	    elsif start_event_result = '0'  and data_ready = '1' then
 	        data_status <= '1';
         end if;
     end if;
