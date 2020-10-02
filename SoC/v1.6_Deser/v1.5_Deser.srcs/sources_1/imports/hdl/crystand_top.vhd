@@ -143,11 +143,9 @@ architecture STRUCTURE of crystand_top is
   
     signal FCLK_CLK0 : std_logic := '0';
   
-    signal reset : std_logic := '0';
+    signal reset : std_logic_vector (0 downto 0) := (others=>'0');
   
     signal pl_reg : std_logic_vector (12 downto 0);
-    signal chNum : std_logic_vector (1 downto 0);
-    signal ch_comp_data : std_logic_vector (13 downto 0);
     signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
     signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
     signal alt_ct : std_logic_vector (7 downto 0) := (others=>'0');
@@ -213,6 +211,8 @@ ps_topp_i: component ps_topp
       OSCILLOGRAMS_BRAM_PORTA_rst  => oscillograms_bram_rst,
       OSCILLOGRAMS_BRAM_PORTA_we   => oscillograms_bram_we,
                   
+      reset               => reset,
+      
       dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
       regNum(31 downto 0) => reg_regNum(31 downto 0),
@@ -223,21 +223,11 @@ pl_top_i : entity work.pl_top
     port map(
     
             ps_clk_50mhz => FCLK_CLK0,
-            reset => reset,
-            adc_ctrl_cmd => pl_reg(0),
-            clk_gen_lock => pl_reg(1),
-            Data_read_ena => pl_reg(2),
-            CHANNAL_NUM => chNum,
-            channal_compare_data => ch_comp_data,
-           
-            DATA_OUT_1 => DataOut1,
-            DATA_OUT_2 => DataOut2,
+            reset => reset(0),
             
             pll_clk_p_100mhz => ADC_CLK_P,
             pll_clk_n_100mhz => ADC_CLK_N,
             
-            ALT_CT => pl_reg(12 downto 5),
-        
             JMP1 => JMP1, 
             JMP2 => JMP2,
             

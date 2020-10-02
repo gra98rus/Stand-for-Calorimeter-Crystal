@@ -14,17 +14,9 @@ port(
 
     ps_clk_50mhz    : in std_logic;
     reset           : in std_logic;
-    adc_ctrl_cmd    : in std_logic;
-    clk_gen_lock    : in std_logic;
-    Data_read_ena   : in std_logic;
-    
-    CHANNAL_NUM          : in std_logic_vector (1 downto 0);        --data to compare module (channel info)
-    CHANNAL_COMPARE_DATA : in std_logic_vector (13 downto 0);       --data to compare module (treshold info)
-    ALT_CT               : in std_logic_vector (7 downto 0);        --shapers control signals
     
     Data_out_1       : out std_logic_vector (31 downto 0);          --adc deserialized data (channels B and A)
     Data_out_2       : out std_logic_vector (31 downto 0);          --adc deserialized data (channels D and C)
-    Buffer_state     : out std_logic;                               --buffer status signal
     
     --clock to adc
     pll_clk_p_100mhz : out std_logic;                               
@@ -142,7 +134,6 @@ end component;
          
     signal adc_deser_clock : std_logic := '0';
     signal clk_100mhz : std_logic := '0';
-    signal adc_deser_clock_locked : std_logic := '0';
 
     signal cmd_reset_adc_deser  : std_logic := '0';
     signal cmd_resync_adc_deser : std_logic := '0';
@@ -159,8 +150,6 @@ end component;
     
     signal shapers_controll : std_logic_vector (11 downto 0);
     
-    signal simple_buffer_state: std_logic := '0';
-    
     signal Data_out: std_logic_vector (63 downto 0) := (others=>'0');
     
     signal compare_data : std_logic_vector (55 downto 0) := (others=>'0');--b"00101101101100000110000111000011111001110000000000000000";
@@ -168,7 +157,6 @@ end component;
     
     signal start_type_s : std_logic;
     signal start_event_s : std_logic;
-    signal Data_read_ena_s : std_logic;
     
     signal idelayctrl_r: std_logic;
         
@@ -200,17 +188,14 @@ end component;
 begin
 
 -----------------------------------------------------------------
-
-infrastructure_top_i : entity work.infrastructure_top       --pll_block
+infrastructure_top_i : entity work.infrastructure_top
 port map(     
+    ps_clk_50mhz       => ps_clk_50mhz,
+    reset              => reset,
     
-    ps_clk_50mhz => ps_clk_50mhz,                   --in
-                                                    
-    reset         => reset,                         --in
-    
-    pl_clk_100mhz => adc_deser_clock,               --out
-    ext_clk_pll_locked => ext_clk_pll_locked        --out
-        ); 
+    pl_clk_100mhz      => adc_deser_clock,
+    ext_clk_pll_locked => ext_clk_pll_locked
+); 
         
 
 -----------------------------------------------------------------
@@ -222,10 +207,10 @@ generic map(
 port map(
     clock => adc_deser_clock,                           --in
        
-    clock_locked => deser_locked,                       --in
+    clock_locked => ext_clk_pll_locked,                       --in
          
-    AdcDeserReset =>cmd_reset_adc_deser,                --in
-    AdcReSync     =>cmd_resync_adc_deser,               --in
+    AdcDeserReset => reset,
+    AdcReSync     => reset,
     
     data_A => adc_data_a,                               --out
     data_B => adc_data_b,                               --out
@@ -433,8 +418,6 @@ TP7 <= ps_cnt(6);                       --out
 TP8 <= ps_cnt(7);                       --out
 
 clk_100mhz <= adc_deser_clock;          --out
-cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
-adc_deser_clock_locked <= clk_gen_lock; --in
 
 DATA_OUT_1 <= dataOut_buf(31 downto 16) & dataOut_buf(15 downto 0);     --out
 DATA_OUT_2 <= dataOut_buf(63 downto 48) & dataOut_buf(47 downto 32);     --dataOut_buf(63 downto 32);                --out
@@ -461,9 +444,6 @@ ALT_16 <= shapers_controll( 9);
 ALT_17 <= shapers_controll(10);
 ALT_18 <= shapers_controll(11);
 
-Buffer_state <= simple_buffer_state;        --out
-
-deser_locked <= adc_deser_clock_locked and ext_clk_pll_locked;
 ----------------------------------------------------------------
 
 end Behavioral;
