@@ -20,7 +20,7 @@ port(
     trigger_level       : out std_logic_vector(55 downto 0);
     selected_channels   : out std_logic_vector( 3 downto 0);
     shapers_config      : out std_logic_vector( 7 downto 0);
-    spectrum_spec       : out std_logic_vector(13 downto 0)
+    spectrum_spec       : out std_logic_vector(14 downto 0)
   	);
 	
 end reg_file;
@@ -123,7 +123,7 @@ begin
         end if;
         
         if regNum = REG_SPECTRUM_SPEC and regWE = '1' then
-            spectrum_spec <= dataIn(13 downto 0);
+            spectrum_spec <= dataIn(14 downto 0);
         end if;
 		
 		if regNum=REG_STATUS then

@@ -173,9 +173,11 @@ end component;
     signal buffer_data_valid     : std_logic                      := '0';
     signal selected_channels_top : std_logic_vector ( 3 downto 0) := (others => '0');
     signal shapers_config_top    : std_logic_vector ( 7 downto 0);
-    signal spectra_params        : std_logic_vector (13 downto 0) := (others => '0');
+    signal spectra_params        : std_logic_vector (14 downto 0) := (others => '0');
     attribute keep_hierarchy     : string;
     attribute keep_hierarchy of infrastructure_top_i : label is "yes";
+    attribute keep_hierarchy of spectra_controller_i : label is "yes";
+    attribute keep_hierarchy of buffers_block_i      : label is "yes";
 
     signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
     
@@ -318,7 +320,6 @@ port map (
     clk              => ps_clk_50mhz,
     bram_ctrl_clk    => spectra_bram_clk,
     spectrum_spec    => spectra_params,
-    spectra_statuses => spectra_commands,
     adc_data         => adc_data_spectra,
     adc_data_valid   => buffer_data_valid,
     PS_addr          => spectra_bram_addr,

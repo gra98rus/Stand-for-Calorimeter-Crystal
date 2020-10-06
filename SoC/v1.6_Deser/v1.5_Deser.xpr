@@ -90,14 +90,14 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
-          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
-        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_ps_top_reg_interface_0_1/ps_topp_ps_top_reg_interface_0_1.xci">
           <Proxy FileSetName="ps_topp_ps_top_reg_interface_0_1"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_axi_bram_ctrl_0_0/ps_topp_axi_bram_ctrl_0_0.xci">
           <Proxy FileSetName="ps_topp_axi_bram_ctrl_0_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
+          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_axi_bram_ctrl_1_0/ps_topp_axi_bram_ctrl_1_0.xci">
           <Proxy FileSetName="ps_topp_axi_bram_ctrl_1_0"/>
