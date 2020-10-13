@@ -144,8 +144,6 @@ architecture STRUCTURE of crystand_top is
     signal FCLK_CLK0 : std_logic := '0';
   
     signal reset : std_logic := '0';
-  
-    signal pl_reg : std_logic_vector (12 downto 0);
     
     signal reg_regWE      : STD_LOGIC := '0';
     signal reg_dataFromPL   :  STD_LOGIC_VECTOR ( 31 downto 0 ) := (others=>'0');
@@ -219,7 +217,6 @@ pl_top_i : entity work.pl_top
     
             ps_clk_50mhz => FCLK_CLK0,
             reset => reset,
-            Data_read_ena => pl_reg(2),
 
             pll_clk_p_100mhz => ADC_CLK_P,
             pll_clk_n_100mhz => ADC_CLK_N,

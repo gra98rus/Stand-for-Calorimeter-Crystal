@@ -14,9 +14,6 @@ port(
 
     ps_clk_50mhz     : in std_logic;
     reset            : in std_logic;
-    Data_read_ena    : in std_logic;
-    
-    Buffer_state     : out std_logic;
 
     --clock to adc
     pll_clk_p_100mhz : out std_logic;                               
@@ -141,8 +138,6 @@ end component;
     signal confirm_match_s : std_logic := '0';
     
     signal shapers_controll : std_logic_vector (11 downto 0);
-    
-    signal simple_buffer_state: std_logic := '0';
     
     signal Data_out: std_logic_vector (63 downto 0) := (others=>'0');
     
@@ -420,9 +415,8 @@ adc_data(2) <= adc_data_c;              --in
 adc_data(1) <= adc_data_b;              --in
 adc_data(0) <= adc_data_a;              --in
 
-
-adc_clk <= deser_out_clk;                 --in
-read_clk <= adc_deser_clock;                  --in
+adc_clk <= deser_out_clk;
+read_clk <= adc_deser_clock;
 
 ALT_07 <= shapers_controll( 0);
 ALT_08 <= shapers_controll( 1);
@@ -436,8 +430,6 @@ ALT_15 <= shapers_controll( 8);
 ALT_16 <= shapers_controll( 9);
 ALT_17 <= shapers_controll(10);
 ALT_18 <= shapers_controll(11);
-
-Buffer_state <= simple_buffer_state;        --out
 ----------------------------------------------------------------
 
 end Behavioral;

@@ -93,19 +93,12 @@ architecture behavioral of tb_pl_top is
     signal ALT_17 : std_logic := '0'; 
     signal ALT_18 : std_logic := '0';
         
-    signal DataReadEna : std_logic := '0';
-    
     signal channal : std_logic_vector (1 downto 0) := b"00";
     signal cmd_resync_adc_deser : std_logic := '0';
     
     signal start_type : std_logic := '1';
     signal start_event : std_logic := '0';
     
-    signal CompareData : std_logic_vector (13 downto 0) := --(others=>'0');
-    B"00000000000000";
-    --00101101101100000110000111000011111001110000000000000000
-
-    signal BufferState : std_logic := '1';
     signal regWE   : std_logic;
     signal regNum  : std_logic_vector(31 downto 0);
     signal dataIn  : std_logic_vector(31 downto 0);
@@ -132,8 +125,6 @@ port map(
     reset => reset,
     
     ps_clk_50mhz => ps_clk_50mhz,
-    Data_read_ena => DataReadEna,
-    Buffer_state => BufferState,
     pll_clk_p_100mhz => pll_clk_p_100mhz,
     pll_clk_n_100mhz => pll_clk_n_100mhz,
     
@@ -330,45 +321,7 @@ begin
     wait;
 end process;
 
-data_for_processor_system_ena: process
-begin
-    DataReadEna <= '0';
-    wait for 20000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 9000 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 2000 ns;
-    DataReadEna <= '0';
-    wait for 30000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 15000 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
---    DataReadEna <= '1';
---    wait for 500 ns;
---    DataReadEna <= '0';
---    wait for 1000 ns;
---    DataReadEna <= '1';
---    wait for 500 ns;
---    DataReadEna <= '0';
-    wait;   
-end process;
-
-    adc_ctrl_cmd <= PsCmdResetAdcDeser;
+adc_ctrl_cmd <= PsCmdResetAdcDeser;
 
 end behavioral;
 
