@@ -31,8 +31,6 @@ architecture behavioral of tb_pl_top is
     signal adc_ctrl_cmd : std_logic := '0';
     signal PsCmdResetAdcDeser : std_logic := '0';
 
-    signal clk_gen_lock : std_logic := '0';
-    
     signal ADC_CLK_P : std_logic := '0';
     signal ADC_CLK_N : std_logic := '0';
     
@@ -95,21 +93,12 @@ architecture behavioral of tb_pl_top is
     signal ALT_17 : std_logic := '0'; 
     signal ALT_18 : std_logic := '0';
         
-    signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
-    signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
-    signal DataReadEna : std_logic := '0';
-    
     signal channal : std_logic_vector (1 downto 0) := b"00";
     signal cmd_resync_adc_deser : std_logic := '0';
     
     signal start_type : std_logic := '1';
     signal start_event : std_logic := '0';
     
-    signal CompareData : std_logic_vector (13 downto 0) := --(others=>'0');
-    B"00000000000000";
-    --00101101101100000110000111000011111001110000000000000000
-
-    signal BufferState : std_logic := '1';
     signal regWE   : std_logic;
     signal regNum  : std_logic_vector(31 downto 0);
     signal dataIn  : std_logic_vector(31 downto 0);
@@ -136,16 +125,6 @@ port map(
     reset => reset,
     
     ps_clk_50mhz => ps_clk_50mhz,
-    adc_ctrl_cmd => adc_ctrl_cmd,
-    clk_gen_lock => clk_gen_lock,
-    Data_read_ena => DataReadEna,
-
-    CHANNAL_NUM => channal,
-    CHANNAL_COMPARE_DATA => CompareData,
-
-    DATA_OUT_1 => DataOut1,
-    DATA_OUT_2 => DataOut2,
-    Buffer_state => BufferState,
     pll_clk_p_100mhz => pll_clk_p_100mhz,
     pll_clk_n_100mhz => pll_clk_n_100mhz,
     
@@ -160,8 +139,6 @@ port map(
     TP6 => TP6,
     TP7 => TP7,
     TP8 => TP8,
-    
-    ALT_CT => ALT_CT,
     
     ALT_01 => ALT_01,
     ALT_02 => ALT_02,
@@ -224,15 +201,6 @@ port map(
     oscillograms_bram_addr => oscillograms_bram_addr_top,
     oscillograms_bram_dout => oscillograms_bram_dout_top
 );  
-
-sleep_proc: process
-begin
-
-    clk_gen_lock <= '0';
-    wait for 10 us;
-    clk_gen_lock <= '1';
-    wait;
-end process;
 
 ps_clk_50mhz_pr: process
 begin
@@ -300,6 +268,21 @@ begin
     wait;
 end process;
 
+reset_proc: process
+begin
+    reset <= '0';
+
+    wait for 10000 ns;
+    reset <= '1';
+    wait for 100 ns;
+    reset <= '0';
+    wait for 10000 ns;
+    reset <= '1';
+    wait for 100 ns;
+    reset <= '0';
+    wait;
+end process;
+
 read_control: process
 begin
     start_event <= '0';
@@ -338,45 +321,7 @@ begin
     wait;
 end process;
 
-data_for_processor_system_ena: process
-begin
-    DataReadEna <= '0';
-    wait for 20000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 9000 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 2000 ns;
-    DataReadEna <= '0';
-    wait for 30000 ns;
-    DataReadEna <= '1';
-    wait for 500 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
-    DataReadEna <= '1';
-    wait for 15000 ns;
-    DataReadEna <= '0';
-    wait for 1000 ns;
---    DataReadEna <= '1';
---    wait for 500 ns;
---    DataReadEna <= '0';
---    wait for 1000 ns;
---    DataReadEna <= '1';
---    wait for 500 ns;
---    DataReadEna <= '0';
-    wait;   
-end process;
-
-    adc_ctrl_cmd <= PsCmdResetAdcDeser;
+adc_ctrl_cmd <= PsCmdResetAdcDeser;
 
 end behavioral;
 

@@ -48,7 +48,7 @@
     <Option Name="DSANumComputeUnits" Val="16"/>
     <Option Name="WTXSimLaunchSim" Val="4"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
-    <Option Name="WTQuestaLaunchSim" Val="815"/>
+    <Option Name="WTQuestaLaunchSim" Val="816"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
@@ -90,14 +90,14 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
+        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
+          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
+        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_ps_top_reg_interface_0_1/ps_topp_ps_top_reg_interface_0_1.xci">
           <Proxy FileSetName="ps_topp_ps_top_reg_interface_0_1"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_axi_bram_ctrl_0_0/ps_topp_axi_bram_ctrl_0_0.xci">
           <Proxy FileSetName="ps_topp_axi_bram_ctrl_0_0"/>
-        </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_processing_system7_0_0/ps_topp_processing_system7_0_0.xci">
-          <Proxy FileSetName="ps_topp_processing_system7_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="ps_topp.bd" FileRelPathName="ip/ps_topp_axi_bram_ctrl_1_0/ps_topp_axi_bram_ctrl_1_0.xci">
           <Proxy FileSetName="ps_topp_axi_bram_ctrl_1_0"/>
@@ -180,6 +180,12 @@
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../../../v1.4/crystand_hw1_0_fw1_0.srcs/sources_1/imports/sources_1/import/main/Fdcr.vhd"/>
           <Attr Name="ImportTime" Val="1598344822"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/reset_system.vhd">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -478,7 +484,7 @@
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Similar to Performance_ExplorePostRoutePhysOpt, but enables logic optimization step (opt_design) with the ExploreWithRemap directive." WriteIncrSynthDcp="false" State="current" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="false">
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Similar to Performance_ExplorePostRoutePhysOpt, but enables logic optimization step (opt_design) with the ExploreWithRemap directive." WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="false">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Performance_ExploreWithRemap" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
@@ -502,6 +508,7 @@
         </Step>
         <Step Id="write_bitstream"/>
       </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
