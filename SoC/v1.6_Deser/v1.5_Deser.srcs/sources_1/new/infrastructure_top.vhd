@@ -67,10 +67,11 @@ port map(
 -------------------------------------------------------
 rst_sys : entity work.reset_system_m
 port map ( 
-    clk     => ps_clk_50mhz,
-    ext_rst => reset,
+    clk        => ps_clk_50mhz,
+    ext_rst    => reset,
+    pll_locked => ext_clk_pll_locked_s,
     
-    int_rst => int_rst
+    int_rst    => int_rst
 );
 
 

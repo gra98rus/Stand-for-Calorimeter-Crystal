@@ -3,7 +3,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 package new_types is 
 
-    constant RST_PRESCALER  : integer := 6;
     constant ADC_NB         : integer := 4;
     constant baskets        : integer := 4096;
     constant num_of_spectra : integer := 12;

@@ -2,6 +2,7 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate /tb_pl_top/ps_clk_50mhz
 add wave -noupdate /tb_pl_top/pll_clk_p_100mhz
+add wave -noupdate /tb_pl_top/pl_top_i/adc_deser_i/clock_locked
 add wave -noupdate /tb_pl_top/reset
 add wave -noupdate /tb_pl_top/pl_top_i/infrastructure_top_i/rst_sys/int_rst
 add wave -noupdate -radix hexadecimal -childformat {{/tb_pl_top/pl_top_i/adc_data_a(15) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(14) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(13) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(12) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(11) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(10) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(9) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(8) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(7) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(6) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(5) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(4) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(3) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(2) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(1) -radix decimal} {/tb_pl_top/pl_top_i/adc_data_a(0) -radix decimal}} -radixshowbase 0 -subitemconfig {/tb_pl_top/pl_top_i/adc_data_a(15) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(14) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(13) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(12) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(11) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(10) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(9) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(8) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(7) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(6) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(5) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(4) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(3) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(2) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(1) {-height 17 -radix decimal -radixshowbase 0} /tb_pl_top/pl_top_i/adc_data_a(0) {-height 17 -radix decimal -radixshowbase 0}} /tb_pl_top/pl_top_i/adc_data_a
@@ -21,7 +22,6 @@ add wave -noupdate -expand -group {Buffers block} -expand -group {Simple buffer}
 add wave -noupdate -expand -group {Buffers block} -expand -group {Simple buffer} /tb_pl_top/pl_top_i/buffers_block_i/simple_buf/mem
 add wave -noupdate -expand -group {Buffers block} /tb_pl_top/pl_top_i/buffers_block_i/state
 add wave -noupdate -expand -group {Buffers block} /tb_pl_top/pl_top_i/buffers_block_i/max_value
-add wave -noupdate -expand -group {Trigger system} /tb_pl_top/pl_top_i/trigg_system_i/rst
 add wave -noupdate -expand -group {Trigger system} /tb_pl_top/pl_top_i/trigg_system_i/start_type
 add wave -noupdate -expand -group {Trigger system} /tb_pl_top/pl_top_i/trigg_system_i/start_event
 add wave -noupdate -expand -group {Trigger system} /tb_pl_top/pl_top_i/trigg_system_i/threshold_pass
@@ -70,7 +70,7 @@ add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/selected_channels_r
 add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/shapers_config_r
 add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/data_status
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {11330000000 fs} 0}
+WaveRestoreCursors {{Cursor 1} {7409909910 fs} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 341
 configure wave -valuecolwidth 136
@@ -86,4 +86,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 fs} {69873257036 fs}
+WaveRestoreZoom {0 fs} {42 us}

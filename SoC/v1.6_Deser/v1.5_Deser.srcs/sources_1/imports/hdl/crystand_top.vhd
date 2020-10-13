@@ -219,7 +219,6 @@ pl_top_i : entity work.pl_top
     
             ps_clk_50mhz => FCLK_CLK0,
             reset => reset,
-            clk_gen_lock => pl_reg(1),
             Data_read_ena => pl_reg(2),
 
             pll_clk_p_100mhz => ADC_CLK_P,

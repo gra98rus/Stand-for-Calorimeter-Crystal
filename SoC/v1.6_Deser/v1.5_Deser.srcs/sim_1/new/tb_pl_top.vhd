@@ -31,8 +31,6 @@ architecture behavioral of tb_pl_top is
     signal adc_ctrl_cmd : std_logic := '0';
     signal PsCmdResetAdcDeser : std_logic := '0';
 
-    signal clk_gen_lock : std_logic := '0';
-    
     signal ADC_CLK_P : std_logic := '0';
     signal ADC_CLK_N : std_logic := '0';
     
@@ -134,7 +132,6 @@ port map(
     reset => reset,
     
     ps_clk_50mhz => ps_clk_50mhz,
-    clk_gen_lock => clk_gen_lock,
     Data_read_ena => DataReadEna,
     Buffer_state => BufferState,
     pll_clk_p_100mhz => pll_clk_p_100mhz,
@@ -213,15 +210,6 @@ port map(
     oscillograms_bram_addr => oscillograms_bram_addr_top,
     oscillograms_bram_dout => oscillograms_bram_dout_top
 );  
-
-sleep_proc: process
-begin
-
-    clk_gen_lock <= '0';
-    wait for 10 us;
-    clk_gen_lock <= '1';
-    wait;
-end process;
 
 ps_clk_50mhz_pr: process
 begin

@@ -14,17 +14,15 @@ port(
 
     ps_clk_50mhz     : in std_logic;
     reset            : in std_logic;
-    clk_gen_lock     : in std_logic;
     Data_read_ena    : in std_logic;
     
     Buffer_state     : out std_logic;
-   -- adc_ctrl_cmd    : in std_logic;
+
     --clock to adc
     pll_clk_p_100mhz : out std_logic;                               
     pll_clk_n_100mhz : out std_logic;
     
     --ADC signals
-        --data
     ADC_D0A_P : in std_logic;
     ADC_D0A_N : in std_logic;
     ADC_D1A_P : in std_logic;
@@ -44,18 +42,12 @@ port(
     ADC_D0D_N : in std_logic;
     ADC_D1D_P : in std_logic;
     ADC_D1D_N : in std_logic;
-        --end data
         
-        --data clock
     ADC_DC0_P : in std_logic;
     ADC_DC0_N : in std_logic;
-        --end data clock
     
-        --frame clock
     ADC_FC0_P : in std_logic;
     ADC_FC0_N : in std_logic;
-        --end frame clock
-    --end ADC signals
 
     JMP1 : in std_logic;
     JMP2 : in std_logic;
@@ -77,7 +69,6 @@ port(
     ALT_04 : out std_logic;
     ALT_05 : out std_logic;
     ALT_06 : out std_logic;
-    --end amplifier control signals
     
     --shapers control signals
     ALT_07 : out std_logic;
@@ -135,10 +126,8 @@ end component;
          
     signal adc_deser_clock : std_logic := '0';
     signal clk_100mhz : std_logic := '0';
-    signal adc_deser_clock_locked : std_logic := '0';
     signal int_rst : std_logic;
 
-    signal cmd_reset_adc_deser  : std_logic := '0';
     signal cmd_resync_adc_deser : std_logic := '0';
      
     signal adc_clk : std_logic := '0';
@@ -213,7 +202,7 @@ generic map(
     C_BufrLoc        => "BUFR_X1Y9")
 port map(
     clock         => adc_deser_clock,
-    clock_locked  => deser_locked,
+    clock_locked  => ext_clk_pll_locked,
          
     AdcDeserReset => int_rst,
     AdcReSync     => cmd_resync_adc_deser,
@@ -425,8 +414,6 @@ TP7 <= ps_cnt(6);                       --out
 TP8 <= ps_cnt(7);                       --out
 
 clk_100mhz <= adc_deser_clock;          --out
---cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
-adc_deser_clock_locked <= clk_gen_lock; --in
 
 adc_data(3) <= adc_data_d;              --in
 adc_data(2) <= adc_data_c;              --in
@@ -451,8 +438,6 @@ ALT_17 <= shapers_controll(10);
 ALT_18 <= shapers_controll(11);
 
 Buffer_state <= simple_buffer_state;        --out
-
-deser_locked <= adc_deser_clock_locked and ext_clk_pll_locked;
 ----------------------------------------------------------------
 
 end Behavioral;
