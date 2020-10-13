@@ -3,8 +3,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 package new_types is 
 
-    constant ADC_NB : integer := 4;
-    constant baskets: integer := 4096;
+    constant RST_PRESCALER  : integer := 6;
+    constant ADC_NB         : integer := 4;
+    constant baskets        : integer := 4096;
     constant num_of_spectra : integer := 12;
     
     type adc_data_64_t is array(0 to 3) of std_logic_vector (15 downto 0);

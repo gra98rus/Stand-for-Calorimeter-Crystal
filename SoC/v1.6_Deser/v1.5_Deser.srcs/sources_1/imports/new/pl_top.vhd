@@ -12,20 +12,13 @@ use work.new_types.all;
 entity pl_top is
 port(
 
-    ps_clk_50mhz    : in std_logic;
-    reset           : in std_logic;
-    adc_ctrl_cmd    : in std_logic;
-    clk_gen_lock    : in std_logic;
-    Data_read_ena   : in std_logic;
+    ps_clk_50mhz     : in std_logic;
+    reset            : in std_logic;
+    clk_gen_lock     : in std_logic;
+    Data_read_ena    : in std_logic;
     
-    CHANNAL_NUM          : in std_logic_vector (1 downto 0);        --data to compare module (channel info)
-    CHANNAL_COMPARE_DATA : in std_logic_vector (13 downto 0);       --data to compare module (treshold info)
-    ALT_CT               : in std_logic_vector (7 downto 0);        --shapers control signals
-    
-    Data_out_1       : out std_logic_vector (31 downto 0);          --adc deserialized data (channels B and A)
-    Data_out_2       : out std_logic_vector (31 downto 0);          --adc deserialized data (channels D and C)
-    Buffer_state     : out std_logic;                               --buffer status signal
-    
+    Buffer_state     : out std_logic;
+   -- adc_ctrl_cmd    : in std_logic;
     --clock to adc
     pll_clk_p_100mhz : out std_logic;                               
     pll_clk_n_100mhz : out std_logic;
@@ -143,6 +136,7 @@ end component;
     signal adc_deser_clock : std_logic := '0';
     signal clk_100mhz : std_logic := '0';
     signal adc_deser_clock_locked : std_logic := '0';
+    signal int_rst : std_logic;
 
     signal cmd_reset_adc_deser  : std_logic := '0';
     signal cmd_resync_adc_deser : std_logic := '0';
@@ -201,66 +195,64 @@ begin
 
 -----------------------------------------------------------------
 
-infrastructure_top_i : entity work.infrastructure_top       --pll_block
+infrastructure_top_i : entity work.infrastructure_top
 port map(     
+    ps_clk_50mhz       => ps_clk_50mhz,
+    reset              => reset,
     
-    ps_clk_50mhz => ps_clk_50mhz,                   --in
-                                                    
-    reset         => reset,                         --in
-    
-    pl_clk_100mhz => adc_deser_clock,               --out
-    ext_clk_pll_locked => ext_clk_pll_locked        --out
-        ); 
-        
+    pl_clk_100mhz      => adc_deser_clock,
+    ext_clk_pll_locked => ext_clk_pll_locked,
+    int_rst            => int_rst
+); 
 
 -----------------------------------------------------------------
-adc_deser_i : entity work.adc_deser                         --deser_block
+adc_deser_i : entity work.adc_deser
 generic map(
     C_DCLK_StatTaps  => C_DCLK_StatTaps_1,
-    C_BufioLoc  => "BUFIO_X1Y9",
-    C_BufrLoc   => "BUFR_X1Y9")
+    C_BufioLoc       => "BUFIO_X1Y9",
+    C_BufrLoc        => "BUFR_X1Y9")
 port map(
-    clock => adc_deser_clock,                           --in
-       
-    clock_locked => deser_locked,                       --in
+    clock         => adc_deser_clock,
+    clock_locked  => deser_locked,
          
-    AdcDeserReset =>cmd_reset_adc_deser,                --in
-    AdcReSync     =>cmd_resync_adc_deser,               --in
+    AdcDeserReset => int_rst,
+    AdcReSync     => cmd_resync_adc_deser,
     
-    data_A => adc_data_a,                               --out
-    data_B => adc_data_b,                               --out
-    data_C => adc_data_c,                               --out
-    data_D => adc_data_d,                               --out
+    data_A => adc_data_a,
+    data_B => adc_data_b,
+    data_C => adc_data_c,
+    data_D => adc_data_d,
          
-    status_signals => adc_status_signals,               --out
+    status_signals => adc_status_signals,
     
-    clk_out => deser_out_clk,                           --out
+    clk_out => deser_out_clk,
           
-    D0PA => ADC_D0A_P,      --in
-    D0NA => ADC_D0A_N,      --in                    
-    D1PA => ADC_D1A_P,      --in
-    D1NA => ADC_D1A_N,      --in
+    D0PA => ADC_D0A_P,
+    D0NA => ADC_D0A_N,
+    D1PA => ADC_D1A_P,
+    D1NA => ADC_D1A_N,
                       
-    D0PB => ADC_D0B_P,      --in
-    D0NB => ADC_D0B_N,      --in    
-    D1PB => ADC_D1B_P,      --in
-    D1NB => ADC_D1B_N,      --in
+    D0PB => ADC_D0B_P,
+    D0NB => ADC_D0B_N,
+    D1PB => ADC_D1B_P,
+    D1NB => ADC_D1B_N,
                            
-    D0PC => ADC_D0C_P,      --in
-    D0NC => ADC_D0C_N,      --in 
-    D1PC => ADC_D1C_P,      --in
-    D1NC => ADC_D1C_N,      --in
+    D0PC => ADC_D0C_P,
+    D0NC => ADC_D0C_N,
+    D1PC => ADC_D1C_P,
+    D1NC => ADC_D1C_N,
             
-    D0PD => ADC_D0D_P,      --in
-    D0ND => ADC_D0D_N,      --in
-    D1PD => ADC_D1D_P,      --in
-    D1ND => ADC_D1D_N,      --in
+    D0PD => ADC_D0D_P,
+    D0ND => ADC_D0D_N,
+    D1PD => ADC_D1D_P,
+    D1ND => ADC_D1D_N,
                  
-    FC0P => ADC_FC0_P,      --in
-    FC0N => ADC_FC0_N,      --in
+    FC0P => ADC_FC0_P,
+    FC0N => ADC_FC0_N,
                        
-    DC0P => ADC_DC0_P,      --in
-    DC0N => ADC_DC0_N);     --in
+    DC0P => ADC_DC0_P,
+    DC0N => ADC_DC0_N);
+    
 ----------------------------------------------------------------
 buffers_block_i : entity work.buffers_block
 port map(
@@ -285,7 +277,7 @@ port map(
 trigg_system_i : entity work.trigg_system
 port map(
     clk => adc_clk,                    --in
-    rst => reset,
+    rst => int_rst,
     start_type  => start_type,          --in
     start_event => start_event,         --in    
     threshold_pass => confirm_match_s,   --in
@@ -433,11 +425,8 @@ TP7 <= ps_cnt(6);                       --out
 TP8 <= ps_cnt(7);                       --out
 
 clk_100mhz <= adc_deser_clock;          --out
-cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
+--cmd_reset_adc_deser <= adc_ctrl_cmd;    --in
 adc_deser_clock_locked <= clk_gen_lock; --in
-
-DATA_OUT_1 <= dataOut_buf(31 downto 16) & dataOut_buf(15 downto 0);     --out
-DATA_OUT_2 <= dataOut_buf(63 downto 48) & dataOut_buf(47 downto 32);     --dataOut_buf(63 downto 32);                --out
 
 adc_data(3) <= adc_data_d;              --in
 adc_data(2) <= adc_data_c;              --in

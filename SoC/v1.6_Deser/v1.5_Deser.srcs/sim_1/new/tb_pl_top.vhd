@@ -95,8 +95,6 @@ architecture behavioral of tb_pl_top is
     signal ALT_17 : std_logic := '0'; 
     signal ALT_18 : std_logic := '0';
         
-    signal DataOut1 : std_logic_vector (31 downto 0) := (others=>'0');
-    signal DataOut2 : std_logic_vector (31 downto 0) := (others=>'0');
     signal DataReadEna : std_logic := '0';
     
     signal channal : std_logic_vector (1 downto 0) := b"00";
@@ -136,15 +134,8 @@ port map(
     reset => reset,
     
     ps_clk_50mhz => ps_clk_50mhz,
-    adc_ctrl_cmd => adc_ctrl_cmd,
     clk_gen_lock => clk_gen_lock,
     Data_read_ena => DataReadEna,
-
-    CHANNAL_NUM => channal,
-    CHANNAL_COMPARE_DATA => CompareData,
-
-    DATA_OUT_1 => DataOut1,
-    DATA_OUT_2 => DataOut2,
     Buffer_state => BufferState,
     pll_clk_p_100mhz => pll_clk_p_100mhz,
     pll_clk_n_100mhz => pll_clk_n_100mhz,
@@ -160,8 +151,6 @@ port map(
     TP6 => TP6,
     TP7 => TP7,
     TP8 => TP8,
-    
-    ALT_CT => ALT_CT,
     
     ALT_01 => ALT_01,
     ALT_02 => ALT_02,
@@ -297,6 +286,21 @@ begin
     PsCmdResetAdcDeser <= '1';
     wait for 100 ns;
     PsCmdResetAdcDeser <= '0';
+    wait;
+end process;
+
+reset_proc: process
+begin
+    reset <= '0';
+
+    wait for 10000 ns;
+    reset <= '1';
+    wait for 100 ns;
+    reset <= '0';
+    wait for 10000 ns;
+    reset <= '1';
+    wait for 100 ns;
+    reset <= '0';
     wait;
 end process;
 
