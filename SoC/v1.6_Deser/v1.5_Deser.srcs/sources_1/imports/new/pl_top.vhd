@@ -163,10 +163,7 @@ end component;
     signal selected_channels_top : std_logic_vector ( 3 downto 0) := (others => '0');
     signal shapers_config_top    : std_logic_vector ( 7 downto 0);
     signal spectra_params        : std_logic_vector (14 downto 0) := (others => '0');
-    attribute keep_hierarchy     : string;
-    attribute keep_hierarchy of infrastructure_top_i : label is "yes";
-    attribute keep_hierarchy of spectra_controller_i : label is "yes";
-    attribute keep_hierarchy of buffers_block_i      : label is "yes";
+
 
     signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
     
@@ -174,7 +171,10 @@ end component;
     signal addr_spectra     : std_logic_vector(6 downto 0);
     
     signal adc_max_value : adc_data_56_t;
-
+    
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
+    
 -----------------------------------------------------------------   
 begin
 

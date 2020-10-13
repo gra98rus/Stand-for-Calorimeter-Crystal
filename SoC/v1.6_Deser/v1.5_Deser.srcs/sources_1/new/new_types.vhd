@@ -7,6 +7,8 @@ package new_types is
     constant baskets        : integer := 4096;
     constant num_of_spectra : integer := 12;
     
+    constant KEEP_HIERAR    : string  := "yes";
+    
     type adc_data_64_t is array(0 to 3) of std_logic_vector (15 downto 0);
     type adc_data_56_t is array(0 to 3) of std_logic_vector (13 downto 0);
  --   type adc_data_lt is array(0 to ADC_NB - 1) of adc_data_t;

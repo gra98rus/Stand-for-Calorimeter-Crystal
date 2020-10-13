@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
+
+library work;
+use work.new_types.all;
+
 entity crystand_top is
   port (
     DDR_addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
@@ -165,6 +169,10 @@ architecture STRUCTURE of crystand_top is
     signal oscillograms_bram_en   : std_logic := '1';
     signal oscillograms_bram_we   : std_logic_vector(7 downto 0) := (others=>'0');
     signal oscillograms_bram_rst  : std_logic := '0';    
+    
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of STRUCTURE : architecture is KEEP_HIERAR;
+
 begin
 ps_topp_i: component ps_topp
      port map (

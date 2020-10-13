@@ -24,6 +24,8 @@ architecture Behavioral of trigg_system is
 type state_type is (STT_WAIT, STT_FORCE, STT_THRESHOLD);
 signal state : state_type;
 
+attribute keep_hierarchy : string;
+attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 ------------------------------------------------------------------------
 begin
 

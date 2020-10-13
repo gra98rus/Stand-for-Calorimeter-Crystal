@@ -8,6 +8,7 @@ use UNISIM.vcomponents.all;
 
 library work;
 use work.all;
+use work.new_types.all;
 
 entity infrastructure_top is
 port(     
@@ -23,7 +24,7 @@ port(
     
 end infrastructure_top;
 
-architecture behavioral of infrastructure_top is
+architecture Behavioral of infrastructure_top is
 ----------------------------------------------------------------
 component pll
 port
@@ -43,6 +44,10 @@ end component;
     signal clk_10mhz                : std_logic := '0';
     signal idelayctrl_0_ready_s     : std_logic := '0';
     signal clk_200mhz               : std_logic := '0';
+    
+        
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 -----------------------------------------------------------------
 begin
 ------------------------------------------------------
@@ -79,4 +84,4 @@ pl_clk_100mhz      <= clk_100mhz;
 ext_clk_pll_locked <= ext_clk_pll_locked_s;
 idelayctrl_0_ready <=idelayctrl_0_ready_s;
 
-end behavioral;
+end Behavioral;

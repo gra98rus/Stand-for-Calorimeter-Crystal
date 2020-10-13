@@ -20,6 +20,9 @@ architecture Behavioral of reset_system_m is
 type state_type is (STT_READY, STT_WAIT);
 signal state     : state_type;
 
+attribute keep_hierarchy : string;
+attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
+
 begin
 
 

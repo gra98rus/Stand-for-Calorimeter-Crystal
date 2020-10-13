@@ -48,6 +48,8 @@ architecture Behavioral of buffers_block is
     
     signal max_value            : adc_data_56_t                  := (others => (others => '0'));
     
+    attribute keep_hierarchy    : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 -----------------------------------------------------------------
 begin
 

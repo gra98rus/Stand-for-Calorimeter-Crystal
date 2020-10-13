@@ -32,6 +32,8 @@ architecture Behavioral of Spectrum_creator is
     
     signal increase_status_r : std_logic := '0';
     
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 begin
 
 process(clk)

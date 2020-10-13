@@ -49,6 +49,8 @@ architecture Behavioral of Spectra_controller is
     type   state_type is (STT_READY, STT_READ_DATA, STT_START_CREATORS, STT_WAIT);
     signal state      : state_type;
     
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;    
     
 begin
 

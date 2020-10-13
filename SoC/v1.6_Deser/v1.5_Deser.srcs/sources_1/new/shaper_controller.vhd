@@ -1,6 +1,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+library work;
+use work.new_types.all;
+
 entity shaper_controller is
 Port (
     clk : in std_logic ;
@@ -12,6 +15,9 @@ Port (
 end shaper_controller;
 -----------------------------------------------------------------------
 architecture Behavioral of shaper_controller is       
+
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 
 begin
     

@@ -24,8 +24,11 @@ end package body ram_pkg;
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+
 library work;
 use work.ram_pkg.all;
+use work.new_types.all;
+
 USE std.textio.all;
 
 entity RAM is
@@ -62,6 +65,9 @@ signal ram_data_b : std_logic_vector(C_RAM_WIDTH-1 downto 0) ;
 
 --shared variable mem : ram_type := (others => (others => '0'));
 signal mem : ram_type := (others => (others => '0'));
+
+attribute keep_hierarchy : string;
+attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 
 begin
 

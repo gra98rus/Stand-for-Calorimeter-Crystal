@@ -1,40 +1,16 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 12/17/2018 12:07:45 PM
--- Design Name: 
--- Module Name: adc_deser - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments: 
-        -- changes in libs files:
-                -- AdcData_struct - delay line was added
--- 
-----------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.ALL;
 use ieee.std_logic_arith.ALL;
 use ieee.std_logic_unsigned.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
 
 library work;
 use work.all;
+use work.new_types.all;
 -----------------------------------------------------------------------
 entity adc_deser is
 generic(
@@ -155,6 +131,9 @@ architecture Behavioral of adc_deser is
     
     signal data_valid_cnt : std_logic_vector(5 downto 0) := (others=>'1');
     signal data_valid_r   : std_logic := '0';
+    
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 -----------------------------------------------------------------------
 begin
 -----------------------------------------------------------------------

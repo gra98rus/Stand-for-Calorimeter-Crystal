@@ -25,7 +25,9 @@ architecture Behavioral of Spectra_memory is
     signal addrb : std_logic_vector(11 downto 0) := (others => '0');
     signal enb   : std_logic_vector(11 downto 0) := (others => '0');
     signal doutb : spectra_data := (others => (others => '0'));
-
+    
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 begin
 
     spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.RAM

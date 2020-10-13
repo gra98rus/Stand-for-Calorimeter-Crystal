@@ -36,6 +36,9 @@ architecture Behavioral of threshold_comparator is
     signal compareB : std_logic := '0';
     signal compareC : std_logic := '0';
     signal compareD : std_logic := '0';
+    
+    attribute keep_hierarchy : string;
+    attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 ---------------------------------------------------------------------------------------
 begin
 ---------------------------------------------------------------------------------------
