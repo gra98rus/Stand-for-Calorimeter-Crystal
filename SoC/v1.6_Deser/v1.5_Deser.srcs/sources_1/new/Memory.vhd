@@ -1,33 +1,10 @@
 library ieee;
 use ieee.std_logic_1164.all;
-
-package ram_pkg is
-    function clogb2 (depth: in natural) return integer;
-end ram_pkg;
-
-package body ram_pkg is
-
-function clogb2( depth : natural) return integer is
-variable temp    : integer := depth;
-variable ret_val : integer := 0;
-begin
-    while temp > 1 loop
-        ret_val := ret_val + 1;
-        temp    := temp / 2;
-    end loop;
-
-    return ret_val;
-end function;
-
-end package body ram_pkg;
-
-library ieee;
-use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 library work;
-use work.ram_pkg.all;
 use work.new_types.all;
+use work.func_pkg.all;
 
 USE std.textio.all;
 
@@ -39,8 +16,8 @@ generic (
 Port (
     clka    : in  std_logic;
     clkb    : in  std_logic;
-    addra   : in  std_logic_vector(clogb2(RAM_DEPTH)-1 downto 0);
-    addrb   : in  std_logic_vector(clogb2(RAM_DEPTH)-1 downto 0);
+    addra   : in  std_logic_vector(clog2(RAM_DEPTH)-1 downto 0);
+    addrb   : in  std_logic_vector(clog2(RAM_DEPTH)-1 downto 0);
     dina    : in  std_logic_vector(RAM_WIDTH-1 downto 0);
 --    dinb    : in  std_logic_vector(RAM_WIDTH-1 downto 0);
     wea     : in  std_logic;

@@ -27,3 +27,27 @@ package new_types is
     type bins_t             is array(0 to 11) of std_logic_vector(11 downto 0);
 
 end new_types;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+package func_pkg is
+    function clog2 (depth: in natural)                  return integer;
+end func_pkg;
+
+package body func_pkg is
+
+function clog2( depth : natural) return integer is
+variable temp    : integer := depth;
+variable ret_val : integer := 0;
+begin
+    while temp > 1 loop
+        ret_val := ret_val + 1;
+        temp    := temp / 2;
+    end loop;
+
+    return ret_val;
+end function;
+
+end package body func_pkg;

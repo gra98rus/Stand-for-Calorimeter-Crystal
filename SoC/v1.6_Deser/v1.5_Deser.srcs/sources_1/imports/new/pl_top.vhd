@@ -113,11 +113,12 @@ end component;
     signal ext_clk_pll_locked : std_logic := '0';
     signal ps_clk_50mhz_s : std_logic := '0';
         
-    signal adc_data : adc_data_64_t;
-    signal adc_data_a : std_logic_vector(15 downto 0) := (others=>'0');
-    signal adc_data_b : std_logic_vector(15 downto 0) := (others=>'0');
-    signal adc_data_c : std_logic_vector(15 downto 0) := (others=>'0');
-    signal adc_data_d : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data    : adc_data_t;
+    signal adc_data_64 : adc_data_64_t;
+    signal adc_data_a  : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data_b  : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data_c  : std_logic_vector(15 downto 0) := (others=>'0');
+    signal adc_data_d  : std_logic_vector(15 downto 0) := (others=>'0');
     
     signal adc_status_signals : std_logic_vector (3 downto 0) := (others=>'0');
          
@@ -203,10 +204,10 @@ port map(
     AdcDeserReset => int_rst,
     AdcReSync     => cmd_resync_adc_deser,
     
-    data_A => adc_data_a,
-    data_B => adc_data_b,
-    data_C => adc_data_c,
-    data_D => adc_data_d,
+    data_A => adc_data_64(0),
+    data_B => adc_data_64(1),
+    data_C => adc_data_64(2),
+    data_D => adc_data_64(3),
          
     status_signals => adc_status_signals,
     
@@ -242,7 +243,7 @@ port map(
 buffers_block_i : entity work.buffers_block
 port map(
     ring_clk            => adc_clk,
-    adc_data_write      => adc_data,
+    adc_data_write      => adc_data_64,
     
     simple_clk          => oscillograms_bram_clk,
     simple_addr         => oscillograms_bram_addr,
@@ -410,10 +411,10 @@ TP8 <= ps_cnt(7);                       --out
 
 clk_100mhz <= adc_deser_clock;          --out
 
-adc_data(3) <= adc_data_d;              --in
-adc_data(2) <= adc_data_c;              --in
-adc_data(1) <= adc_data_b;              --in
-adc_data(0) <= adc_data_a;              --in
+adc_data(3) <= adc_data_64(3)(ADC_LENGTH - 1 downto 0);
+adc_data(2) <= adc_data_64(2)(ADC_LENGTH - 1 downto 0);
+adc_data(1) <= adc_data_64(1)(ADC_LENGTH - 1 downto 0);
+adc_data(0) <= adc_data_64(0)(ADC_LENGTH - 1 downto 0);
 
 adc_clk <= deser_out_clk;
 read_clk <= adc_deser_clock;
