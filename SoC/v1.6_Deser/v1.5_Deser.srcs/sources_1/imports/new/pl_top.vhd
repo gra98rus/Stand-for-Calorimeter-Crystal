@@ -142,7 +142,7 @@ end component;
     
     signal Data_out: std_logic_vector (63 downto 0) := (others=>'0');
     
-    signal compare_data : std_logic_vector (55 downto 0) := (others=>'0');--b"00101101101100000110000111000011111001110000000000000000";
+    signal data_to_compare : adc_data_t;
     signal adc_pin : std_logic;
     
     signal start_type_s : std_logic;
@@ -275,7 +275,7 @@ threshold_comparator_i : entity work.threshold_comparator
 port map(
     clk               => adc_clk,
     adc_buf_data      => adc_data,
-    data_to_compare   => compare_data,
+    data_to_compare   => data_to_compare,
     selected_channels => selected_channels_top,
     
     threshold_pass    => confirm_match_s
@@ -302,7 +302,7 @@ port map (
     trigger_type      => start_type,
     selected_channels => selected_channels_top,
     shapers_config    => shapers_config_top,
-    trigger_level     => COMPARE_DATA,
+    trigger_level     => data_to_compare,
     spectrum_spec     => spectra_params
 );
 

@@ -30,20 +30,11 @@ add wave -noupdate -expand -group {Trigger system} /tb_pl_top/pl_top_i/trigg_sys
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/adc_buf_data
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_to_compare
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/threshold_pass
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_ch_A
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_ch_B
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_ch_C
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_ch_D
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_tc_A
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_tc_B
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_tc_C
-add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/data_tc_D
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareA
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareB
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareC
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/compareD
 add wave -noupdate -group {Threshold comparator} /tb_pl_top/pl_top_i/threshold_comparator_i/selected_channels
-add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_statuses
 add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/adc_data_valid
 add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/spectra_params
 add wave -noupdate -group {Spectra controller} /tb_pl_top/pl_top_i/spectra_controller_i/num_of_bins
@@ -70,7 +61,7 @@ add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/selected_channels_r
 add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/shapers_config_r
 add wave -noupdate -group reg_i /tb_pl_top/pl_top_i/reg_i/data_status
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {7409909910 fs} 0}
+WaveRestoreCursors {{Cursor 1} {39719451906 fs} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 341
 configure wave -valuecolwidth 136
@@ -86,4 +77,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 fs} {42 us}
+WaveRestoreZoom {25594884481 fs} {49379870335 fs}

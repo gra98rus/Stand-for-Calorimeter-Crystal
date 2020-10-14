@@ -17,7 +17,7 @@ port(
 	dataOut             : out std_logic_vector(31 downto 0);
     start_event         : out std_logic;
     trigger_type        : out std_logic;
-    trigger_level       : out std_logic_vector(55 downto 0);
+    trigger_level       : out adc_data_t;
     selected_channels   : out std_logic_vector( 3 downto 0);
     shapers_config      : out std_logic_vector( 7 downto 0);
     spectrum_spec       : out std_logic_vector(14 downto 0)
@@ -35,7 +35,7 @@ architecture behavioral of reg_file is
     signal start_event_delay   : std_logic                     := '0';
     signal start_event_result  : std_logic                     := '0';
     signal trigger_type_r      : std_logic                     := '1';
-    signal trigger_level_r     : std_logic_vector(55 downto 0) := (others => '0');
+    signal trigger_level_r     : adc_data_t                    := (others => (others =>'0'));
     signal selected_channels_r : std_logic_vector( 3 downto 0) := (others => '0');
     signal shapers_config_r    : std_logic_vector( 7 downto 0) := (others => '0');
     
@@ -98,13 +98,13 @@ begin
         
 	    if regNum = REG_TRIGGER_LEVEL and regWE = '1' then
 	        if dataIn(15 downto 14) = "00" then
-                trigger_level_r(13 downto 0) <= dataIn(13 downto 0);
+                trigger_level_r(0) <= dataIn(13 downto 0);
             elsif dataIn(15 downto 14) = "01" then
-                trigger_level_r(27 downto 14) <= dataIn(13 downto 0);
+                trigger_level_r(1) <= dataIn(13 downto 0);
             elsif dataIn(15 downto 14) = "10" then
-                trigger_level_r(41 downto 28) <= dataIn(13 downto 0);
+                trigger_level_r(2) <= dataIn(13 downto 0);
             elsif dataIn(15 downto 14) = "11" then
-                trigger_level_r(55 downto 42) <= dataIn(13 downto 0);
+                trigger_level_r(3) <= dataIn(13 downto 0);
             end if;
         end if;
 		
