@@ -25,21 +25,21 @@ architecture Behavioral of Spectra_controller is
     signal spectra_params : spectrum_params_t             := (others => (others => '0'));
     signal num_of_bins    : num_of_bins_t                 := (others => (others => '0'));
     signal selected_point : selected_point_t              := (others => (others => '0'));
-    signal PL_addr        : spectra_addr                  := (others => (others => '0'));
-    signal data_to_mem    : spectra_data                  := (others => (others => '0'));
-    signal data_from_mem  : spectra_data                  := (others => (others => '0'));
+    signal PL_addr        : spectra_addr_t                := (others => (others => '0'));
+    signal data_to_mem    : spectra_data_t                := (others => (others => '0'));
+    signal data_from_mem  : spectra_data_t                := (others => (others => '0'));
     signal spectra_ena    : std_logic_vector(11 downto 0) := (others => '0');
     signal wea            : std_logic_vector(11 downto 0) := (others => '0');
     signal ena            : std_logic_vector(11 downto 0) := (others => '1');
     signal enb            : std_logic_vector(11 downto 0) := (others => '0');
-    signal doutb          : spectra_data                  := (others => (others => '0'));
+    signal doutb          : spectra_data_t                := (others => (others => '0'));
     signal relevant_adc   : relevant_adc_t                := (others => (others => '0'));
     signal start_creators : std_logic                     := '0'; 
     
     signal increase_status      : std_logic_vector(11 downto 0) := (others => '0');
     signal increase_status_buf1 : std_logic_vector(11 downto 0) := (others => '0');
     signal increase_status_buf2 : std_logic_vector(11 downto 0) := (others => '0');
-    signal bins                 : bins                          := (others => (others => '0'));
+    signal bins                 : bins_t                        := (others => (others => '0'));
     
     signal clock_read : std_logic_vector(11 downto 0) := (others => '0');
     signal read       : std_logic_vector(11 downto 0) := (others => '0');
@@ -73,7 +73,6 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
         clk             => clk,
         ena             => spectra_ena    (i*3),
         num_of_bins     => num_of_bins    (i*3),
-        selected_point  => selected_point (i*3),
         adc_data        => relevant_adc   (i*3),
         adc_data_valid  => start_creators,
         bin             => bins           (i*3),
@@ -86,7 +85,6 @@ spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity wor
         clk             => clk,
         ena             => spectra_ena    (i + i/2 + 1),
         num_of_bins     => num_of_bins    (i + i/2 + 1),
-        selected_point  => selected_point (i + i/2 + 1),
         adc_data        => relevant_adc   (i + i/2 + 1),
         adc_data_valid  => start_creators,
         bin             => bins           (i + i/2 + 1),

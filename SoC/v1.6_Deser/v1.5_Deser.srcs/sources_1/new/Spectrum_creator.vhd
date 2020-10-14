@@ -10,7 +10,6 @@ Port (
     clk            : in std_logic;
     ena            : in std_logic;
     num_of_bins    : in std_logic_vector(2 downto 0);
-    selected_point : in std_logic_vector(6 downto 0);
     adc_data       : in std_logic_vector(13 downto 0);
     adc_data_valid : in std_logic;
 

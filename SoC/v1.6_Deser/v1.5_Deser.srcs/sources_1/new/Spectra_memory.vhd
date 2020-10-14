@@ -8,13 +8,13 @@ entity Spectra_memory is
 Port (
     clka : in std_logic;
     clkb : in std_logic;
-    addra : in spectra_addr;
+    addra : in spectra_addr_t;
     PS_addr : in std_logic_vector(15 downto 0);
-    dina : in spectra_data;
+    dina : in spectra_data_t;
     wea : in std_logic_vector(11 downto 0);
     ena : in std_logic_vector(11 downto 0);
     --enb : in std_logic_vector(11 downto 0);
-    douta : out spectra_data;
+    douta : out spectra_data_t;
     PS_data : out std_logic_vector(31 downto 0)
 );
 
@@ -24,7 +24,7 @@ architecture Behavioral of Spectra_memory is
 
     signal addrb : std_logic_vector(11 downto 0) := (others => '0');
     signal enb   : std_logic_vector(11 downto 0) := (others => '0');
-    signal doutb : spectra_data := (others => (others => '0'));
+    signal doutb : spectra_data_t := (others => (others => '0'));
     
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
