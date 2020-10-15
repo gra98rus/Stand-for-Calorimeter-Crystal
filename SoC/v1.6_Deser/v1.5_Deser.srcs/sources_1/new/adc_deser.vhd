@@ -24,11 +24,8 @@ generic(
     C_AdcBytOrBitMode : integer := 0;                   --ADC: 0 - byte mode; 1 - bit mode (data Sheet ad9253)
     C_AdcMsbOrLsbFst  : integer := 0);                  --ADC: 0 - Msb (most significant bit) mode; 1 - Lsb (least significant bit) mode
 port( 
-    clock            : in std_logic;            --pl_top system clock
-           
---    idelayctrl_ready : in std_logic;          --doesn't require
-
-    clock_locked     : in std_logic;            -- '1' - unlocked; '0' - locked
+    clock            : in std_logic;
+    clock_locked     : in std_logic;
       
     AdcDeserReset    : in std_logic;            --deser system reset
     AdcReSync        : in std_logic;            --deser system resync
@@ -128,9 +125,6 @@ architecture Behavioral of adc_deser is
     signal data_B_r : std_logic_vector(15 downto 0);
     signal data_C_r : std_logic_vector(15 downto 0);
     signal data_D_r : std_logic_vector(15 downto 0);
-    
-    signal data_valid_cnt : std_logic_vector(5 downto 0) := (others=>'1');
-    signal data_valid_r   : std_logic := '0';
     
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
@@ -347,21 +341,6 @@ begin
             data_D_r <= IntDataOutD(1) & IntDataOutD(0) & IntDataOutD(14) & IntDataOutD(15) & IntDataOutD(12) & IntDataOutD(13) & IntDataOutD(10) & IntDataOutD(11) 
                       & IntDataOutD(8) & IntDataOutD(9) & IntDataOutD(6) & IntDataOutD(7) & IntDataOutD(4) & IntDataOutD(5) & IntDataOutD(2) & IntDataOutD(3);
         end if;
-                
-        if AdcFrmDataOut(15 downto 0) /= X"F0F0" or IntBitClkDone='0' then  --operator(which is worked with signals) to identify and block wrong data
-            data_valid_cnt <= (others=>'1');
-            data_valid_r <= '0';
-        end if;
-        
-        if data_valid_cnt /= 0 then                                    --counter(time) to block wrong data
-            data_valid_cnt <= data_valid_cnt - '1';
-        end if;
-                
-        data_valid_r <= '0';                                           --signal to identify data validity
-        if data_valid_cnt = 0 then
-            data_valid_r <= '1';
-        end if;
-   
     end if;
 end process;
 ----------------------------------------------------------------------

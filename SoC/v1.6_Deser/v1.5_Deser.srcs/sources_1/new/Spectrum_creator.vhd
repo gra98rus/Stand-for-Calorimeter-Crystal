@@ -4,13 +4,14 @@ use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 
 use work.new_types.all;
+use work.func_pkg.all;
 
 entity Spectrum_creator is
 Port (
     clk            : in std_logic;
     ena            : in std_logic;
     num_of_bins    : in std_logic_vector(2 downto 0);
-    adc_data       : in std_logic_vector(13 downto 0);
+    adc_data       : in std_logic_vector(ADC_LENGTH -1 downto ADC_LENGTH - clog2(BINS_NUM));
     adc_data_valid : in std_logic;
 
     bin            : out std_logic_vector(11 downto 0);

@@ -168,10 +168,10 @@ end component;
 
     signal spectra_commands : std_logic_vector(11 downto 0) := (others => '0');
     
-    signal adc_data_spectra : adc_data_56_t;
+    signal adc_data_spectra : adc_data_spectr_t;
     signal addr_spectra     : std_logic_vector(6 downto 0);
     
-    signal adc_max_value : adc_data_56_t;
+    signal adc_max_value : adc_data_spectr_t;
     
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;

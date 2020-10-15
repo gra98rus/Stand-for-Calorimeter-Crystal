@@ -3,20 +3,20 @@ use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 
 use work.new_types.all;
+use work.func_pkg.all;
 
 entity Spectra_controller is
 Port ( 
     clk              : in  std_logic;
     bram_ctrl_clk    : in  std_logic;
     spectrum_spec    : in  std_logic_vector(14 downto 0);
-    adc_data         : in  adc_data_56_t;
-    adc_max_value    : in  adc_data_56_t;
+    adc_data         : in  adc_data_spectr_t;
+    adc_max_value    : in  adc_data_spectr_t;
     adc_data_valid   : in  std_logic;
     PS_addr          : in  std_logic_vector(15 downto 0);
     
     simple_buff_addr : out std_logic_vector(6  downto 0); 
     PS_data          : out std_logic_vector(31 downto 0)
-
 );
 end Spectra_controller;
 
@@ -33,7 +33,7 @@ architecture Behavioral of Spectra_controller is
     signal ena            : std_logic_vector(11 downto 0) := (others => '1');
     signal enb            : std_logic_vector(11 downto 0) := (others => '0');
     signal doutb          : spectra_data_t                := (others => (others => '0'));
-    signal relevant_adc   : relevant_adc_t                := (others => (others => '0'));
+    signal relevant_adc   : relevant_spectr_t             := (others => (others => '0'));
     signal start_creators : std_logic                     := '0'; 
     
     signal increase_status      : std_logic_vector(11 downto 0) := (others => '0');
@@ -68,7 +68,7 @@ port map(
     PS_data => PS_data
 );
 
-spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.Spectrum_creator
+spectra_max_creators: for i in 0 to ADC_NB - 1 generate spectrum_creator_ii: entity work.Spectrum_creator
     port map(
         clk             => clk,
         ena             => spectra_ena    (i*3),
@@ -80,7 +80,7 @@ spectra_max_creators: for i in 0 to 3 generate spectrum_creator_ii: entity work.
     );
 end generate;
 
-spectra_point_creators: for i in 0 to 7 generate spectrum_creator_ii: entity work.Spectrum_creator
+spectra_point_creators: for i in 0 to 2 * ADC_NB - 1 generate spectrum_creator_ii: entity work.Spectrum_creator
     port map(
         clk             => clk,
         ena             => spectra_ena    (i + i/2 + 1),
