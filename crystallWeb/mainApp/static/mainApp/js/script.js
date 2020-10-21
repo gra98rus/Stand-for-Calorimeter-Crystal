@@ -1,4 +1,4 @@
-var ADC_WIDTH = 128;
+var OSCILLOGRAM_WIDTH = 128;
 
 var chartsData = []
 var allChartsData = []
@@ -80,7 +80,7 @@ function start() {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.responseType = 'text';
 
-  json = {"command" : "readCharts"};
+  json = {"command" : "read_charts"};
   str = JSON.stringify(json);
   request.send(str);
 
@@ -88,7 +88,7 @@ function start() {
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       chartsData = [];
-      for (var i = 0; i < 4*ADC_WIDTH; i++) {
+      for (var i = 0; i < 4 * OSCILLOGRAM_WIDTH; i++) {
         chartsData[i] = json[i];
       }
       var copy = chartsData;
@@ -126,10 +126,10 @@ function drawADC(id,num,chartsData) {
   var x = [];
   var y = [];
   var type;
-  for (i = 0; i < ADC_WIDTH; i++) {
-    //data.addRow([i,chartsData[ADC_WIDTH*(num-1)+i]]);
+  for (i = 0; i < OSCILLOGRAM_WIDTH; i++) {
+    //data.addRow([i,chartsData[OSCILLOGRAM_WIDTH*(num-1)+i]]);
     x.push(i);
-    y.push(chartsData[ADC_WIDTH*(num-1)+i]);
+    y.push(chartsData[i * 4 + (num-1)]);
   }
   if (chartType=="line")
     type="scatter";
@@ -184,7 +184,7 @@ function drawSpectrum(num){
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       spectrum_data = [];
-      for (var i = 0; i < 4*ADC_WIDTH; i++) {
+      for (var i = 0; i < 4*OSCILLOGRAM_WIDTH; i++) {
         spectrum_data[i] = json[i];
       }
     }
@@ -492,7 +492,7 @@ function deleteSpectrum(num){
         alert("Неправильный канал!");
         $('#add-spectrum-item').attr("class", "dropdown-item");
       } else {
-        if (pt < 0 || pt > ADC_WIDTH) {
+        if (pt < 0 || pt > OSCILLOGRAM_WIDTH) {
           alert("Неправильная опорная точка!");
           $('#add-spectrum-item').attr("class", "dropdown-item");
         } else {

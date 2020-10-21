@@ -67,7 +67,7 @@ def read_spectrum(spectrum_num):
     mem = MMIO (SPECTRA_MEM_ADDRESS, SPECTRA_MEM_SIZE)
     data = mem.read(0x4000 * spectrum_num, 2048)
     mem.close()
-    data_ = struct.unpack("512I",data)
+    data_ = struct.unpack("1024H",data)
     return data_
 
 @csrf_exempt
@@ -105,17 +105,17 @@ def index(request):
             response = JsonResponse({'reg_number': reg_num, 'data': data})
             return HttpResponse(response)
 
-        if (js['command'] == 'readCharts'):                               
-            response = {}                                                 
-            write_to_reg(REG_START_EVENT, COMMAND_START)                  
-            status = read_from_reg (REG_STATUS)                           
-            while status != 1:                                            
-                status = read_from_reg (REG_STATUS)                       
+        if (js['command'] == 'read_charts'):
+            response = {}
+            write_to_reg(REG_START_EVENT, COMMAND_START)
+            status = read_from_reg(REG_STATUS)
+            while status != 1:
+                status = read_from_reg(REG_STATUS)
                 print(status)
-            data = read_charts()                                          
-            for i in range(0,512):                                        
-                response[str(i)] = data[i]                                
-            response = JsonResponse(response)                             
+            data = read_charts()
+            for i in range(0,1024):
+                response[str(i)] = data[i]
+            response = JsonResponse(response)
             return HttpResponse(response)
 
         if (js['command'] == 'readSpectrum'):                               
