@@ -57,7 +57,7 @@ def read_charts ():
     mem = MMIO (MEM_ADDRESS, MEM_SIZE)
     data = mem.read(0, 2048)
     mem.close()
-    data_ = struct.unpack("512I",data)
+    data_ = struct.unpack("1024H",data)
     #data__ = []
     #for i in range(0,512):
     #    data__.append(struct.unpack("I", data)[i])
