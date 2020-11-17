@@ -163,6 +163,7 @@ end component;
     signal buffer_data_valid     : std_logic                      := '0';
     signal selected_channels_top : std_logic_vector ( 3 downto 0) := (others => '0');
     signal shapers_config_top    : std_logic_vector ( 7 downto 0);
+    signal amplifiers_config_top : std_logic_vector ( 5 downto 0);
     signal spectra_params        : std_logic_vector (14 downto 0) := (others => '0');
 
 
@@ -200,8 +201,8 @@ generic map(
 port map(
     clock_locked  => ext_clk_pll_locked,
          
-    AdcDeserReset => int_rst,
-    AdcReSync     => cmd_resync_adc_deser,
+    AdcDeserReset => JMP1, --int_rst,
+    AdcReSync     => JMP2,--cmd_resync_adc_deser,
     
     data_A => adc_data_64(0),
     data_B => adc_data_64(1),
@@ -301,6 +302,7 @@ port map (
     trigger_type      => start_type,
     selected_channels => selected_channels_top,
     shapers_config    => shapers_config_top,
+    amplifiers_config => amplifiers_config_top,
     trigger_level     => data_to_compare,
     spectrum_spec     => spectra_params
 );
@@ -319,59 +321,12 @@ port map (
     PS_data          => spectra_bram_dout
 );
 ----------------------------------------------------------------
-process(JMP1, JMP2)     --process to choise amplifiers coefficient
-begin
-    
-    ALT_01 <= '0';      --out
-    ALT_02 <= '0';      --out
-    ALT_03 <= '0';      --out            --control signals for amplifiers
-    ALT_04 <= '0';      --out
-    ALT_05 <= '0';      --out
-    ALT_06 <= '0';      --out
---    ALT_07 <= '0';
---    ALT_08 <= '1';
---    ALT_09 <= '1';
---    ALT_10 <= '1';
---    ALT_11 <= '1';
---    ALT_12 <= '0';        --signals are controlled by shaper_controller
---    ALT_13 <= '1';
---    ALT_14 <= '0';
---    ALT_15 <= '1';
---    ALT_16 <= '1';
---    ALT_17 <= '0';
---    ALT_18 <= '1';
-    
-    if JMP2 = '0' and JMP1 = '0' then           
-        ALT_01 <= '0';
-        ALT_02 <= '0';
-        ALT_03 <= '0';
-        ALT_04 <= '0';
-        ALT_05 <= '0';
-        ALT_06 <= '0';
-    elsif JMP2 = '0' and JMP1 = '1' then
-        ALT_01 <= '0';
-        ALT_02 <= '1';
-        ALT_03 <= '0';
-        ALT_04 <= '1';
-        ALT_05 <= '0';
-        ALT_06 <= '1';
-    elsif JMP2 = '1' and JMP1 = '0' then
-        ALT_01 <= '1';
-        ALT_02 <= '0';
-        ALT_03 <= '1';
-        ALT_04 <= '0';
-        ALT_05 <= '1';
-        ALT_06 <= '0';
-    else
-        ALT_01 <= '1';
-        ALT_02 <= '1';
-        ALT_03 <= '1';
-        ALT_04 <= '1';
-        ALT_05 <= '1';
-        ALT_06 <= '1';
-    end if;       
-       
-end process;
+    ALT_01 <= amplifiers_config_top(0);
+    ALT_02 <= amplifiers_config_top(1);
+    ALT_03 <= amplifiers_config_top(2);
+    ALT_04 <= amplifiers_config_top(3);
+    ALT_05 <= amplifiers_config_top(4);
+    ALT_06 <= amplifiers_config_top(5);
 -----------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(

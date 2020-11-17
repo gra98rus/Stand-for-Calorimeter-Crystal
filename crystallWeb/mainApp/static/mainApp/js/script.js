@@ -130,6 +130,7 @@ function drawADC(id,num,chartsData) {
     //data.addRow([i,chartsData[OSCILLOGRAM_WIDTH*(num-1)+i]]);
     x.push(i);
     y.push(chartsData[i * 4 + (num-1)]);
+    console.log(chartsData[i * 4 + (num-1)]);
   }
   if (chartType=="line")
     type="scatter";
@@ -647,6 +648,93 @@ function deleteSpectrum(num){
         console.log("send POST")
     });
 
+    $("input[name='first_ampl']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#first_ampl_1').prop("checked");
+        if (value == true)
+            data = 0b0000;
+        else{
+            value = $('#first_ampl_2').prop("checked");
+            if (value == true)
+                data = 0b0001;
+            else{
+                value = $('#first_ampl_4').prop("checked");
+                if (value == true)
+                    data = 0b0010;
+                else
+                    data = 0b0011;
+            }
+        }
+        var json = {"command" : "set_ampl_config",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
+    $("input[name='second_ampl']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#second_ampl_1').prop("checked");
+        if (value == true)
+            data = 0b0100;
+        else{
+            value = $('#second_ampl_2').prop("checked");
+            if (value == true)
+                data = 0b0101;
+            else{
+                value = $('#second_ampl_4').prop("checked");
+                if (value == true)
+                    data = 0b0110;
+                else
+                    data = 0b0111;
+            }
+        }
+        var json = {"command" : "set_ampl_config",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
+    $("input[name='third_ampl']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#third_ampl_1').prop("checked");
+        if (value == true)
+            data = 0b1000;
+        else{
+            value = $('#third_ampl_2').prop("checked");
+            if (value == true)
+                data = 0b1001;
+            else{
+                value = $('#third_ampl_4').prop("checked");
+                if (value == true)
+                    data = 0b1010;
+                else
+                    data = 0b1011;
+            }
+        }
+        var json = {"command" : "set_ampl_config",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
+    });
+
     $("input[name='level_num_checkbox']").change( function() {
         var request = new XMLHttpRequest();
         request.open("POST", "", true);
@@ -688,7 +776,7 @@ function deleteSpectrum(num){
         request.open("POST", "", true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
-        var json = {"command" : "updateConfigOnPage",
+        var json = {"command" : "update_config_on_page",
                     "regNumber" : "",
                     "data" : ""};
         var str = JSON.stringify(json)
@@ -716,6 +804,7 @@ function deleteSpectrum(num){
                 document.getElementById('triggLevel1').value = json.trigger_level_1 & 0x3FFF;
                 document.getElementById('triggLevel2').value = json.trigger_level_2 & 0x3FFF;
                 document.getElementById('triggLevel3').value = json.trigger_level_3 & 0x3FFF;
+
                 if(json.shapers_config_0 == 1){
                     document.getElementById('first_channel_01').checked = true;
                     document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary active");
@@ -790,6 +879,93 @@ function deleteSpectrum(num){
                     document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary");
                     document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary");
                     document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.ampl_config_0 == 0){
+                    document.getElementById('first_ampl_1').checked = true;
+                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_0 == 1){
+                    document.getElementById('first_ampl_1').checked = true;
+                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_0 == 2){
+                    document.getElementById('first_ampl_1').checked = true;
+                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_0 == 3){
+                    document.getElementById('first_ampl_1').checked = true;
+                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.ampl_config_1 == 0){
+                    document.getElementById('second_ampl_1').checked = true;
+                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_1 == 1){
+                    document.getElementById('second_ampl_1').checked = true;
+                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_1 == 2){
+                    document.getElementById('second_ampl_1').checked = true;
+                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_1 == 3){
+                    document.getElementById('second_ampl_1').checked = true;
+                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary active");
+                }
+
+                if(json.ampl_config_2 == 0){
+                    document.getElementById('third_ampl_1').checked = true;
+                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_2 == 1){
+                    document.getElementById('third_ampl_1').checked = true;
+                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_2 == 2){
+                    document.getElementById('third_ampl_1').checked = true;
+                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
+                }
+                else if(json.ampl_config_2 == 3){
+                    document.getElementById('third_ampl_1').checked = true;
+                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary active");
                 }
             }
         }

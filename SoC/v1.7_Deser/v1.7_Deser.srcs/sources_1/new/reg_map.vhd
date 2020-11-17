@@ -13,6 +13,7 @@ package reg_map is
     constant REG_BASKET_NUM         : std_logic_vector(15 downto 0)  := X"0111";
     constant REG_SHAPER             : std_logic_vector(15 downto 0)  := X"1000";
     constant REG_SPECTRUM_SPEC      : std_logic_vector(15 downto 0)  := X"1001";
+    constant REG_AMPLIFIERS         : std_logic_vector(15 downto 0)  := X"1010";
 
 end reg_map;
 

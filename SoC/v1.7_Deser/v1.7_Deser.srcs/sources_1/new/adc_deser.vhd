@@ -343,10 +343,13 @@ begin
     end if;
 end process;
 ----------------------------------------------------------------------
-data_A <= data_A_r;             --out
-data_B <= data_B_r;             --out
-data_C <= data_C_r;             --out
-data_D <= data_D_r;             --out
+data_A <= data_A_r(13) & data_A_r(13) & data_A_r(13 downto 0);
+data_B <= data_B_r(13) & data_B_r(13) & data_B_r(13 downto 0);
+data_C <= data_C_r(13) & data_C_r(13) & data_C_r(13 downto 0);
+data_D <= data_D_r(13) & data_D_r(13) & data_D_r(13 downto 0);
+--data_B <= data_B_r;
+--data_C <= data_C_r;
+--data_D <= data_D_r;
 
 clk_rst <= AdcDeserReset;       --in
 reset <= clk_rst;

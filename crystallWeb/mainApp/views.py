@@ -19,6 +19,7 @@ REG_SELECTED_CHANNELS = 0x0110
 REG_BASKET_NUM = 0x0111
 REG_SHAPER = 0x1000
 REG_SPECTRUM_SPEC = 0x1001
+REG_AMPLIFIERS = 0x1010
 
 COMMAND_START = 0x0001
 
@@ -38,6 +39,9 @@ shapers_config_0 = 0b0001
 shapers_config_1 = 0b0101
 shapers_config_2 = 0b1001
 shapers_config_3 = 0b1101
+amplifiers_config_0 = 0b0000
+amplifiers_config_1 = 0b0100
+amplifiers_config_2 = 0b1000
 
 def write_to_reg (reg_num , data):
     mem = MMIO(REG_ADDRESS , REG_SIZE)
@@ -57,7 +61,7 @@ def read_charts ():
     mem = MMIO (MEM_ADDRESS, MEM_SIZE)
     data = mem.read(0, 2048)
     mem.close()
-    data_ = struct.unpack("1024H",data)
+    data_ = struct.unpack("1024h",data)
     #data__ = []
     #for i in range(0,512):
     #    data__.append(struct.unpack("I", data)[i])
@@ -67,7 +71,7 @@ def read_spectrum(spectrum_num):
     mem = MMIO (SPECTRA_MEM_ADDRESS, SPECTRA_MEM_SIZE)
     data = mem.read(0x4000 * spectrum_num, 2048)
     mem.close()
-    data_ = struct.unpack("1024H",data)
+    data_ = struct.unpack("1024h",data)
     return data_
 
 @csrf_exempt
@@ -114,7 +118,7 @@ def index(request):
                 print(status)
             data = read_charts()
             for i in range(0,1024):
-                response[str(i)] = data[i]
+                response[str(i)] =  data[i]
             response = JsonResponse(response)
             return HttpResponse(response)
 
@@ -173,6 +177,19 @@ def index(request):
             else:
                 shapers_config_3 = int(js['data']) & 0b0011
             return HttpResponse('ok!')
+
+        if (js['command'] == 'set_ampl_config'):
+            write_to_reg(REG_AMPLIFIERS, int(js['data']))
+            global amplifiers_config_0
+            global amplifiers_config_1
+            global amplifiers_config_2
+            if (int(js['data']) & 0b1100 == 0):
+                amplifiers_config_0 = int(js['data']) & 0b0011
+            elif (int(js['data']) & 0b1100 == 0b0100):
+                amplifiers_config_1 = int(js['data']) & 0b0011
+            else:
+                amplifiers_config_3 = int(js['data']) & 0b0011
+            return HttpResponse('ok!')
         
         if (js['command'] == 'sendStartEvent'):
             write_to_reg(REG_START_EVENT, 1)
@@ -182,8 +199,8 @@ def index(request):
             write_to_reg(REG_START_EVENT, 0)
             return HttpResponse('ok!')
         
-        if (js['command'] == 'updateConfigOnPage'):
-            response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3})
+        if (js['command'] == 'update_config_on_page'):
+            response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3, "ampl_config_0" : amplifiers_config_0, "ampl_config_1" : amplifiers_config_1, "ampl_config_2" : amplifiers_config_2})
             return HttpResponse(response)
 
         if (js['command'] == 'set_spectrum_conf'):

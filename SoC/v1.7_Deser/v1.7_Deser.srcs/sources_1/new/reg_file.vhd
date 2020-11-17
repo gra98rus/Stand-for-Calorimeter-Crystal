@@ -20,6 +20,7 @@ port(
     trigger_level       : out adc_data_t;
     selected_channels   : out std_logic_vector( 3 downto 0);
     shapers_config      : out std_logic_vector( 7 downto 0);
+    amplifiers_config   : out std_logic_vector( 5 downto 0);
     spectrum_spec       : out std_logic_vector(14 downto 0)
   	);
 	
@@ -38,6 +39,7 @@ architecture behavioral of reg_file is
     signal trigger_level_r     : adc_data_t                    := (others => (others =>'0'));
     signal selected_channels_r : std_logic_vector( 3 downto 0) := (others => '0');
     signal shapers_config_r    : std_logic_vector( 7 downto 0) := (others => '0');
+    signal amplifiers_config_r : std_logic_vector( 5 downto 0) := (others => '0');
     
     signal data_status         : std_logic                     := '0';
     
@@ -124,6 +126,16 @@ begin
             end if;
         end if;
         
+        if regNum = REG_AMPLIFIERS and regWE = '1' then
+            if dataIn(3 downto 2) = "00" then
+                amplifiers_config_r(1 downto 0) <= dataIn(1 downto 0);
+            elsif dataIn(3 downto 2) = "01" then
+                amplifiers_config_r(3 downto 2) <= dataIn(1 downto 0);
+            elsif dataIn(3 downto 2) = "10" then
+                amplifiers_config_r(5 downto 4) <= dataIn(1 downto 0);
+            end if;
+        end if;
+        
         if regNum = REG_SPECTRUM_SPEC and regWE = '1' then
             spectrum_spec <= dataIn(14 downto 0);
         end if;
@@ -140,5 +152,6 @@ start_event       <= start_event_result;
 trigger_level     <= trigger_level_r;
 trigger_type      <= trigger_type_r;
 shapers_config    <= shapers_config_r;
+amplifiers_config <= amplifiers_config_r;
 selected_channels <= selected_channels_r;
 end architecture;
