@@ -185,7 +185,7 @@ function drawSpectrum(num){
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       spectrum_data = [];
-      for (var i = 0; i < 4*OSCILLOGRAM_WIDTH; i++) {
+      for (var i = 0; i < 4096; i++) {
         spectrum_data[i] = json[i];
       }
     }
@@ -193,9 +193,11 @@ function drawSpectrum(num){
   var x = [];
   var y = [];
   var spectrumData = [];
-  for (i = 0; i < spectra_list[num].bin_num; i++) {
+  var yc = 0;
+  for (i = -spectra_list[num].bin_num / 2; i < spectra_list[num].bin_num/2; i++) {
     x.push(i);
-    y.push(spectrum_data[i]);
+    yc = (i < 0) ? i + Number(spectra_list[num].bin_num) : i;
+    y.push(spectrum_data[yc]);
   }
 
   if (chartType=="line")
@@ -292,10 +294,10 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
   request.open("POST", "", true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.responseType = 'text';
-  var json = {"command" : "set_spectrum_conf",
+  var json = {"command"      : "set_spectrum_conf",
               "spectrum_num" : spectrum_num,
-              "point"   : point,
-              "bins_num": bin_num};
+              "point"        : point,
+              "bins_num"     : Math.log2(bin_num) - 5};
   var str = JSON.stringify(json)
   request.send(str);
   console.log("send POST")
@@ -485,15 +487,15 @@ function deleteSpectrum(num){
       }
       if ($('#maxAmplMode').prop("checked") == true) {
         mode = 0;
-        pt = null;
+        pt = 0;
       }
       smpl = $("#basketNumber > .active").text();
-
+      console.log(pt);
       if (ch > 4 || ch < 1) {
         alert("Неправильный канал!");
         $('#add-spectrum-item').attr("class", "dropdown-item");
       } else {
-        if (pt < 0 || pt > OSCILLOGRAM_WIDTH) {
+        if (pt < 0 || pt > OSCILLOGRAM_WIDTH ) {
           alert("Неправильная опорная точка!");
           $('#add-spectrum-item').attr("class", "dropdown-item");
         } else {
@@ -526,7 +528,7 @@ function deleteSpectrum(num){
       if (value == false)
         chartType="line";
       drawCharts();
-      drawSpectra();
+//      drawSpectra();
 //      drawADC("adc_graph_1_1",1,chartsData);
 //      drawADC("adc_graph_2_2",2,chartsData);
 //      drawADC("adc_graph_3_3",3,chartsData);

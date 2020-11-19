@@ -6,15 +6,15 @@ use work.new_types.all;
 
 entity Spectra_memory is
 Port (
-    clka : in std_logic;
-    clkb : in std_logic;
-    addra : in spectra_addr_t;
+    clka    : in std_logic;
+    clkb    : in std_logic;
+    addra   : in spectra_addr_t;
     PS_addr : in std_logic_vector(15 downto 0);
-    dina : in spectra_data_t;
-    wea : in std_logic_vector(11 downto 0);
-    ena : in std_logic_vector(11 downto 0);
-    --enb : in std_logic_vector(11 downto 0);
-    douta : out spectra_data_t;
+    dina    : in spectra_data_t;
+    wea     : in std_logic_vector(11 downto 0);
+    ena     : in std_logic_vector(11 downto 0);
+    --enb   : in std_logic_vector(11 downto 0);
+    douta   : out spectra_data_t;
     PS_data : out std_logic_vector(31 downto 0)
 );
 
@@ -33,7 +33,8 @@ begin
     spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.RAM
         generic map(
             RAM_WIDTH => 32,
-            RAM_DEPTH => 4096)
+            RAM_DEPTH => 4096
+            )
         port map(
             clka => clka,
             clkb => clkb,
@@ -47,7 +48,7 @@ begin
             doutb => doutb(i)
         );
     end generate spectra_mem;
-        
+                       
 enb(0)  <= '1' when PS_addr(15 downto 12) = B"0000" else '0';
 enb(1)  <= '1' when PS_addr(15 downto 12) = B"0001" else '0';
 enb(2)  <= '1' when PS_addr(15 downto 12) = B"0010" else '0';
@@ -75,7 +76,7 @@ with enb select
                doutb(9)  when B"001000000000",
                doutb(10) when B"010000000000",
                doutb(11) when B"100000000000",
-               (others => '0') when others;
+               (others => '1') when others;
 			
 			
 

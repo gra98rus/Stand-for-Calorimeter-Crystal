@@ -28,7 +28,7 @@ architecture Behavioral of Spectra_controller is
     signal PL_addr        : spectra_addr_t                := (others => (others => '0'));
     signal data_to_mem    : spectra_data_t                := (others => (others => '0'));
     signal data_from_mem  : spectra_data_t                := (others => (others => '0'));
-    signal spectra_ena    : std_logic_vector(11 downto 0) := (others => '0');
+    signal spectra_ena    : std_logic_vector(11 downto 0) := (others => '1');
     signal wea            : std_logic_vector(11 downto 0) := (others => '0');
     signal ena            : std_logic_vector(11 downto 0) := (others => '1');
     signal enb            : std_logic_vector(11 downto 0) := (others => '0');

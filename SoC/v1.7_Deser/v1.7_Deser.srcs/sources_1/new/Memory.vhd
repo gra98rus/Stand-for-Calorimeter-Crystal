@@ -11,7 +11,8 @@ USE std.textio.all;
 entity RAM is
 generic (
     RAM_WIDTH  : integer := 32;
-    RAM_DEPTH  : integer := 32
+    RAM_DEPTH  : integer := 32;
+    INIT_FILE  : string  := "RAM_INIT.dat"
 );
 Port (
     clka    : in  std_logic;
@@ -34,14 +35,37 @@ architecture Behavioral of RAM is
 
 constant C_RAM_WIDTH : integer := RAM_WIDTH;
 constant C_RAM_DEPTH : integer := RAM_DEPTH;
-
+constant C_INIT_FILE : string  := INIT_FILE;
 
 type ram_type is array (C_RAM_DEPTH-1 downto 0) of std_logic_vector (C_RAM_WIDTH-1 downto 0);      -- 2D Array Declaration for RAM signal
 signal ram_data_a : std_logic_vector(C_RAM_WIDTH-1 downto 0) ;
 signal ram_data_b : std_logic_vector(C_RAM_WIDTH-1 downto 0) ;
 
+function initramfromfile (ramfilename : in string) return ram_type is
+file ramfile	: text is in ramfilename;
+variable ramfileline : line;
+variable ram_name	: ram_type;
+variable bitvec : bit_vector(C_RAM_WIDTH-1 downto 0);
+begin
+    for i in ram_type'range loop
+        readline (ramfile, ramfileline);
+        read (ramfileline, bitvec);
+        ram_name(i) := to_stdlogicvector(bitvec);
+    end loop;
+    return ram_name;
+end function;
+
+function init_from_file_or_zeroes(ramfile : string) return ram_type is
+begin
+    if ramfile = "RAM_INIT.dat" then
+        return (others => (others => '0'));
+    else
+        return InitRamFromFile(ramfile);
+    end if;
+end;
+
 --shared variable mem : ram_type := (others => (others => '0'));
-signal mem : ram_type := (others => (others => '0'));
+signal mem : ram_type := init_from_file_or_zeroes(C_INIT_FILE);
 
 attribute keep_hierarchy : string;
 attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;

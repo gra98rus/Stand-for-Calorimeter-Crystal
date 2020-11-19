@@ -150,38 +150,38 @@ begin
                 state                 <= STT_READ_RING;
                 addrb_ring            <= std_logic_vector (unsigned(addrb_ring) + 1);
                 write_simple_ena      <= '1';
-                
+                 
             when STT_READ_RING =>                                           --write to a simple buffer
                 if addra_simple = B"1111111" then
                     state             <= STT_WAIT;
                     write_simple_ena  <= '0';
                     simple_data_valid <= '1';
-                    if doutb_ring(13 downto  2) > max_value(0) then
+                    if signed(doutb_ring(13 downto  2)) > signed(max_value(0)) then
                         max_value(0) <= doutb_ring(13 downto 2);
                     end if;
-                    if doutb_ring(29 downto 18) > max_value(1) then
+                    if signed(doutb_ring(29 downto 18)) > signed(max_value(1)) then
                         max_value(1) <= doutb_ring(29 downto 18);
                     end if;
-                    if doutb_ring(45 downto 34) > max_value(2) then
+                    if signed(doutb_ring(45 downto 34)) > signed(max_value(2)) then
                         max_value(2) <= doutb_ring(45 downto 34);
                     end if;
-                    if doutb_ring(61 downto 50) > max_value(3) then
+                    if signed(doutb_ring(61 downto 50)) > signed(max_value(3)) then
                         max_value(3) <= doutb_ring(61 downto 50);
                     end if;
                 else
                     write_simple_ena  <= '1';
                     addra_simple      <= std_logic_vector (unsigned(addra_simple) + 1);
                     addrb_ring        <= std_logic_vector (unsigned(addrb_ring) + 1);
-                    if doutb_ring(13 downto  2) > max_value(0) then
+                    if signed(doutb_ring(13 downto  2)) > signed(max_value(0)) then
                         max_value(0) <= doutb_ring(13 downto 2);
                     end if;
-                    if doutb_ring(29 downto 18) > max_value(1) then
+                    if signed(doutb_ring(29 downto 18)) > signed(max_value(1)) then
                         max_value(1) <= doutb_ring(29 downto 18);
                     end if;
-                    if doutb_ring(45 downto 34) > max_value(2) then
+                    if signed(doutb_ring(45 downto 34)) > signed(max_value(2)) then
                         max_value(2) <= doutb_ring(45 downto 34);
                     end if;
-                    if doutb_ring(61 downto 50) > max_value(3) then
+                    if signed(doutb_ring(61 downto 50)) > signed(max_value(3)) then
                         max_value(3) <= doutb_ring(61 downto 50);
                     end if;
                 end if;

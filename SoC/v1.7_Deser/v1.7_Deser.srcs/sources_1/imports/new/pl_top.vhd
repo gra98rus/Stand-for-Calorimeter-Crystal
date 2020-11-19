@@ -321,12 +321,12 @@ port map (
     PS_data          => spectra_bram_dout
 );
 ----------------------------------------------------------------
-    ALT_01 <= amplifiers_config_top(0);
-    ALT_02 <= amplifiers_config_top(1);
-    ALT_03 <= amplifiers_config_top(2);
-    ALT_04 <= amplifiers_config_top(3);
-    ALT_05 <= amplifiers_config_top(4);
-    ALT_06 <= amplifiers_config_top(5);
+ALT_01 <= amplifiers_config_top(0);
+ALT_02 <= amplifiers_config_top(1);
+ALT_03 <= amplifiers_config_top(2);
+ALT_04 <= amplifiers_config_top(3);
+ALT_05 <= amplifiers_config_top(4);
+ALT_06 <= amplifiers_config_top(5);
 -----------------------------------------------------------------
 adc_clk_obufds : OBUFDS
 port map(

@@ -26,6 +26,7 @@ end package body func_pkg;
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 library work;
 use work.func_pkg.all;

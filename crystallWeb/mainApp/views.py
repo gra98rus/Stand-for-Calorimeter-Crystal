@@ -69,9 +69,10 @@ def read_charts ():
 
 def read_spectrum(spectrum_num):
     mem = MMIO (SPECTRA_MEM_ADDRESS, SPECTRA_MEM_SIZE)
-    data = mem.read(0x4000 * spectrum_num, 2048)
+    data = mem.read(0x4000 * spectrum_num, 16384)
     mem.close()
-    data_ = struct.unpack("1024h",data)
+    data_ = struct.unpack("4096I",data)
+    print data_
     return data_
 
 @csrf_exempt
@@ -123,9 +124,10 @@ def index(request):
             return HttpResponse(response)
 
         if (js['command'] == 'readSpectrum'):                               
-            response = {}                                                 
-            data = read_spectrum(int(js['spectrum_num']))                                          
-            for i in range(0,512):                                        
+            response = {}
+            #data = read_spectrum(0)
+            data = read_spectrum(int(js['spectrum_num']))
+            for i in range(0,4096):                                        
                 response[str(i)] = data[i]                                
             response = JsonResponse(response)                             
             return HttpResponse(response)
@@ -204,5 +206,6 @@ def index(request):
             return HttpResponse(response)
 
         if (js['command'] == 'set_spectrum_conf'):
-            write_to_reg(REG_SPECTRUM_SPEC, 3<<7 | int(js['point']))
+            write_to_reg(REG_SPECTRUM_SPEC, 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
+            print bin(int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
             return HttpResponse('ok!')
