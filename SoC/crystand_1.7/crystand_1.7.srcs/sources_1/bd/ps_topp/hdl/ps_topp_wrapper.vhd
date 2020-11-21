@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Thu Sep 17 18:10:53 2020
+--Date        : Sat Nov 21 13:51:38 2020
 --Host        : aandreev-inp running 64-bit Ubuntu 18.04.5 LTS
 --Command     : generate_target ps_topp_wrapper.bd
 --Design      : ps_topp_wrapper
