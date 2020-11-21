@@ -38,25 +38,25 @@ process (clk)
 begin
 if clk'event and clk = '1' then
 
-    if adc_buf_data(0) >= data_to_compare(0) and selected_channels(0) = '1' then
+    if signed(adc_buf_data(0)) >= signed(data_to_compare(0)) and selected_channels(0) = '1' then
         compareA <= '1';
     else
         compareA <= '0';
     end if;
     
-    if adc_buf_data(1) >= data_to_compare(1) and selected_channels(1) = '1' then
+    if signed(adc_buf_data(1)) >= signed(data_to_compare(1)) and selected_channels(1) = '1' then
         compareB <= '1';
     else
         compareB <= '0';
     end if;
 
-    if adc_buf_data(2) >= data_to_compare(2) and selected_channels(2) = '1' then
+    if signed(adc_buf_data(2)) >= signed(data_to_compare(2)) and selected_channels(2) = '1' then
         compareC <= '1';
     else
         compareC <= '0';
     end if;
     
-    if adc_buf_data(3) >= data_to_compare(3) and selected_channels(3) = '1' then
+    if signed(adc_buf_data(3)) >= signed(data_to_compare(3)) and selected_channels(3) = '1' then
         compareD <= '1';
     else
         compareD <= '0';
