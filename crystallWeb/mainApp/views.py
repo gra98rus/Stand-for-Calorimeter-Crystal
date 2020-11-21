@@ -72,7 +72,6 @@ def read_spectrum(spectrum_num):
     data = mem.read(0x4000 * spectrum_num, 16384)
     mem.close()
     data_ = struct.unpack("4096I",data)
-    print data_
     return data_
 
 @csrf_exempt
@@ -138,8 +137,9 @@ def index(request):
             trigger_type = int(js['data'])
             return HttpResponse('ok!')
         
-        if (js['command'] == 'setTriggerLevel'):
+        if (js['command'] == 'set_trigger_level'):
             write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
+            print bin(int(js['data']))
             global trigger_level_0
             global trigger_level_1
             global trigger_level_2
@@ -206,6 +206,6 @@ def index(request):
             return HttpResponse(response)
 
         if (js['command'] == 'set_spectrum_conf'):
-            write_to_reg(REG_SPECTRUM_SPEC, 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
+            write_to_reg(REG_SPECTRUM_SPEC, int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
             print bin(int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
             return HttpResponse('ok!')

@@ -348,8 +348,8 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    var level  = parseInt(document.getElementById('triggLevel0').value, 10);
-    var json = {"command" : "setTriggerLevel",
+    var level = (0b011111111111111 & parseInt(document.getElementById('triggLevel0').value, 10));
+    var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
     var str = JSON.stringify(json)
@@ -360,8 +360,8 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = parseInt(document.getElementById('triggLevel1').value, 10) + 16384;
-    var json = {"command" : "setTriggerLevel",
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel1').value, 10)) | 16384;
+    var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
     var str = JSON.stringify(json)
@@ -372,8 +372,8 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = parseInt(document.getElementById('triggLevel2').value, 10) + 32768;
-    var json = {"command" : "setTriggerLevel",
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel2').value, 10)) | 32768;
+    var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
     var str = JSON.stringify(json)
@@ -384,8 +384,8 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = parseInt(document.getElementById('triggLevel3').value, 10) + 49152;
-    var json = {"command" : "setTriggerLevel",
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10)) | 49152;
+    var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
     var str = JSON.stringify(json)
@@ -798,14 +798,18 @@ function deleteSpectrum(num){
                     document.getElementById('css_force_but').setAttribute("class", "btn btn-primary");
                     document.getElementById('css_level_but').setAttribute("class", "btn btn-primary active");
                 }
+                console.log(-(json.trigger_level_0 & 8191));
+                console.log(json.trigger_level_1 & 8192);
+                console.log(json.trigger_level_2 & 8192);
+                console.log(json.trigger_level_3 & 8192);
                 document.getElementById('level0').checked = json.selected_level&1 ? true : false;
                 document.getElementById('level1').checked = json.selected_level&2 ? true : false;
                 document.getElementById('level2').checked = json.selected_level&4 ? true : false;
                 document.getElementById('level3').checked = json.selected_level&8 ? true : false;
-                document.getElementById('triggLevel0').value = json.trigger_level_0;
-                document.getElementById('triggLevel1').value = json.trigger_level_1 & 0x3FFF;
-                document.getElementById('triggLevel2').value = json.trigger_level_2 & 0x3FFF;
-                document.getElementById('triggLevel3').value = json.trigger_level_3 & 0x3FFF;
+                document.getElementById('triggLevel0').value = json.trigger_level_0 & 8192 ? -(json.trigger_level_0 & 8191) : json.trigger_level_0 & 8191;
+                document.getElementById('triggLevel1').value = json.trigger_level_1 & 8192 ? -(json.trigger_level_1 & 8191) : json.trigger_level_1 & 8191;
+                document.getElementById('triggLevel2').value = json.trigger_level_2 & 8192 ? -(json.trigger_level_2 & 8191) : json.trigger_level_2 & 8191;
+                document.getElementById('triggLevel3').value = json.trigger_level_3 & 8192 ? -(json.trigger_level_3 & 8191) : json.trigger_level_3 & 8191;
 
                 if(json.shapers_config_0 == 1){
                     document.getElementById('first_channel_01').checked = true;
