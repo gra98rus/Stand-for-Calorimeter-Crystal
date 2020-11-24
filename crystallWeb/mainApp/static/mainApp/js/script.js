@@ -348,7 +348,7 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    var level = (0b011111111111111 & parseInt(document.getElementById('triggLevel0').value, 10));
+    var level = (0b011111111111111 & parseInt(document.getElementById('triggLevel0').value, 10) + 0);
     var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
@@ -360,7 +360,7 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel1').value, 10)) | 16384;
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel1').value, 10) + 0) | 16384;
     var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
@@ -372,7 +372,7 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel2').value, 10)) | 32768;
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel2').value, 10) + 0) | 32768;
     var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
@@ -384,7 +384,7 @@ function sendTriggLevel() {
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10)) | 49152;
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10) + 0) | 49152;
     var json = {"command" : "set_trigger_level",
                 "regNumber" : "",
                 "data" : level};
