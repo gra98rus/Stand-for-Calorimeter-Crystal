@@ -27,7 +27,7 @@ begin
     if clk'event and clk = '1' then
         ---------------------------------------------------------
         if    shapers_config (1 downto 0) = B"00" then
-            shapers_controll (2 downto 0) <= B"110" ;
+            shapers_controll (2 downto 0) <= B"111" ;
         elsif shapers_config (1 downto 0) = B"01" then
             shapers_controll (2 downto 0) <= B"110";                        --shaper selection for ch_A
         elsif shapers_config (1 downto 0) = B"10" then
@@ -37,7 +37,7 @@ begin
         end if;        
         ----------------------------------------------------------
         if    shapers_config (3 downto 2) = B"00" then
-            shapers_controll (5 downto 3) <= B"110" ;
+            shapers_controll (5 downto 3) <= B"111" ;
         elsif shapers_config (3 downto 2) = B"01" then
             shapers_controll (5 downto 3) <= B"110";                        --shaper selection for ch_B
         elsif shapers_config (3 downto 2) = B"10" then
@@ -47,7 +47,7 @@ begin
         end if;
         ----------------------------------------------------------
         if    shapers_config (5 downto 4) = B"00" then
-            shapers_controll (8 downto 6) <= B"110" ;
+            shapers_controll (8 downto 6) <= B"111" ;
         elsif shapers_config (5 downto 4) = B"01" then
             shapers_controll (8 downto 6) <= B"110";                        --shaper selection for ch_C
         elsif shapers_config (5 downto 4) = B"10" then
@@ -57,7 +57,7 @@ begin
         end if;
         ----------------------------------------------------------
         if    shapers_config ( 7 downto 6) = B"00" then
-            shapers_controll (11 downto 9) <= B"110" ;
+            shapers_controll (11 downto 9) <= B"111" ;
         elsif shapers_config ( 7 downto 6) = B"01" then
             shapers_controll (11 downto 9) <= B"110";                       --shaper selection for ch_D
         elsif shapers_config ( 7 downto 6) = B"10" then

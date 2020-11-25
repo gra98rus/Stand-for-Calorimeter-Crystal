@@ -560,16 +560,11 @@ function deleteSpectrum(num){
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
         var data = 0;
-        var value = $('#first_channel_01').prop("checked");
-        if (value == true)
-            data = 0b0001;
-        else{
-            value = $('#first_channel_02').prop("checked");
-            if (value == true)
-                data = 0b0010;
-            else
-                data = 0b0011;
-        }
+        if      ($('#first_channel_00').prop("checked")) data = 0b0000;
+        else if ($('#first_channel_01').prop("checked")) data = 0b0001;
+        else if ($('#first_channel_02').prop("checked")) data = 0b0010;
+        else if ($('#first_channel_05').prop("checked")) data = 0b0011;
+
         var json = {"command" : "setShapersConfig",
                     "regNumber" : "",
                     "data" : data};
@@ -584,16 +579,11 @@ function deleteSpectrum(num){
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
         var data = 0;
-        var value = $('#second_channel_01').prop("checked");
-        if (value == true)
-            data = 0b0101;
-        else{
-            value = $('#second_channel_02').prop("checked");
-            if (value == true)
-                data = 0b0110;
-            else
-                data = 0b0111;
-        }
+        if      ($('#second_channel_00').prop("checked")) data = 0b0100;
+        else if ($('#second_channel_01').prop("checked")) data = 0b0101;
+        else if ($('#second_channel_02').prop("checked")) data = 0b0110;
+        else if ($('#second_channel_05').prop("checked")) data = 0b0111;
+
         var json = {"command" : "setShapersConfig",
                     "regNumber" : "",
                     "data" : data};
@@ -608,16 +598,11 @@ function deleteSpectrum(num){
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
         var data = 0;
-        var value = $('#third_channel_01').prop("checked");
-        if (value == true)
-            data = 0b1001;
-        else{
-            value = $('#third_channel_02').prop("checked");
-            if (value == true)
-                data = 0b1010;
-            else
-                data = 0b1011;
-        }
+        if      ($('#third_channel_00').prop("checked")) data = 0b1000;
+        else if ($('#third_channel_01').prop("checked")) data = 0b1001;
+        else if ($('#third_channel_02').prop("checked")) data = 0b1010;
+        else if ($('#third_channel_05').prop("checked")) data = 0b1011;
+
         var json = {"command" : "setShapersConfig",
                     "regNumber" : "",
                     "data" : data};
@@ -632,16 +617,11 @@ function deleteSpectrum(num){
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
         var data = 0;
-        var value = $('#fourth_channel_01').prop("checked");
-        if (value == true)
-            data = 0b1101;
-        else{
-            value = $('#fourth_channel_02').prop("checked");
-            if (value == true)
-                data = 0b1110;
-            else
-                data = 0b1111;
-        }
+        if      ($('#fourth_channel_00').prop("checked")) data = 0b1100;
+        else if ($('#fourth_channel_01').prop("checked")) data = 0b1101;
+        else if ($('#fourth_channel_02').prop("checked")) data = 0b1110;
+        else if ($('#fourth_channel_05').prop("checked")) data = 0b1111;
+
         var json = {"command" : "setShapersConfig",
                     "regNumber" : "",
                     "data" : data};

@@ -113,9 +113,15 @@ def index(request):
             response = {}
             write_to_reg(REG_START_EVENT, COMMAND_START)
             status = read_from_reg(REG_STATUS)
-            while status != 1:
-                status = read_from_reg(REG_STATUS)
-                print(status)
+            result = 0
+#            for i in range(0,1024):
+#                status = read_from_reg(REG_STATUS)
+#                result = result + status
+#                print(str(i) + "___" + str(status))
+#            while status != 1:
+#                status = read_from_reg(REG_STATUS)
+#                print(status)
+            print result
             data = read_charts()
             for i in range(0,1024):
                 response[str(i)] =  data[i]
