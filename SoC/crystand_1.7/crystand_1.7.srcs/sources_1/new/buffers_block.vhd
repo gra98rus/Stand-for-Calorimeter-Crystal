@@ -109,11 +109,6 @@ port map(
 read_SBFS: for i in 0 to ADC_NB - 1 generate
     simple_dout_spectra(i) <= doutb_simple_spectra(BUFFER_WIDTH / ADC_NB * i + ADC_LENGTH - 1 downto BUFFER_WIDTH / ADC_NB * i + ADC_LENGTH - clog2(BINS_NUM));
 end generate read_SBFS;
-    
---simple_dout_spectra(0) <= doutb_simple_spectra(13 downto  0);
---simple_dout_spectra(1) <= doutb_simple_spectra(29 downto 16);
---simple_dout_spectra(2) <= doutb_simple_spectra(45 downto 32);
---simple_dout_spectra(3) <= doutb_simple_spectra(61 downto 48);
 
 -----------------------------------------------------------------
 

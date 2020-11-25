@@ -41,8 +41,6 @@ architecture behavioral of reg_file is
     signal shapers_config_r    : std_logic_vector( 7 downto 0) := (others => '0');
     signal amplifiers_config_r : std_logic_vector( 5 downto 0) := (others => '0');
     
-    signal data_status         : std_logic                     := '0';
-    
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 begin
@@ -59,18 +57,6 @@ begin
 	end if;
 end process;
 
-process(clock)
-begin
-    if clock'event and clock='1' then
-    	if start_event_result = '1' and data_ready = '0' then
-            data_status <= '0';
-        elsif start_event_result = '1' and data_ready = '1' then
-	        data_status <= '0';
-	    elsif start_event_result = '0'  and data_ready = '1' then
-	        data_status <= '1';
-        end if;
-    end if;
-end process;
 
 process(clock)
 begin
@@ -141,7 +127,7 @@ begin
         end if;
 		
 		if regNum=REG_STATUS then
-		  data_out_r(0) <= data_status;
+		  data_out_r(0) <= data_ready;
 		end if;
 	end if;
 
