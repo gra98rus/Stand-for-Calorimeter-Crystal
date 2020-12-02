@@ -404,12 +404,18 @@ function deleteSpectrum(num){
     elem.innerHTML='Спектр '+ (num)
     sp.appendChild(elem);
     add.className = "dropdown-item";
-
     spectra_list[num].channel = -1;
-
     console.log(elem)
 }
 
+function update_button(names, select){
+    document.getElementById(names[select]).checked = true;
+    document.getElementById("css_" + names[select]).setAttribute("class", "btn btn-primary active");
+    for (var i = 0; i < names.length; i++){
+        if(i != select)
+        document.getElementById('css_' + names[i]).setAttribute("class", "btn btn-primary");
+    }
+}
 
   $(document).ready(function(){
     drawCharts();
@@ -566,7 +572,6 @@ function deleteSpectrum(num){
         else if ($('#first_channel_05').prop("checked")) data = 0b0011;
 
         var json = {"command" : "setShapersConfig",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -585,7 +590,6 @@ function deleteSpectrum(num){
         else if ($('#second_channel_05').prop("checked")) data = 0b0111;
 
         var json = {"command" : "setShapersConfig",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -604,7 +608,6 @@ function deleteSpectrum(num){
         else if ($('#third_channel_05').prop("checked")) data = 0b1011;
 
         var json = {"command" : "setShapersConfig",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -623,7 +626,6 @@ function deleteSpectrum(num){
         else if ($('#fourth_channel_05').prop("checked")) data = 0b1111;
 
         var json = {"command" : "setShapersConfig",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -681,7 +683,6 @@ function deleteSpectrum(num){
             }
         }
         var json = {"command" : "set_ampl_config",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -710,7 +711,6 @@ function deleteSpectrum(num){
             }
         }
         var json = {"command" : "set_ampl_config",
-                    "regNumber" : "",
                     "data" : data};
         var str = JSON.stringify(json)
         request.send(str);
@@ -728,7 +728,6 @@ function deleteSpectrum(num){
         var dataCheck3 = $('#level3').prop("checked") ? 1 : 0;
         var dataCheck = dataCheck0 + dataCheck1 * 2 + dataCheck2 * 4 + dataCheck3 * 8;
         var json = {"command" : "setSelectedChannels",
-                    "regNumber" : "",
                     "data" : dataCheck};
         var str = JSON.stringify(json)
         request.send(str);
@@ -758,9 +757,7 @@ function deleteSpectrum(num){
         request.open("POST", "", true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.responseType = 'text';
-        var json = {"command" : "update_config_on_page",
-                    "regNumber" : "",
-                    "data" : ""};
+        var json = {"command" : "update_config_on_page"};
         var str = JSON.stringify(json)
         request.send(str);
         console.log("send POST")
@@ -790,82 +787,11 @@ function deleteSpectrum(num){
                 document.getElementById('triggLevel1').value = json.trigger_level_1 & 8192 ? -(json.trigger_level_1 & 8191) : json.trigger_level_1 & 8191;
                 document.getElementById('triggLevel2').value = json.trigger_level_2 & 8192 ? -(json.trigger_level_2 & 8191) : json.trigger_level_2 & 8191;
                 document.getElementById('triggLevel3').value = json.trigger_level_3 & 8192 ? -(json.trigger_level_3 & 8191) : json.trigger_level_3 & 8191;
-
-                if(json.shapers_config_0 == 1){
-                    document.getElementById('first_channel_01').checked = true;
-                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_0 == 2){
-                    document.getElementById('first_channel_02').checked = true;
-                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_0 == 3){
-                    document.getElementById('first_channel_05').checked = true;
-                    document.getElementById('css_first_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_channel_05').setAttribute("class", "btn btn-primary active");
-                }
-
-                if(json.shapers_config_1 == 1){
-                    document.getElementById('second_channel_01').checked = true;
-                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_1 == 2){
-                    document.getElementById('second_channel_01').checked = true;
-                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_1 == 3){
-                    document.getElementById('second_channel_01').checked = true;
-                    document.getElementById('css_second_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_channel_05').setAttribute("class", "btn btn-primary active");
-                }
-
-                if(json.shapers_config_2 == 1){
-                    document.getElementById('third_channel_01').checked = true;
-                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_2 == 2){
-                    document.getElementById('third_channel_01').checked = true;
-                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_2 == 3){
-                    document.getElementById('third_channel_01').checked = true;
-                    document.getElementById('css_third_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_channel_05').setAttribute("class", "btn btn-primary active");
-                }
-
-                if(json.shapers_config_3 == 1){
-                    document.getElementById('fourth_channel_01').checked = true;
-                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_3 == 2){
-                    document.getElementById('fourth_channel_01').checked = true;
-                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.shapers_config_3 == 3){
-                    document.getElementById('fourth_channel_01').checked = true;
-                    document.getElementById('css_fourth_channel_01').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_fourth_channel_02').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_fourth_channel_05').setAttribute("class", "btn btn-primary active");
-                }
+                
+                update_button(["first_channel_00", "first_channel_01", "first_channel_02", "first_channel_05"], json.shapers_config_0);
+                update_button(["second_channel_00", "second_channel_01", "second_channel_02", "second_channel_05"], json.shapers_config_1);
+                update_button(["third_channel_00", "third_channel_01", "third_channel_02", "third_channel_05"], json.shapers_config_2);
+                update_button(["fourth_channel_00", "fourth_channel_01", "fourth_channel_02", "fourth_channel_05"], json.shapers_config_3);
 
                 if(json.ampl_config_0 == 0){
                     document.getElementById('first_ampl_1').checked = true;
