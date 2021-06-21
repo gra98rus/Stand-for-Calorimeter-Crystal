@@ -29,8 +29,8 @@ entity crystand_top is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
---    UART_RX : in STD_LOGIC;
---    UART_TX : out STD_LOGIC;
+    UART_RX : in STD_LOGIC;
+    UART_TX : out STD_LOGIC;
     
     JMP1 : in std_logic;
     JMP2 : in std_logic;
@@ -90,17 +90,20 @@ entity crystand_top is
     ADC_DC0_N : in std_logic;
         
     ADC_FC0_P : in std_logic;
-    ADC_FC0_N : in std_logic
+    ADC_FC0_N : in std_logic;
     
---    SPI_CSB: out std_logic;
---    SPI_SCLK: out std_logic;
---    SPI_SDIO: out std_logic
+    SPI_CSB   : out std_logic;
+    SPI_SCLK  : out std_logic;
+    SPI_SDIO  : out std_logic
     );
 end crystand_top;
 
 architecture STRUCTURE of crystand_top is
   component ps_topp is
   port (
+  ADC_SPI_sck_o: out STD_LOGIC;
+  ADC_SPI_io0_o: out STD_LOGIC;
+  ADC_SPI_ss_o: out STD_LOGIC;
   DDR_addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
   DDR_ba : inout STD_LOGIC_VECTOR ( 2 downto 0 );
   DDR_cas_n : inout STD_LOGIC;
@@ -116,6 +119,8 @@ architecture STRUCTURE of crystand_top is
   DDR_ras_n : inout STD_LOGIC;
   DDR_reset_n : inout STD_LOGIC;
   DDR_we_n : inout STD_LOGIC;
+  UART_rxd : in STD_LOGIC;
+  UART_txd : out STD_LOGIC;
   FCLK_CLK0 : out STD_LOGIC;
   FIXED_IO_ddr_vrn : inout STD_LOGIC;
   FIXED_IO_ddr_vrp : inout STD_LOGIC;
@@ -191,6 +196,10 @@ ps_topp_i: component ps_topp
       DDR_ras_n => DDR_ras_n,
       DDR_reset_n => DDR_reset_n,
       DDR_we_n => DDR_we_n,
+      
+      UART_rxd => UART_RX,
+      UART_txd => UART_TX,
+      
       FIXED_IO_ddr_vrn => FIXED_IO_ddr_vrn,
       FIXED_IO_ddr_vrp => FIXED_IO_ddr_vrp,
       FIXED_IO_mio(53 downto 0) => FIXED_IO_mio(53 downto 0),
@@ -215,7 +224,11 @@ ps_topp_i: component ps_topp
       OSCILLOGRAMS_BRAM_PORTA_we   => oscillograms_bram_we,
                   
       reset               => reset,
-      
+     
+      ADC_SPI_sck_o => SPI_SCLK,
+      ADC_SPI_io0_o => SPI_SDIO,
+      ADC_SPI_ss_o => SPI_CSB,
+
       dataIn(31 downto 0) => reg_dataFromPL(31 downto 0),
       dataOut(31 downto 0) => reg_dataInPL(31 downto 0),
       regNum(31 downto 0) => reg_regNum(31 downto 0),

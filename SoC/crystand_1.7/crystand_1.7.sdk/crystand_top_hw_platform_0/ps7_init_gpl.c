@@ -38,23 +38,23 @@ unsigned long ps7_pll_init_data_3_0[] = {
     // .. FINISH: SLCR SETTINGS
     // .. START: PLL SLCR REGISTERS
     // .. .. START: ARM PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000110[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000110[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000110[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x177
-    // .. .. ==> 0XF8000110[21:12] = 0x00000177U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00177000U
+    // .. .. LOCK_CNT = 0xfa
+    // .. .. ==> 0XF8000110[21:12] = 0x000000FAU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x000FA000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x001772C0U),
+    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x000FA220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x1a
-    // .. .. .. ==> 0XF8000100[18:12] = 0x0000001AU
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001A000U
+    // .. .. .. PLL_FDIV = 0x28
+    // .. .. .. ==> 0XF8000100[18:12] = 0x00000028U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00028000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x0001A000U),
+    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x00028000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -116,23 +116,23 @@ unsigned long ps7_pll_init_data_3_0[] = {
     EMIT_MASKWRITE(0XF8000120, 0x1F003F30U ,0x1F000200U),
     // .. .. FINISH: ARM PLL INIT
     // .. .. START: DDR PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000114[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000114[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000114[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1db
-    // .. .. ==> 0XF8000114[21:12] = 0x000001DBU
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001DB000U
+    // .. .. LOCK_CNT = 0x12c
+    // .. .. ==> 0XF8000114[21:12] = 0x0000012CU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x0012C000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x001DB2C0U),
+    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x0012C220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x15
-    // .. .. .. ==> 0XF8000104[18:12] = 0x00000015U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00015000U
+    // .. .. .. PLL_FDIV = 0x20
+    // .. .. .. ==> 0XF8000104[18:12] = 0x00000020U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00020000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00015000U),
+    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00020000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -191,17 +191,17 @@ unsigned long ps7_pll_init_data_3_0[] = {
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000118[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1f4
-    // .. .. ==> 0XF8000118[21:12] = 0x000001F4U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001F4000U
+    // .. .. LOCK_CNT = 0x145
+    // .. .. ==> 0XF8000118[21:12] = 0x00000145U
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00145000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001F42C0U),
+    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001452C0U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x14
-    // .. .. .. ==> 0XF8000108[18:12] = 0x00000014U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00014000U
+    // .. .. .. PLL_FDIV = 0x1e
+    // .. .. .. ==> 0XF8000108[18:12] = 0x0000001EU
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001E000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x00014000U),
+    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x0001E000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -267,14 +267,14 @@ unsigned long ps7_clock_init_data_3_0[] = {
     // .. CLKACT = 0x1
     // .. ==> 0XF8000128[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
-    // .. DIVISOR0 = 0x34
-    // .. ==> 0XF8000128[13:8] = 0x00000034U
-    // ..     ==> MASK : 0x00003F00U    VAL : 0x00003400U
-    // .. DIVISOR1 = 0x2
-    // .. ==> 0XF8000128[25:20] = 0x00000002U
-    // ..     ==> MASK : 0x03F00000U    VAL : 0x00200000U
+    // .. DIVISOR0 = 0xf
+    // .. ==> 0XF8000128[13:8] = 0x0000000FU
+    // ..     ==> MASK : 0x00003F00U    VAL : 0x00000F00U
+    // .. DIVISOR1 = 0x7
+    // .. ==> 0XF8000128[25:20] = 0x00000007U
+    // ..     ==> MASK : 0x03F00000U    VAL : 0x00700000U
     // .. 
-    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00203401U),
+    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00700F01U),
     // .. CLKACT = 0x1
     // .. ==> 0XF8000138[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
@@ -499,9 +499,9 @@ unsigned long ps7_ddr_init_data_3_0[] = {
     // .. ..     ==> MASK : 0x03FF8000U    VAL : 0x00010000U
     // .. .. 
     EMIT_MASKWRITE(0XF8006010, 0x03FFFFFFU ,0x00014001U),
-    // .. .. reg_ddrc_t_rc = 0x1a
-    // .. .. ==> 0XF8006014[5:0] = 0x0000001AU
-    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001AU
+    // .. .. reg_ddrc_t_rc = 0x1b
+    // .. .. ==> 0XF8006014[5:0] = 0x0000001BU
+    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001BU
     // .. .. reg_ddrc_t_rfc_min = 0x56
     // .. .. ==> 0XF8006014[13:6] = 0x00000056U
     // .. ..     ==> MASK : 0x00003FC0U    VAL : 0x00001580U
@@ -509,27 +509,27 @@ unsigned long ps7_ddr_init_data_3_0[] = {
     // .. .. ==> 0XF8006014[20:14] = 0x00000010U
     // .. ..     ==> MASK : 0x001FC000U    VAL : 0x00040000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159AU),
+    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159BU),
     // .. .. reg_ddrc_wr2pre = 0x12
     // .. .. ==> 0XF8006018[4:0] = 0x00000012U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000012U
     // .. .. reg_ddrc_powerdown_to_x32 = 0x6
     // .. .. ==> 0XF8006018[9:5] = 0x00000006U
     // .. ..     ==> MASK : 0x000003E0U    VAL : 0x000000C0U
-    // .. .. reg_ddrc_t_faw = 0x16
-    // .. .. ==> 0XF8006018[15:10] = 0x00000016U
-    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00005800U
+    // .. .. reg_ddrc_t_faw = 0x18
+    // .. .. ==> 0XF8006018[15:10] = 0x00000018U
+    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00006000U
     // .. .. reg_ddrc_t_ras_max = 0x24
     // .. .. ==> 0XF8006018[21:16] = 0x00000024U
     // .. ..     ==> MASK : 0x003F0000U    VAL : 0x00240000U
-    // .. .. reg_ddrc_t_ras_min = 0x13
-    // .. .. ==> 0XF8006018[26:22] = 0x00000013U
-    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x04C00000U
+    // .. .. reg_ddrc_t_ras_min = 0x14
+    // .. .. ==> 0XF8006018[26:22] = 0x00000014U
+    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x05000000U
     // .. .. reg_ddrc_t_cke = 0x4
     // .. .. ==> 0XF8006018[31:28] = 0x00000004U
     // .. ..     ==> MASK : 0xF0000000U    VAL : 0x40000000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x44E458D2U),
+    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x452460D2U),
     // .. .. reg_ddrc_write_latency = 0x5
     // .. .. ==> 0XF800601C[4:0] = 0x00000005U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000005U
@@ -2714,238 +2714,10 @@ unsigned long ps7_peripherals_init_data_3_0[] = {
     // .. .. START: NOR CS1 BASE ADDRESS
     // .. .. FINISH: NOR CS1 BASE ADDRESS
     // .. .. START: USB RESET
-    // .. .. .. START: USB0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB0 RESET
-    // .. .. .. START: USB1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB1 RESET
     // .. .. FINISH: USB RESET
     // .. .. START: ENET RESET
-    // .. .. .. START: ENET0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET0 RESET
-    // .. .. .. START: ENET1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET1 RESET
     // .. .. FINISH: ENET RESET
     // .. .. START: I2C RESET
-    // .. .. .. START: I2C0 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C0 RESET
-    // .. .. .. START: I2C1 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C1 RESET
     // .. .. FINISH: I2C RESET
     // .. .. START: NOR CHIP SELECT
     // .. .. .. START: DIR MODE BANK 0
@@ -3124,23 +2896,23 @@ unsigned long ps7_pll_init_data_2_0[] = {
     // .. FINISH: SLCR SETTINGS
     // .. START: PLL SLCR REGISTERS
     // .. .. START: ARM PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000110[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000110[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000110[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x177
-    // .. .. ==> 0XF8000110[21:12] = 0x00000177U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00177000U
+    // .. .. LOCK_CNT = 0xfa
+    // .. .. ==> 0XF8000110[21:12] = 0x000000FAU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x000FA000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x001772C0U),
+    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x000FA220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x1a
-    // .. .. .. ==> 0XF8000100[18:12] = 0x0000001AU
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001A000U
+    // .. .. .. PLL_FDIV = 0x28
+    // .. .. .. ==> 0XF8000100[18:12] = 0x00000028U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00028000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x0001A000U),
+    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x00028000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -3202,23 +2974,23 @@ unsigned long ps7_pll_init_data_2_0[] = {
     EMIT_MASKWRITE(0XF8000120, 0x1F003F30U ,0x1F000200U),
     // .. .. FINISH: ARM PLL INIT
     // .. .. START: DDR PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000114[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000114[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000114[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1db
-    // .. .. ==> 0XF8000114[21:12] = 0x000001DBU
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001DB000U
+    // .. .. LOCK_CNT = 0x12c
+    // .. .. ==> 0XF8000114[21:12] = 0x0000012CU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x0012C000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x001DB2C0U),
+    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x0012C220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x15
-    // .. .. .. ==> 0XF8000104[18:12] = 0x00000015U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00015000U
+    // .. .. .. PLL_FDIV = 0x20
+    // .. .. .. ==> 0XF8000104[18:12] = 0x00000020U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00020000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00015000U),
+    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00020000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -3277,17 +3049,17 @@ unsigned long ps7_pll_init_data_2_0[] = {
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000118[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1f4
-    // .. .. ==> 0XF8000118[21:12] = 0x000001F4U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001F4000U
+    // .. .. LOCK_CNT = 0x145
+    // .. .. ==> 0XF8000118[21:12] = 0x00000145U
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00145000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001F42C0U),
+    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001452C0U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x14
-    // .. .. .. ==> 0XF8000108[18:12] = 0x00000014U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00014000U
+    // .. .. .. PLL_FDIV = 0x1e
+    // .. .. .. ==> 0XF8000108[18:12] = 0x0000001EU
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001E000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x00014000U),
+    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x0001E000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -3353,14 +3125,14 @@ unsigned long ps7_clock_init_data_2_0[] = {
     // .. CLKACT = 0x1
     // .. ==> 0XF8000128[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
-    // .. DIVISOR0 = 0x34
-    // .. ==> 0XF8000128[13:8] = 0x00000034U
-    // ..     ==> MASK : 0x00003F00U    VAL : 0x00003400U
-    // .. DIVISOR1 = 0x2
-    // .. ==> 0XF8000128[25:20] = 0x00000002U
-    // ..     ==> MASK : 0x03F00000U    VAL : 0x00200000U
+    // .. DIVISOR0 = 0xf
+    // .. ==> 0XF8000128[13:8] = 0x0000000FU
+    // ..     ==> MASK : 0x00003F00U    VAL : 0x00000F00U
+    // .. DIVISOR1 = 0x7
+    // .. ==> 0XF8000128[25:20] = 0x00000007U
+    // ..     ==> MASK : 0x03F00000U    VAL : 0x00700000U
     // .. 
-    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00203401U),
+    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00700F01U),
     // .. CLKACT = 0x1
     // .. ==> 0XF8000138[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
@@ -3600,9 +3372,9 @@ unsigned long ps7_ddr_init_data_2_0[] = {
     // .. ..     ==> MASK : 0x03FF8000U    VAL : 0x00010000U
     // .. .. 
     EMIT_MASKWRITE(0XF8006010, 0x03FFFFFFU ,0x00014001U),
-    // .. .. reg_ddrc_t_rc = 0x1a
-    // .. .. ==> 0XF8006014[5:0] = 0x0000001AU
-    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001AU
+    // .. .. reg_ddrc_t_rc = 0x1b
+    // .. .. ==> 0XF8006014[5:0] = 0x0000001BU
+    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001BU
     // .. .. reg_ddrc_t_rfc_min = 0x56
     // .. .. ==> 0XF8006014[13:6] = 0x00000056U
     // .. ..     ==> MASK : 0x00003FC0U    VAL : 0x00001580U
@@ -3610,27 +3382,27 @@ unsigned long ps7_ddr_init_data_2_0[] = {
     // .. .. ==> 0XF8006014[20:14] = 0x00000010U
     // .. ..     ==> MASK : 0x001FC000U    VAL : 0x00040000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159AU),
+    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159BU),
     // .. .. reg_ddrc_wr2pre = 0x12
     // .. .. ==> 0XF8006018[4:0] = 0x00000012U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000012U
     // .. .. reg_ddrc_powerdown_to_x32 = 0x6
     // .. .. ==> 0XF8006018[9:5] = 0x00000006U
     // .. ..     ==> MASK : 0x000003E0U    VAL : 0x000000C0U
-    // .. .. reg_ddrc_t_faw = 0x16
-    // .. .. ==> 0XF8006018[15:10] = 0x00000016U
-    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00005800U
+    // .. .. reg_ddrc_t_faw = 0x18
+    // .. .. ==> 0XF8006018[15:10] = 0x00000018U
+    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00006000U
     // .. .. reg_ddrc_t_ras_max = 0x24
     // .. .. ==> 0XF8006018[21:16] = 0x00000024U
     // .. ..     ==> MASK : 0x003F0000U    VAL : 0x00240000U
-    // .. .. reg_ddrc_t_ras_min = 0x13
-    // .. .. ==> 0XF8006018[26:22] = 0x00000013U
-    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x04C00000U
+    // .. .. reg_ddrc_t_ras_min = 0x14
+    // .. .. ==> 0XF8006018[26:22] = 0x00000014U
+    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x05000000U
     // .. .. reg_ddrc_t_cke = 0x4
     // .. .. ==> 0XF8006018[31:28] = 0x00000004U
     // .. ..     ==> MASK : 0xF0000000U    VAL : 0x40000000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x44E458D2U),
+    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x452460D2U),
     // .. .. reg_ddrc_write_latency = 0x5
     // .. .. ==> 0XF800601C[4:0] = 0x00000005U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000005U
@@ -5961,238 +5733,10 @@ unsigned long ps7_peripherals_init_data_2_0[] = {
     // .. .. START: NOR CS1 BASE ADDRESS
     // .. .. FINISH: NOR CS1 BASE ADDRESS
     // .. .. START: USB RESET
-    // .. .. .. START: USB0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB0 RESET
-    // .. .. .. START: USB1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB1 RESET
     // .. .. FINISH: USB RESET
     // .. .. START: ENET RESET
-    // .. .. .. START: ENET0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET0 RESET
-    // .. .. .. START: ENET1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET1 RESET
     // .. .. FINISH: ENET RESET
     // .. .. START: I2C RESET
-    // .. .. .. START: I2C0 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C0 RESET
-    // .. .. .. START: I2C1 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C1 RESET
     // .. .. FINISH: I2C RESET
     // .. .. START: NOR CHIP SELECT
     // .. .. .. START: DIR MODE BANK 0
@@ -6363,23 +5907,23 @@ unsigned long ps7_pll_init_data_1_0[] = {
     // .. FINISH: SLCR SETTINGS
     // .. START: PLL SLCR REGISTERS
     // .. .. START: ARM PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000110[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000110[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000110[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x177
-    // .. .. ==> 0XF8000110[21:12] = 0x00000177U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00177000U
+    // .. .. LOCK_CNT = 0xfa
+    // .. .. ==> 0XF8000110[21:12] = 0x000000FAU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x000FA000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x001772C0U),
+    EMIT_MASKWRITE(0XF8000110, 0x003FFFF0U ,0x000FA220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x1a
-    // .. .. .. ==> 0XF8000100[18:12] = 0x0000001AU
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001A000U
+    // .. .. .. PLL_FDIV = 0x28
+    // .. .. .. ==> 0XF8000100[18:12] = 0x00000028U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00028000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x0001A000U),
+    EMIT_MASKWRITE(0XF8000100, 0x0007F000U ,0x00028000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -6441,23 +5985,23 @@ unsigned long ps7_pll_init_data_1_0[] = {
     EMIT_MASKWRITE(0XF8000120, 0x1F003F30U ,0x1F000200U),
     // .. .. FINISH: ARM PLL INIT
     // .. .. START: DDR PLL INIT
-    // .. .. PLL_RES = 0xc
-    // .. .. ==> 0XF8000114[7:4] = 0x0000000CU
-    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x000000C0U
+    // .. .. PLL_RES = 0x2
+    // .. .. ==> 0XF8000114[7:4] = 0x00000002U
+    // .. ..     ==> MASK : 0x000000F0U    VAL : 0x00000020U
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000114[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1db
-    // .. .. ==> 0XF8000114[21:12] = 0x000001DBU
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001DB000U
+    // .. .. LOCK_CNT = 0x12c
+    // .. .. ==> 0XF8000114[21:12] = 0x0000012CU
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x0012C000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x001DB2C0U),
+    EMIT_MASKWRITE(0XF8000114, 0x003FFFF0U ,0x0012C220U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x15
-    // .. .. .. ==> 0XF8000104[18:12] = 0x00000015U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00015000U
+    // .. .. .. PLL_FDIV = 0x20
+    // .. .. .. ==> 0XF8000104[18:12] = 0x00000020U
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00020000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00015000U),
+    EMIT_MASKWRITE(0XF8000104, 0x0007F000U ,0x00020000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -6516,17 +6060,17 @@ unsigned long ps7_pll_init_data_1_0[] = {
     // .. .. PLL_CP = 0x2
     // .. .. ==> 0XF8000118[11:8] = 0x00000002U
     // .. ..     ==> MASK : 0x00000F00U    VAL : 0x00000200U
-    // .. .. LOCK_CNT = 0x1f4
-    // .. .. ==> 0XF8000118[21:12] = 0x000001F4U
-    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x001F4000U
+    // .. .. LOCK_CNT = 0x145
+    // .. .. ==> 0XF8000118[21:12] = 0x00000145U
+    // .. ..     ==> MASK : 0x003FF000U    VAL : 0x00145000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001F42C0U),
+    EMIT_MASKWRITE(0XF8000118, 0x003FFFF0U ,0x001452C0U),
     // .. .. .. START: UPDATE FB_DIV
-    // .. .. .. PLL_FDIV = 0x14
-    // .. .. .. ==> 0XF8000108[18:12] = 0x00000014U
-    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x00014000U
+    // .. .. .. PLL_FDIV = 0x1e
+    // .. .. .. ==> 0XF8000108[18:12] = 0x0000001EU
+    // .. .. ..     ==> MASK : 0x0007F000U    VAL : 0x0001E000U
     // .. .. .. 
-    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x00014000U),
+    EMIT_MASKWRITE(0XF8000108, 0x0007F000U ,0x0001E000U),
     // .. .. .. FINISH: UPDATE FB_DIV
     // .. .. .. START: BY PASS PLL
     // .. .. .. PLL_BYPASS_FORCE = 1
@@ -6592,14 +6136,14 @@ unsigned long ps7_clock_init_data_1_0[] = {
     // .. CLKACT = 0x1
     // .. ==> 0XF8000128[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
-    // .. DIVISOR0 = 0x34
-    // .. ==> 0XF8000128[13:8] = 0x00000034U
-    // ..     ==> MASK : 0x00003F00U    VAL : 0x00003400U
-    // .. DIVISOR1 = 0x2
-    // .. ==> 0XF8000128[25:20] = 0x00000002U
-    // ..     ==> MASK : 0x03F00000U    VAL : 0x00200000U
+    // .. DIVISOR0 = 0xf
+    // .. ==> 0XF8000128[13:8] = 0x0000000FU
+    // ..     ==> MASK : 0x00003F00U    VAL : 0x00000F00U
+    // .. DIVISOR1 = 0x7
+    // .. ==> 0XF8000128[25:20] = 0x00000007U
+    // ..     ==> MASK : 0x03F00000U    VAL : 0x00700000U
     // .. 
-    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00203401U),
+    EMIT_MASKWRITE(0XF8000128, 0x03F03F01U ,0x00700F01U),
     // .. CLKACT = 0x1
     // .. ==> 0XF8000138[0:0] = 0x00000001U
     // ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
@@ -6839,9 +6383,9 @@ unsigned long ps7_ddr_init_data_1_0[] = {
     // .. ..     ==> MASK : 0x03FF8000U    VAL : 0x00010000U
     // .. .. 
     EMIT_MASKWRITE(0XF8006010, 0x03FFFFFFU ,0x00014001U),
-    // .. .. reg_ddrc_t_rc = 0x1a
-    // .. .. ==> 0XF8006014[5:0] = 0x0000001AU
-    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001AU
+    // .. .. reg_ddrc_t_rc = 0x1b
+    // .. .. ==> 0XF8006014[5:0] = 0x0000001BU
+    // .. ..     ==> MASK : 0x0000003FU    VAL : 0x0000001BU
     // .. .. reg_ddrc_t_rfc_min = 0x56
     // .. .. ==> 0XF8006014[13:6] = 0x00000056U
     // .. ..     ==> MASK : 0x00003FC0U    VAL : 0x00001580U
@@ -6849,27 +6393,27 @@ unsigned long ps7_ddr_init_data_1_0[] = {
     // .. .. ==> 0XF8006014[20:14] = 0x00000010U
     // .. ..     ==> MASK : 0x001FC000U    VAL : 0x00040000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159AU),
+    EMIT_MASKWRITE(0XF8006014, 0x001FFFFFU ,0x0004159BU),
     // .. .. reg_ddrc_wr2pre = 0x12
     // .. .. ==> 0XF8006018[4:0] = 0x00000012U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000012U
     // .. .. reg_ddrc_powerdown_to_x32 = 0x6
     // .. .. ==> 0XF8006018[9:5] = 0x00000006U
     // .. ..     ==> MASK : 0x000003E0U    VAL : 0x000000C0U
-    // .. .. reg_ddrc_t_faw = 0x16
-    // .. .. ==> 0XF8006018[15:10] = 0x00000016U
-    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00005800U
+    // .. .. reg_ddrc_t_faw = 0x18
+    // .. .. ==> 0XF8006018[15:10] = 0x00000018U
+    // .. ..     ==> MASK : 0x0000FC00U    VAL : 0x00006000U
     // .. .. reg_ddrc_t_ras_max = 0x24
     // .. .. ==> 0XF8006018[21:16] = 0x00000024U
     // .. ..     ==> MASK : 0x003F0000U    VAL : 0x00240000U
-    // .. .. reg_ddrc_t_ras_min = 0x13
-    // .. .. ==> 0XF8006018[26:22] = 0x00000013U
-    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x04C00000U
+    // .. .. reg_ddrc_t_ras_min = 0x14
+    // .. .. ==> 0XF8006018[26:22] = 0x00000014U
+    // .. ..     ==> MASK : 0x07C00000U    VAL : 0x05000000U
     // .. .. reg_ddrc_t_cke = 0x4
     // .. .. ==> 0XF8006018[31:28] = 0x00000004U
     // .. ..     ==> MASK : 0xF0000000U    VAL : 0x40000000U
     // .. .. 
-    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x44E458D2U),
+    EMIT_MASKWRITE(0XF8006018, 0xF7FFFFFFU ,0x452460D2U),
     // .. .. reg_ddrc_write_latency = 0x5
     // .. .. ==> 0XF800601C[4:0] = 0x00000005U
     // .. ..     ==> MASK : 0x0000001FU    VAL : 0x00000005U
@@ -9133,238 +8677,10 @@ unsigned long ps7_peripherals_init_data_1_0[] = {
     // .. .. START: NOR CS1 BASE ADDRESS
     // .. .. FINISH: NOR CS1 BASE ADDRESS
     // .. .. START: USB RESET
-    // .. .. .. START: USB0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB0 RESET
-    // .. .. .. START: USB1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: USB1 RESET
     // .. .. FINISH: USB RESET
     // .. .. START: ENET RESET
-    // .. .. .. START: ENET0 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET0 RESET
-    // .. .. .. START: ENET1 RESET
-    // .. .. .. .. START: DIR MODE BANK 0
-    // .. .. .. .. FINISH: DIR MODE BANK 0
-    // .. .. .. .. START: DIR MODE BANK 1
-    // .. .. .. .. FINISH: DIR MODE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE BANK 0
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 0
-    // .. .. .. .. START: OUTPUT ENABLE BANK 1
-    // .. .. .. .. FINISH: OUTPUT ENABLE BANK 1
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: ENET1 RESET
     // .. .. FINISH: ENET RESET
     // .. .. START: I2C RESET
-    // .. .. .. START: I2C0 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C0 RESET
-    // .. .. .. START: I2C1 RESET
-    // .. .. .. .. START: DIR MODE GPIO BANK0
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK0
-    // .. .. .. .. START: DIR MODE GPIO BANK1
-    // .. .. .. .. FINISH: DIR MODE GPIO BANK1
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: OUTPUT ENABLE
-    // .. .. .. .. FINISH: OUTPUT ENABLE
-    // .. .. .. .. START: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW LOW BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW LOW BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW LOW BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW LOW BANK [53:48]
-    // .. .. .. .. START: ADD 1 MS DELAY
-    // .. .. .. .. 
-    EMIT_MASKDELAY(0XF8F00200, 1),
-    // .. .. .. .. FINISH: ADD 1 MS DELAY
-    // .. .. .. .. START: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. FINISH: MASK_DATA_0_LSW HIGH BANK [15:0]
-    // .. .. .. .. START: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. FINISH: MASK_DATA_0_MSW HIGH BANK [31:16]
-    // .. .. .. .. START: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. FINISH: MASK_DATA_1_LSW HIGH BANK [47:32]
-    // .. .. .. .. START: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. .. FINISH: MASK_DATA_1_MSW HIGH BANK [53:48]
-    // .. .. .. FINISH: I2C1 RESET
     // .. .. FINISH: I2C RESET
     // .. .. START: NOR CHIP SELECT
     // .. .. .. START: DIR MODE BANK 0

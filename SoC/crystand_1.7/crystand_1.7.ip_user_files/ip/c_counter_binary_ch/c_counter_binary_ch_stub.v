@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-// Date        : Thu Nov 19 22:37:33 2020
-// Host        : aandreev-inp running 64-bit Ubuntu 18.04.5 LTS
+// Date        : Thu Jun 17 17:37:41 2021
+// Host        : deva2 running 64-bit Ubuntu 18.04.5 LTS
 // Command     : write_verilog -force -mode synth_stub
-//               /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/v1.7_Deser/crystand_1.7/crystand_1.7.runs/c_counter_binary_ch_synth_1/c_counter_binary_ch_stub.v
+//               /home/aandreev/pro/Stand-for-Calorimeter-Crystal/SoC/crystand_1.7/crystand_1.7.runs/c_counter_binary_ch_synth_1/c_counter_binary_ch_stub.v
 // Design      : c_counter_binary_ch
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1

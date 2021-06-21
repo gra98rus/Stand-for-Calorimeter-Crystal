@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>crystand_top_hw_platform_1</name>
-	<comment>Created by SDK v2016.4</comment>
+	<comment>Created by SDK v2018.2</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -11,7 +11,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1537939154341</id>
+			<id>1624017046636</id>
 			<name></name>
 			<type>6</type>
 			<matcher>
@@ -20,7 +20,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1537939154344</id>
+			<id>1624017046638</id>
 			<name></name>
 			<type>6</type>
 			<matcher>
@@ -29,7 +29,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1537939154613</id>
+			<id>1624017046643</id>
 			<name></name>
 			<type>6</type>
 			<matcher>

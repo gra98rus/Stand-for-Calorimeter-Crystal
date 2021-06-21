@@ -1,0 +1,12 @@
+vhdl work  \
+"../../../bd/ps_topp/ip/ps_topp_proc_sys_reset_0_1/sim/ps_topp_proc_sys_reset_0_1.vhd" \
+"../../../bd/ps_topp/sim/ps_topp.vhd" \
+"../../../bd/ps_topp/ipshared/afd5/hdl/ps_top_reg_interface_v1_0_S00_AXI.vhd" \
+"../../../bd/ps_topp/ipshared/afd5/hdl/ps_top_reg_interface_v1_0.vhd" \
+"../../../bd/ps_topp/ipshared/afd5/hdl/reg_inteface_v1_0.vhd" \
+"../../../bd/ps_topp/ipshared/afd5/hdl/ps_top_ps_top_reg_interface_ip_0_0_0_0.vhd" \
+"../../../bd/ps_topp/ip/ps_topp_ps_top_reg_interface_0_1/sim/ps_topp_ps_top_reg_interface_0_1.vhd" \
+"../../../bd/ps_topp/ip/ps_topp_axi_bram_ctrl_0_0/sim/ps_topp_axi_bram_ctrl_0_0.vhd" \
+"../../../bd/ps_topp/ip/ps_topp_axi_bram_ctrl_1_0/sim/ps_topp_axi_bram_ctrl_1_0.vhd" \
+
+nosort

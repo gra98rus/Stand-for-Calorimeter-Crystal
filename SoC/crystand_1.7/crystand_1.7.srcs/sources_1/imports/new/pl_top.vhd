@@ -46,9 +46,13 @@ port(
     ADC_FC0_P : in std_logic;
     ADC_FC0_N : in std_logic;
 
-    JMP1 : in std_logic;
-    JMP2 : in std_logic;
+    JMP1      : in std_logic;
+    JMP2      : in std_logic;
     
+ --   SPI_CSB   : out std_logic;
+ --   SPI_SCLK  : out std_logic;
+ --   SPI_SDIO  : out std_logic;
+
     --supporting signals (free)
     TP1 : out std_logic;
     TP2 : out std_logic;
@@ -199,7 +203,7 @@ generic map(
 port map(
     clock_locked  => ext_clk_pll_locked,
          
-    AdcDeserReset => JMP1, --int_rst,
+    AdcDeserReset => '0', --int_rst,
     AdcReSync     => JMP2,--cmd_resync_adc_deser,
     
     data_A => adc_data_64(0),
@@ -383,6 +387,10 @@ ALT_15 <= shapers_controll( 8);
 ALT_16 <= shapers_controll( 9);
 ALT_17 <= shapers_controll(10);
 ALT_18 <= shapers_controll(11);
+
+--SPI_CSB  <= '1';
+--SPI_SDIO <= '1';
+--SPI_SCLK <= JMP1;
 ----------------------------------------------------------------
 
 end Behavioral;

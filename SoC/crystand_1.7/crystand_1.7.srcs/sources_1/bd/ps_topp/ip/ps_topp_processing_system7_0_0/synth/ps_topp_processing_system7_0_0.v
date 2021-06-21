@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2020 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2021 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -58,6 +58,22 @@ XI_GP1_THREAD_ID_WIDTH=12,C_NUM_F2P_INTR_INPUTS=1,C_IRQ_F2P_MODE=DIRECT,C_DQ_WID
 C_GP1_EN_MODIFIABLE_TXN=1}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module ps_topp_processing_system7_0_0 (
+  SPI0_SCLK_I,
+  SPI0_SCLK_O,
+  SPI0_SCLK_T,
+  SPI0_MOSI_I,
+  SPI0_MOSI_O,
+  SPI0_MOSI_T,
+  SPI0_MISO_I,
+  SPI0_MISO_O,
+  SPI0_MISO_T,
+  SPI0_SS_I,
+  SPI0_SS_O,
+  SPI0_SS1_O,
+  SPI0_SS2_O,
+  SPI0_SS_T,
+  UART0_TX,
+  UART0_RX,
   M_AXI_GP0_ARVALID,
   M_AXI_GP0_AWVALID,
   M_AXI_GP0_BREADY,
@@ -122,6 +138,38 @@ module ps_topp_processing_system7_0_0 (
   PS_PORB
 );
 
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SCK_I" *)
+input wire SPI0_SCLK_I;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SCK_O" *)
+output wire SPI0_SCLK_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SCK_T" *)
+output wire SPI0_SCLK_T;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO0_I" *)
+input wire SPI0_MOSI_I;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO0_O" *)
+output wire SPI0_MOSI_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO0_T" *)
+output wire SPI0_MOSI_T;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO1_I" *)
+input wire SPI0_MISO_I;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO1_O" *)
+output wire SPI0_MISO_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 IO1_T" *)
+output wire SPI0_MISO_T;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SS_I" *)
+input wire SPI0_SS_I;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SS_O" *)
+output wire SPI0_SS_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SS1_O" *)
+output wire SPI0_SS1_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SS2_O" *)
+output wire SPI0_SS2_O;
+(* X_INTERFACE_INFO = "xilinx.com:interface:spi:1.0 SPI_0 SS_T" *)
+output wire SPI0_SS_T;
+(* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART_0 TxD" *)
+output wire UART0_TX;
+(* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART_0 RxD" *)
+input wire UART0_RX;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_GP0 ARVALID" *)
 output wire M_AXI_GP0_ARVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_GP0 AWVALID" *)
@@ -411,20 +459,20 @@ inout wire PS_PORB;
     .SDIO1_WP(1'B0),
     .SDIO1_BUSPOW(),
     .SDIO1_BUSVOLT(),
-    .SPI0_SCLK_I(1'B0),
-    .SPI0_SCLK_O(),
-    .SPI0_SCLK_T(),
-    .SPI0_MOSI_I(1'B0),
-    .SPI0_MOSI_O(),
-    .SPI0_MOSI_T(),
-    .SPI0_MISO_I(1'B0),
-    .SPI0_MISO_O(),
-    .SPI0_MISO_T(),
-    .SPI0_SS_I(1'B0),
-    .SPI0_SS_O(),
-    .SPI0_SS1_O(),
-    .SPI0_SS2_O(),
-    .SPI0_SS_T(),
+    .SPI0_SCLK_I(SPI0_SCLK_I),
+    .SPI0_SCLK_O(SPI0_SCLK_O),
+    .SPI0_SCLK_T(SPI0_SCLK_T),
+    .SPI0_MOSI_I(SPI0_MOSI_I),
+    .SPI0_MOSI_O(SPI0_MOSI_O),
+    .SPI0_MOSI_T(SPI0_MOSI_T),
+    .SPI0_MISO_I(SPI0_MISO_I),
+    .SPI0_MISO_O(SPI0_MISO_O),
+    .SPI0_MISO_T(SPI0_MISO_T),
+    .SPI0_SS_I(SPI0_SS_I),
+    .SPI0_SS_O(SPI0_SS_O),
+    .SPI0_SS1_O(SPI0_SS1_O),
+    .SPI0_SS2_O(SPI0_SS2_O),
+    .SPI0_SS_T(SPI0_SS_T),
     .SPI1_SCLK_I(1'B0),
     .SPI1_SCLK_O(),
     .SPI1_SCLK_T(),
@@ -441,12 +489,12 @@ inout wire PS_PORB;
     .SPI1_SS_T(),
     .UART0_DTRN(),
     .UART0_RTSN(),
-    .UART0_TX(),
+    .UART0_TX(UART0_TX),
     .UART0_CTSN(1'B0),
     .UART0_DCDN(1'B0),
     .UART0_DSRN(1'B0),
     .UART0_RIN(1'B0),
-    .UART0_RX(1'B1),
+    .UART0_RX(UART0_RX),
     .UART1_DTRN(),
     .UART1_RTSN(),
     .UART1_TX(),

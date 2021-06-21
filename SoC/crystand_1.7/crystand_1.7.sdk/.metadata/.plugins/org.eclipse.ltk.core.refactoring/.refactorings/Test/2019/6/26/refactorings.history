@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Test/src/spi_lib&apos; to &apos;spi_lib.c&apos;" description="Rename resource &apos;spi_lib&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/spi_lib" name="spi_lib.c" stamp="1561626342295" updateReferences="true"/>
-</session>

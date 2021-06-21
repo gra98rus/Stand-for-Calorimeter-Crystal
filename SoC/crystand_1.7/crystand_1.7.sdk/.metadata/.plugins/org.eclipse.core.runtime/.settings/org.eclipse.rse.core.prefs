@@ -1,4 +1,3 @@
-activeuserprofiles=Team;deva2;devz
 eclipse.preferences.version=1
-org.eclipse.rse.systemtype.local.systemType.defaultUserId=zhulanov
-useridperkey=devz.Local\=zhulanov;
+org.eclipse.rse.systemtype.local.systemType.defaultUserId=aandreev
+useridperkey=deva2.Local\=aandreev;

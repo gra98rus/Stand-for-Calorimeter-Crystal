@@ -271,7 +271,7 @@ inout
 Quad SPI Flash
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-qspi0_io[3]
+qspi0_io[3]/HOLD_B
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
 LVCMOS 1.8V
@@ -1417,21 +1417,10 @@ Enable DDR Controller of Zynq PS
 </TR>
 <TR valign="top">
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>Enable DDR</B>
-</TD>
-<TD width=10% BGCOLOR=#FBF5EF>
-1
-</TD>
-<TD width=10% BGCOLOR=#FBF5EF>
-Enable DDR Controller of Zynq PS
-</TD>
-</TR>
-<TR valign="top">
-<TD width=10% BGCOLOR=#FBF5EF>
 <B>Memory Part</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-MT41J128M16 HA-125
+MT41J128M16 HA-15E
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
 
@@ -1618,7 +1607,7 @@ Precharge Time (tRP) is the number of clock cycles needed o terminate acces s to
 <B>tRC (ns )</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-48.75
+49.5
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
 Provide the Row cycle time tRC (ns)
@@ -1629,7 +1618,7 @@ Provide the Row cycle time tRC (ns)
 <B>tRASmin ( ns )</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-35.0
+36.0
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
 tRASmin (ns) is the minimum number of clock cycles required between an Active command and issuing the Precharge command
@@ -1640,7 +1629,7 @@ tRASmin (ns) is the minimum number of clock cycles required between an Active co
 <B>tFAW</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-40.0
+45.0
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
 It restricts the number of activates that can be done within a certain window of time
@@ -1780,7 +1769,7 @@ The average of the data midpoint delay, of the data delays associated with a byt
 </TR>
 </TABLE>
 <H2><a name="ClockInfoTab">PS Clocks information</a></H2>
-<H2><a name="ClockInfoTab">PS Reference Clock : 50</a></H2>
+<H2><a name="ClockInfoTab">PS Reference Clock : 33.333333</a></H2>
 <TABLE border=1 cellspacing=0 BORDERCOLOR=black WIDTH=100%">
 <TR valign="top">
 <TD width=10% BGCOLOR=#E0F8F7>
@@ -1801,7 +1790,7 @@ The average of the data midpoint delay, of the data delays associated with a byt
 ARM PLL
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-650.000000
+666.666687
 </TD>
 </TR>
 <TR valign="top">
@@ -2598,10 +2587,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control</B>
@@ -2638,10 +2627,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>177</B>
+<B>fa</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>177000</B>
+<B>fa000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned with a certain window before syaing locked.</B>
@@ -2661,7 +2650,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1772c0</B>
+<B>fa220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Configuration</B>
@@ -2746,10 +2735,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>28</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into reset mode. Refer to the Zynq-7000 TRM, UG585, Clocks chapter for CP/RES/CNT values for the PLL.</B>
@@ -2769,7 +2758,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Control</B>
@@ -3621,10 +3610,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control.</B>
@@ -3661,10 +3650,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1db</B>
+<B>12c</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1db000</B>
+<B>12c000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned with a certain window before staying locked.</B>
@@ -3684,7 +3673,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1db2c0</B>
+<B>12c220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Configuration</B>
@@ -3769,10 +3758,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>15</B>
+<B>20</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into reset mode. Refer to the Zynq-7000 TRM, UG585, Clocks chapter for CP/RES/CNT values for the PLL.</B>
@@ -3792,7 +3781,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Control</B>
@@ -4624,10 +4613,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1f4</B>
+<B>145</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1f4000</B>
+<B>145000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned with a certain window before staying locked.</B>
@@ -4647,7 +4636,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1f42c0</B>
+<B>1452c0</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Configuration</B>
@@ -4732,10 +4721,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>14</B>
+<B>1e</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into reset mode. Refer to the Zynq-7000 TRM, UG585, Clocks chapter for CP/RES/CNT values for programming the PLL.</B>
@@ -4755,7 +4744,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Control</B>
@@ -5906,10 +5895,10 @@ SLCR_LOCK
 <B>3f00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>34</B>
+<B>f</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>3400</B>
+<B>f00</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency.</B>
@@ -5926,10 +5915,10 @@ SLCR_LOCK
 <B>3f00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>2</B>
+<B>7</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>200000</B>
+<B>700000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency. Second cascade divider</B>
@@ -5949,7 +5938,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>203401</B>
+<B>700f01</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DCI clock control</B>
@@ -10244,10 +10233,10 @@ ddrc_ctrl
 <B>3f</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRC - Min time between activates to same bank (spec: 65 ns for DDR2-400 and smaller for faster parts). DRAM Related. Default value is set for DDR3.</B>
@@ -10307,7 +10296,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>4159a</B>
+<B>4159b</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters 0</B>
@@ -10431,10 +10420,10 @@ ddrc_ctrl
 <B>fc00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>16</B>
+<B>18</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>5800</B>
+<B>6000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tFAW - At most 4 banks must be activated in a rolling window of tFAW cycles. Unit: clocks. DRAM Related.</B>
@@ -10471,10 +10460,10 @@ ddrc_ctrl
 <B>7c00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>13</B>
+<B>14</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>4c00000</B>
+<B>5000000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRAS(min) - Minimum time between activate and precharge to the same bank (spec is 45 ns). Unit: clocks DRAM related. Default value is set for DDR3.</B>
@@ -10514,7 +10503,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>44e458d2</B>
+<B>452460d2</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters 1</B>
@@ -34932,116 +34921,8 @@ CTRL
 <H1>DIRECT COMMAND</H1>
 <H1>NOR CS1 BASE ADDRESS</H1>
 <H1>USB RESET</H1>
-<H1>USB0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>USB1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>ENET RESET</H1>
-<H1>ENET0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>ENET1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>I2C RESET</H1>
-<H1>I2C0 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>I2C1 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>NOR CHIP SELECT</H1>
 <H1>DIR MODE BANK 0</H1>
 <H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
@@ -37241,10 +37122,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control</B>
@@ -37281,10 +37162,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>177</B>
+<B>fa</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>177000</B>
+<B>fa000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before syaing locked.</B>
@@ -37304,7 +37185,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1772c0</B>
+<B>fa220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Configuration</B>
@@ -37389,10 +37270,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>28</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -37412,7 +37293,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Control</B>
@@ -38264,10 +38145,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control.</B>
@@ -38304,10 +38185,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1db</B>
+<B>12c</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1db000</B>
+<B>12c000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before staying locked.</B>
@@ -38327,7 +38208,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1db2c0</B>
+<B>12c220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Configuration</B>
@@ -38412,10 +38293,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>15</B>
+<B>20</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -38435,7 +38316,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Control</B>
@@ -39267,10 +39148,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1f4</B>
+<B>145</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1f4000</B>
+<B>145000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drive the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before staying locked.</B>
@@ -39290,7 +39171,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1f42c0</B>
+<B>1452c0</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Configuration</B>
@@ -39375,10 +39256,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>14</B>
+<B>1e</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provide the feedback divisor for the PLL. Note: Before changing this value, the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -39398,7 +39279,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Control</B>
@@ -40549,10 +40430,10 @@ SLCR_LOCK
 <B>3f00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>34</B>
+<B>f</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>3400</B>
+<B>f00</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency.</B>
@@ -40569,10 +40450,10 @@ SLCR_LOCK
 <B>3f00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>2</B>
+<B>7</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>200000</B>
+<B>700000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency. Second cascade divider</B>
@@ -40592,7 +40473,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>203401</B>
+<B>700f01</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DCI clock control</B>
@@ -45009,10 +44890,10 @@ ddrc_ctrl
 <B>3f</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRC - Min time between activates to same bank (spec: 65 ns for DDR2-400 and smaller for faster parts). DRAM Related. Default value is set for DDR3.</B>
@@ -45072,7 +44953,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>4159a</B>
+<B>4159b</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters 0</B>
@@ -45196,10 +45077,10 @@ ddrc_ctrl
 <B>fc00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>16</B>
+<B>18</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>5800</B>
+<B>6000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tFAW - At most 4 banks must be activated in a rolling window of tFAW cycles. Unit: clocks. DRAM Related.</B>
@@ -45236,10 +45117,10 @@ ddrc_ctrl
 <B>7c00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>13</B>
+<B>14</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>4c00000</B>
+<B>5000000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRAS(min) - Minimum time between activate and precharge to the same bank (spec is 45 ns). Unit: clocks DRAM related. Default value is set for DDR3.</B>
@@ -45279,7 +45160,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>44e458d2</B>
+<B>452460d2</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters 1</B>
@@ -70744,116 +70625,8 @@ CTRL
 <H1>DIRECT COMMAND</H1>
 <H1>NOR CS1 BASE ADDRESS</H1>
 <H1>USB RESET</H1>
-<H1>USB0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>USB1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>ENET RESET</H1>
-<H1>ENET0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>ENET1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>I2C RESET</H1>
-<H1>I2C0 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>I2C1 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>NOR CHIP SELECT</H1>
 <H1>DIR MODE BANK 0</H1>
 <H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
@@ -73012,10 +72785,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drives the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control</B>
@@ -73052,10 +72825,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>177</B>
+<B>fa</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>177000</B>
+<B>fa000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drives the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before syaing locked.</B>
@@ -73075,7 +72848,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1772c0</B>
+<B>fa220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Configuration</B>
@@ -73160,10 +72933,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>28</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the feedback divisor for the PLL. NOTE: Before changing this value the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -73183,7 +72956,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1a000</B>
+<B>28000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>ARM PLL Control</B>
@@ -74035,10 +73808,10 @@ SLCR_LOCK
 <B>f0</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>c</B>
+<B>2</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>c0</B>
+<B>20</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drives the PLL_RES[3:0] input of the PLL to set the PLL loop filter resistor control</B>
@@ -74075,10 +73848,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1db</B>
+<B>12c</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1db000</B>
+<B>12c000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drives the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before syaing locked.</B>
@@ -74098,7 +73871,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1db2c0</B>
+<B>12c220</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Configuration</B>
@@ -74183,10 +73956,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>15</B>
+<B>20</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the feedback divisor for the PLL. NOTE: Before changing this value the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -74206,7 +73979,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>15000</B>
+<B>20000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DDR PLL Control</B>
@@ -75038,10 +74811,10 @@ SLCR_LOCK
 <B>3ff000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1f4</B>
+<B>145</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1f4000</B>
+<B>145000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Drives the LOCK_CNT[9:0] input of the PLL to set the number of clock cycles the PLL needs to have clkref and clkfb aligned withth a certain window before syaing locked.</B>
@@ -75061,7 +74834,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>1f42c0</B>
+<B>1452c0</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Configuration</B>
@@ -75146,10 +74919,10 @@ SLCR_LOCK
 <B>7f000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>14</B>
+<B>1e</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the feedback divisor for the PLL. NOTE: Before changing this value the PLL must first be bypassed and then put into powerdown or reset state.</B>
@@ -75169,7 +74942,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>14000</B>
+<B>1e000</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>IO PLL Control</B>
@@ -76320,10 +76093,10 @@ SLCR_LOCK
 <B>3f00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>34</B>
+<B>f</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>3400</B>
+<B>f00</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency.</B>
@@ -76340,10 +76113,10 @@ SLCR_LOCK
 <B>3f00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>2</B>
+<B>7</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>200000</B>
+<B>700000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>Provides the divisor used to divide the source clock to generate the required generated clock frequency. Second cascade divider</B>
@@ -76363,7 +76136,7 @@ SLCR_LOCK
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>203401</B>
+<B>700f01</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DCI clock control</B>
@@ -80736,10 +80509,10 @@ ddrc_ctrl
 <B>3f</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>1a</B>
+<B>1b</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRC - Min time between activates to same bank (spec: 65 ns for DDR2-400 and smaller for faster parts). DRAM RELATED. Default value is set for DDR3.</B>
@@ -80799,7 +80572,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>4159a</B>
+<B>4159b</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters register 0</B>
@@ -80923,10 +80696,10 @@ ddrc_ctrl
 <B>fc00</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>16</B>
+<B>18</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>5800</B>
+<B>6000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tFAW - At most 4 banks must be activated in a rolling window of tFAW cycles. Unit: clocks DRAM RELATED.</B>
@@ -80963,10 +80736,10 @@ ddrc_ctrl
 <B>7c00000</B>
 </TD>
 <TD width=10% BGCOLOR=#FBF5EF>
-<B>13</B>
+<B>14</B>
 </TD>
 <TD width=15% BGCOLOR=#FBF5EF>
-<B>4c00000</B>
+<B>5000000</B>
 </TD>
 <TD width=35% BGCOLOR=#FBF5EF>
 <B>tRAS(min) - Minimum time between activate and precharge to the same bank(spec: 45 ns). Unit: clocks DRAM RELATED. Default value is set for DDR3.</B>
@@ -81006,7 +80779,7 @@ ddrc_ctrl
 <B></B>
 </TD>
 <TD width=15% BGCOLOR=#C0C0C0>
-<B>44e458d2</B>
+<B>452460d2</B>
 </TD>
 <TD width=35% BGCOLOR=#C0C0C0>
 <B>DRAM Parameters register 1</B>
@@ -105877,116 +105650,8 @@ CTRL
 <H1>DIRECT COMMAND</H1>
 <H1>NOR CS1 BASE ADDRESS</H1>
 <H1>USB RESET</H1>
-<H1>USB0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>USB1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>ENET RESET</H1>
-<H1>ENET0 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>ENET1 RESET</H1>
-<H1>DIR MODE BANK 0</H1>
-<H1>DIR MODE BANK 1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE BANK 0</H1>
-<H1>OUTPUT ENABLE BANK 1</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>I2C RESET</H1>
-<H1>I2C0 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>I2C1 RESET</H1>
-<H1>DIR MODE GPIO BANK0</H1>
-<H1>DIR MODE GPIO BANK1</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>OUTPUT ENABLE</H1>
-<H1>MASK_DATA_0_LSW LOW BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW LOW BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW LOW BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW LOW BANK [53:48]</H1>
-<H1>ADD 1 MS DELAY</H1>
-<H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>
-<H1>MASK_DATA_0_MSW HIGH BANK [31:16]</H1>
-<H1>MASK_DATA_1_LSW HIGH BANK [47:32]</H1>
-<H1>MASK_DATA_1_MSW HIGH BANK [53:48]</H1>
 <H1>NOR CHIP SELECT</H1>
 <H1>DIR MODE BANK 0</H1>
 <H1>MASK_DATA_0_LSW HIGH BANK [15:0]</H1>

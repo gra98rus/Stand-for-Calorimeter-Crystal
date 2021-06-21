@@ -1,8 +1,8 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Thu Sep 17 18:10:53 2020
---Host        : aandreev-inp running 64-bit Ubuntu 18.04.5 LTS
+--Date        : Sun Feb 21 14:25:52 2021
+--Host        : deva2 running 64-bit Ubuntu 18.04.5 LTS
 --Command     : generate_target ps_topp.bd
 --Design      : ps_topp
 --Purpose     : IP block netlist
@@ -2713,21 +2713,25 @@ entity ps_topp is
     SPECTRA_BRAM_PORTA_en : out STD_LOGIC;
     SPECTRA_BRAM_PORTA_rst : out STD_LOGIC;
     SPECTRA_BRAM_PORTA_we : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    UART_rxd : in STD_LOGIC;
+    UART_txd : out STD_LOGIC;
     dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
     regWE : out STD_LOGIC;
     reset : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute core_generation_info : string;
-  attribute core_generation_info of ps_topp : entity is "ps_topp,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ps_topp,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=16,numReposBlks=11,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=2,da_board_cnt=5,da_clkrst_cnt=4,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
-  attribute hw_handoff : string;
-  attribute hw_handoff of ps_topp : entity is "ps_topp.hwdef";
+  attribute CORE_GENERATION_INFO : string;
+  attribute CORE_GENERATION_INFO of ps_topp : entity is "ps_topp,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ps_topp,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=16,numReposBlks=11,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=2,da_board_cnt=5,da_clkrst_cnt=4,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
+  attribute HW_HANDOFF : string;
+  attribute HW_HANDOFF of ps_topp : entity is "ps_topp.hwdef";
 end ps_topp;
 
 architecture STRUCTURE of ps_topp is
   component ps_topp_processing_system7_0_0 is
   port (
+    UART0_TX : out STD_LOGIC;
+    UART0_RX : in STD_LOGIC;
     M_AXI_GP0_ARVALID : out STD_LOGIC;
     M_AXI_GP0_AWVALID : out STD_LOGIC;
     M_AXI_GP0_BREADY : out STD_LOGIC;
@@ -2806,35 +2810,6 @@ architecture STRUCTURE of ps_topp is
     peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component ps_topp_proc_sys_reset_0_1;
-  component ps_topp_ps_top_reg_interface_0_1 is
-  port (
-    regWE : out STD_LOGIC;
-    regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    s00_axi_awaddr : in STD_LOGIC_VECTOR ( 5 downto 0 );
-    s00_axi_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    s00_axi_awvalid : in STD_LOGIC;
-    s00_axi_awready : out STD_LOGIC;
-    s00_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    s00_axi_wvalid : in STD_LOGIC;
-    s00_axi_wready : out STD_LOGIC;
-    s00_axi_bresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    s00_axi_bvalid : out STD_LOGIC;
-    s00_axi_bready : in STD_LOGIC;
-    s00_axi_araddr : in STD_LOGIC_VECTOR ( 5 downto 0 );
-    s00_axi_arprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    s00_axi_arvalid : in STD_LOGIC;
-    s00_axi_arready : out STD_LOGIC;
-    s00_axi_rdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    s00_axi_rresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    s00_axi_rvalid : out STD_LOGIC;
-    s00_axi_rready : in STD_LOGIC;
-    s00_axi_aclk : in STD_LOGIC;
-    s00_axi_aresetn : in STD_LOGIC
-  );
-  end component ps_topp_ps_top_reg_interface_0_1;
   component ps_topp_axi_bram_ctrl_0_0 is
   port (
     s_axi_aclk : in STD_LOGIC;
@@ -2923,6 +2898,35 @@ architecture STRUCTURE of ps_topp is
     bram_rddata_a : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component ps_topp_axi_bram_ctrl_1_0;
+  component ps_topp_ps_top_reg_interface_0_1 is
+  port (
+    regWE : out STD_LOGIC;
+    regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    s00_axi_awaddr : in STD_LOGIC_VECTOR ( 5 downto 0 );
+    s00_axi_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    s00_axi_awvalid : in STD_LOGIC;
+    s00_axi_awready : out STD_LOGIC;
+    s00_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    s00_axi_wvalid : in STD_LOGIC;
+    s00_axi_wready : out STD_LOGIC;
+    s00_axi_bresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
+    s00_axi_bvalid : out STD_LOGIC;
+    s00_axi_bready : in STD_LOGIC;
+    s00_axi_araddr : in STD_LOGIC_VECTOR ( 5 downto 0 );
+    s00_axi_arprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    s00_axi_arvalid : in STD_LOGIC;
+    s00_axi_arready : out STD_LOGIC;
+    s00_axi_rdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    s00_axi_rresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
+    s00_axi_rvalid : out STD_LOGIC;
+    s00_axi_rready : in STD_LOGIC;
+    s00_axi_aclk : in STD_LOGIC;
+    s00_axi_aresetn : in STD_LOGIC
+  );
+  end component ps_topp_ps_top_reg_interface_0_1;
   signal axi_interconnect_0_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interconnect_0_M00_AXI_ARPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal axi_interconnect_0_M00_AXI_ARREADY : STD_LOGIC;
@@ -3076,6 +3080,8 @@ architecture STRUCTURE of ps_topp is
   signal processing_system7_0_M_AXI_GP0_WREADY : STD_LOGIC;
   signal processing_system7_0_M_AXI_GP0_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal processing_system7_0_M_AXI_GP0_WVALID : STD_LOGIC;
+  signal processing_system7_0_UART_0_RxD : STD_LOGIC;
+  signal processing_system7_0_UART_0_TxD : STD_LOGIC;
   signal ps_top_reg_interface_0_dataOut : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ps_top_reg_interface_0_regNum : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ps_top_reg_interface_0_regWE : STD_LOGIC;
@@ -3088,51 +3094,53 @@ architecture STRUCTURE of ps_topp is
   signal spectra_bram_ctrl_BRAM_PORTA_WE : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal NLW_proc_sys_reset_0_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  attribute x_interface_info : string;
-  attribute x_interface_info of DDR_cas_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CAS_N";
-  attribute x_interface_info of DDR_ck_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_N";
-  attribute x_interface_info of DDR_ck_p : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_P";
-  attribute x_interface_info of DDR_cke : signal is "xilinx.com:interface:ddrx:1.0 DDR CKE";
-  attribute x_interface_info of DDR_cs_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CS_N";
-  attribute x_interface_info of DDR_odt : signal is "xilinx.com:interface:ddrx:1.0 DDR ODT";
-  attribute x_interface_info of DDR_ras_n : signal is "xilinx.com:interface:ddrx:1.0 DDR RAS_N";
-  attribute x_interface_info of DDR_reset_n : signal is "xilinx.com:interface:ddrx:1.0 DDR RESET_N";
-  attribute x_interface_info of DDR_we_n : signal is "xilinx.com:interface:ddrx:1.0 DDR WE_N";
-  attribute x_interface_info of FCLK_CLK0 : signal is "xilinx.com:signal:clock:1.0 CLK.FCLK_CLK0 CLK";
-  attribute x_interface_parameter : string;
-  attribute x_interface_parameter of FCLK_CLK0 : signal is "XIL_INTERFACENAME CLK.FCLK_CLK0, CLK_DOMAIN ps_topp_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 50000000, PHASE 0.000";
-  attribute x_interface_info of FIXED_IO_ddr_vrn : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN";
-  attribute x_interface_parameter of FIXED_IO_ddr_vrn : signal is "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false";
-  attribute x_interface_info of FIXED_IO_ddr_vrp : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP";
-  attribute x_interface_info of FIXED_IO_ps_clk : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK";
-  attribute x_interface_info of FIXED_IO_ps_porb : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB";
-  attribute x_interface_info of FIXED_IO_ps_srstb : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_clk : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA CLK";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_en : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA EN";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_rst : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA RST";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_clk : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA CLK";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_en : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA EN";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_rst : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA RST";
-  attribute x_interface_info of DDR_addr : signal is "xilinx.com:interface:ddrx:1.0 DDR ADDR";
-  attribute x_interface_parameter of DDR_addr : signal is "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
-  attribute x_interface_info of DDR_ba : signal is "xilinx.com:interface:ddrx:1.0 DDR BA";
-  attribute x_interface_info of DDR_dm : signal is "xilinx.com:interface:ddrx:1.0 DDR DM";
-  attribute x_interface_info of DDR_dq : signal is "xilinx.com:interface:ddrx:1.0 DDR DQ";
-  attribute x_interface_info of DDR_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_N";
-  attribute x_interface_info of DDR_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_P";
-  attribute x_interface_info of FIXED_IO_mio : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_addr : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA ADDR";
-  attribute x_interface_parameter of OSCILLOGRAMS_BRAM_PORTA_addr : signal is "XIL_INTERFACENAME OSCILLOGRAMS_BRAM_PORTA, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 4096, MEM_WIDTH 64";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_din : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA DIN";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_dout : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA DOUT";
-  attribute x_interface_info of OSCILLOGRAMS_BRAM_PORTA_we : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA WE";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_addr : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA ADDR";
-  attribute x_interface_parameter of SPECTRA_BRAM_PORTA_addr : signal is "XIL_INTERFACENAME SPECTRA_BRAM_PORTA, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 262144, MEM_WIDTH 32";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_din : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA DIN";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_dout : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA DOUT";
-  attribute x_interface_info of SPECTRA_BRAM_PORTA_we : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA WE";
-  attribute x_interface_info of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
-  attribute x_interface_parameter of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH";
+  attribute X_INTERFACE_INFO : string;
+  attribute X_INTERFACE_INFO of DDR_cas_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CAS_N";
+  attribute X_INTERFACE_INFO of DDR_ck_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_N";
+  attribute X_INTERFACE_INFO of DDR_ck_p : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_P";
+  attribute X_INTERFACE_INFO of DDR_cke : signal is "xilinx.com:interface:ddrx:1.0 DDR CKE";
+  attribute X_INTERFACE_INFO of DDR_cs_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CS_N";
+  attribute X_INTERFACE_INFO of DDR_odt : signal is "xilinx.com:interface:ddrx:1.0 DDR ODT";
+  attribute X_INTERFACE_INFO of DDR_ras_n : signal is "xilinx.com:interface:ddrx:1.0 DDR RAS_N";
+  attribute X_INTERFACE_INFO of DDR_reset_n : signal is "xilinx.com:interface:ddrx:1.0 DDR RESET_N";
+  attribute X_INTERFACE_INFO of DDR_we_n : signal is "xilinx.com:interface:ddrx:1.0 DDR WE_N";
+  attribute X_INTERFACE_INFO of FCLK_CLK0 : signal is "xilinx.com:signal:clock:1.0 CLK.FCLK_CLK0 CLK";
+  attribute X_INTERFACE_PARAMETER : string;
+  attribute X_INTERFACE_PARAMETER of FCLK_CLK0 : signal is "XIL_INTERFACENAME CLK.FCLK_CLK0, CLK_DOMAIN ps_topp_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 50000000, PHASE 0.000";
+  attribute X_INTERFACE_INFO of FIXED_IO_ddr_vrn : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN";
+  attribute X_INTERFACE_PARAMETER of FIXED_IO_ddr_vrn : signal is "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false";
+  attribute X_INTERFACE_INFO of FIXED_IO_ddr_vrp : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP";
+  attribute X_INTERFACE_INFO of FIXED_IO_ps_clk : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK";
+  attribute X_INTERFACE_INFO of FIXED_IO_ps_porb : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB";
+  attribute X_INTERFACE_INFO of FIXED_IO_ps_srstb : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_clk : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA CLK";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_en : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA EN";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_rst : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA RST";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_clk : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA CLK";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_en : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA EN";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_rst : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA RST";
+  attribute X_INTERFACE_INFO of UART_rxd : signal is "xilinx.com:interface:uart:1.0 UART RxD";
+  attribute X_INTERFACE_INFO of UART_txd : signal is "xilinx.com:interface:uart:1.0 UART TxD";
+  attribute X_INTERFACE_INFO of DDR_addr : signal is "xilinx.com:interface:ddrx:1.0 DDR ADDR";
+  attribute X_INTERFACE_PARAMETER of DDR_addr : signal is "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
+  attribute X_INTERFACE_INFO of DDR_ba : signal is "xilinx.com:interface:ddrx:1.0 DDR BA";
+  attribute X_INTERFACE_INFO of DDR_dm : signal is "xilinx.com:interface:ddrx:1.0 DDR DM";
+  attribute X_INTERFACE_INFO of DDR_dq : signal is "xilinx.com:interface:ddrx:1.0 DDR DQ";
+  attribute X_INTERFACE_INFO of DDR_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_N";
+  attribute X_INTERFACE_INFO of DDR_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_P";
+  attribute X_INTERFACE_INFO of FIXED_IO_mio : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_addr : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA ADDR";
+  attribute X_INTERFACE_PARAMETER of OSCILLOGRAMS_BRAM_PORTA_addr : signal is "XIL_INTERFACENAME OSCILLOGRAMS_BRAM_PORTA, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 4096, MEM_WIDTH 64";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_din : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA DIN";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_dout : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA DOUT";
+  attribute X_INTERFACE_INFO of OSCILLOGRAMS_BRAM_PORTA_we : signal is "xilinx.com:interface:bram:1.0 OSCILLOGRAMS_BRAM_PORTA WE";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_addr : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA ADDR";
+  attribute X_INTERFACE_PARAMETER of SPECTRA_BRAM_PORTA_addr : signal is "XIL_INTERFACENAME SPECTRA_BRAM_PORTA, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 262144, MEM_WIDTH 32";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_din : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA DIN";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_dout : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA DOUT";
+  attribute X_INTERFACE_INFO of SPECTRA_BRAM_PORTA_we : signal is "xilinx.com:interface:bram:1.0 SPECTRA_BRAM_PORTA WE";
+  attribute X_INTERFACE_INFO of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
+  attribute X_INTERFACE_PARAMETER of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH";
 begin
   FCLK_CLK0 <= processing_system7_0_FCLK_CLK0;
   OSCILLOGRAMS_BRAM_PORTA_addr(11 downto 0) <= oscillograms_bram_ctrl_BRAM_PORTA_ADDR(11 downto 0);
@@ -3147,9 +3155,11 @@ begin
   SPECTRA_BRAM_PORTA_en <= spectra_bram_ctrl_BRAM_PORTA_EN;
   SPECTRA_BRAM_PORTA_rst <= spectra_bram_ctrl_BRAM_PORTA_RST;
   SPECTRA_BRAM_PORTA_we(3 downto 0) <= spectra_bram_ctrl_BRAM_PORTA_WE(3 downto 0);
+  UART_txd <= processing_system7_0_UART_0_TxD;
   dataIn_0_1(31 downto 0) <= dataIn(31 downto 0);
   dataOut(31 downto 0) <= ps_top_reg_interface_0_dataOut(31 downto 0);
   oscillograms_bram_ctrl_BRAM_PORTA_DOUT(63 downto 0) <= OSCILLOGRAMS_BRAM_PORTA_dout(63 downto 0);
+  processing_system7_0_UART_0_RxD <= UART_rxd;
   regNum(31 downto 0) <= ps_top_reg_interface_0_regNum(31 downto 0);
   regWE <= ps_top_reg_interface_0_regWE;
   reset(0) <= proc_sys_reset_0_peripheral_reset(0);
@@ -3405,7 +3415,9 @@ processing_system7_0: component ps_topp_processing_system7_0_0
       M_AXI_GP0_WVALID => processing_system7_0_M_AXI_GP0_WVALID,
       PS_CLK => FIXED_IO_ps_clk,
       PS_PORB => FIXED_IO_ps_porb,
-      PS_SRSTB => FIXED_IO_ps_srstb
+      PS_SRSTB => FIXED_IO_ps_srstb,
+      UART0_RX => processing_system7_0_UART_0_RxD,
+      UART0_TX => processing_system7_0_UART_0_TxD
     );
 ps_top_reg_interface_0: component ps_topp_ps_top_reg_interface_0_1
      port map (
