@@ -81,8 +81,8 @@ def index(request):
         return render (request , 'index.html')
 
     if (request.method == 'POST'):
-        print 'Raw Data: "%s"' % request.body
-        js = json.loads(request.body)
+        print ('Raw Data: "%s"' % request.body)
+        js = json.loads(request.body.decode('utf-8'))
 
         reg_num = 0
         data = 0
@@ -121,7 +121,7 @@ def index(request):
 #            while status != 1:
 #                status = read_from_reg(REG_STATUS)
 #                print(status)
-            print result
+            print (result)
             data = read_charts()
             for i in range(0,1024):
                 response[str(i)] =  data[i]
@@ -145,7 +145,7 @@ def index(request):
         
         if (js['command'] == 'set_trigger_level'):
             write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
-            print bin(int(js['data']))
+            print (bin(int(js['data'])))
             global trigger_level_0
             global trigger_level_1
             global trigger_level_2
@@ -213,5 +213,5 @@ def index(request):
 
         if (js['command'] == 'set_spectrum_conf'):
             write_to_reg(REG_SPECTRUM_SPEC, int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
-            print bin(int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
+            print (bin(int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point'])))
             return HttpResponse('ok!')
