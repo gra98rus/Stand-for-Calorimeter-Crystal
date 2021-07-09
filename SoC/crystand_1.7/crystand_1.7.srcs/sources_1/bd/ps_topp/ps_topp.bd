@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xD6DFF212A0BA63ED" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.2" bd:top="ps_topp" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xD1AE1FD5B247ED19" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.2" bd:top="ps_topp" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -241,12 +241,6 @@
         <spirit:abstractionType spirit:library="interface" spirit:name="uart_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
       </spirit:busInterface>
       <spirit:busInterface>
-        <spirit:name>ADC_SPI</spirit:name>
-        <spirit:master/>
-        <spirit:busType spirit:library="interface" spirit:name="spi" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="interface" spirit:name="spi_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-      </spirit:busInterface>
-      <spirit:busInterface>
         <spirit:name>CLK.FCLK_CLK0</spirit:name>
         <spirit:displayName>Clk</spirit:displayName>
         <spirit:description>Clock</spirit:description>
@@ -413,7 +407,7 @@
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_ENET1_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SDIO_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_UART_PERIPHERAL_FREQMHZ">100.000000</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SPI_PERIPHERAL_FREQMHZ">166.666672</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SPI_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_CAN_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_WDT_PERIPHERAL_FREQMHZ">108.333336</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_PCAP_PERIPHERAL_FREQMHZ">200.000000</spirit:configurableElementValue>
@@ -432,15 +426,15 @@
           <spirit:configurableElementValue spirit:referenceId="PCW_CLK1_FREQ">10000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_CLK2_FREQ">10000000</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_CLK3_FREQ">10000000</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_SPI_PERIPHERAL_VALID">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_SPI_PERIPHERAL_VALID">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_UART_PERIPHERAL_VALID">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_EMIO_ENET0">0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_EN_EMIO_SPI0">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_EN_EMIO_SPI0">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_EMIO_UART0">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_EMIO_MODEM_UART0">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_QSPI">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_ENET0">1</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_EN_SPI0">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_EN_SPI0">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_UART0">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_UART1">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_EN_MODEM_UART0">0</spirit:configurableElementValue>
@@ -463,8 +457,7 @@
           <spirit:configurableElementValue spirit:referenceId="PCW_UART0_UART0_IO">EMIO</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_UART0_GRP_FULL_ENABLE">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_UART1_PERIPHERAL_ENABLE">0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_SPI0_PERIPHERAL_ENABLE">1</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_SPI0_SPI0_IO">EMIO</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_SPI0_PERIPHERAL_ENABLE">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ENET0_PERIPHERAL_FREQMHZ">1000 Mbps</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ENET0_PERIPHERAL_CLKSRC">IO PLL</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_MIO_1_PULLUP">enabled</spirit:configurableElementValue>
@@ -668,9 +661,6 @@
       </spirit:hierConnection>
       <spirit:hierConnection spirit:interfaceRef="UART/processing_system7_0_UART_0">
         <spirit:activeInterface spirit:busRef="UART_0" spirit:componentRef="processing_system7_0"/>
-      </spirit:hierConnection>
-      <spirit:hierConnection spirit:interfaceRef="ADC_SPI/processing_system7_0_SPI_0">
-        <spirit:activeInterface spirit:busRef="SPI_0" spirit:componentRef="processing_system7_0"/>
       </spirit:hierConnection>
     </spirit:hierConnections>
   </spirit:design>

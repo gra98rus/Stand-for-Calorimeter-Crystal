@@ -349,7 +349,7 @@ data_C <= data_C_r(13) & data_C_r(13) & data_C_r(13 downto 0);
 data_D <= data_D_r(13) & data_D_r(13) & data_D_r(13 downto 0);
 
 clk_rst <= AdcDeserReset;       --in
-reset <= clk_rst;
+reset   <= clk_rst;
 clk_out <= IntClkDiv;           --out
 
 status_signals(0) <= IntBitClkDone;    --out

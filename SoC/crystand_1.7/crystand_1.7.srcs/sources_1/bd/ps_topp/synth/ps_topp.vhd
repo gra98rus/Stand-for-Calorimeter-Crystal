@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Fri Jun 18 19:19:59 2021
+--Date        : Sun Jul  4 14:32:06 2021
 --Host        : deva2 running 64-bit Ubuntu 18.04.5 LTS
 --Command     : generate_target ps_topp.bd
 --Design      : ps_topp
@@ -2677,20 +2677,6 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity ps_topp is
   port (
-    ADC_SPI_io0_i : in STD_LOGIC;
-    ADC_SPI_io0_o : out STD_LOGIC;
-    ADC_SPI_io0_t : out STD_LOGIC;
-    ADC_SPI_io1_i : in STD_LOGIC;
-    ADC_SPI_io1_o : out STD_LOGIC;
-    ADC_SPI_io1_t : out STD_LOGIC;
-    ADC_SPI_sck_i : in STD_LOGIC;
-    ADC_SPI_sck_o : out STD_LOGIC;
-    ADC_SPI_sck_t : out STD_LOGIC;
-    ADC_SPI_ss1_o : out STD_LOGIC;
-    ADC_SPI_ss2_o : out STD_LOGIC;
-    ADC_SPI_ss_i : in STD_LOGIC;
-    ADC_SPI_ss_o : out STD_LOGIC;
-    ADC_SPI_ss_t : out STD_LOGIC;
     DDR_addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
     DDR_ba : inout STD_LOGIC_VECTOR ( 2 downto 0 );
     DDR_cas_n : inout STD_LOGIC;
@@ -2744,20 +2730,6 @@ end ps_topp;
 architecture STRUCTURE of ps_topp is
   component ps_topp_processing_system7_0_0 is
   port (
-    SPI0_SCLK_I : in STD_LOGIC;
-    SPI0_SCLK_O : out STD_LOGIC;
-    SPI0_SCLK_T : out STD_LOGIC;
-    SPI0_MOSI_I : in STD_LOGIC;
-    SPI0_MOSI_O : out STD_LOGIC;
-    SPI0_MOSI_T : out STD_LOGIC;
-    SPI0_MISO_I : in STD_LOGIC;
-    SPI0_MISO_O : out STD_LOGIC;
-    SPI0_MISO_T : out STD_LOGIC;
-    SPI0_SS_I : in STD_LOGIC;
-    SPI0_SS_O : out STD_LOGIC;
-    SPI0_SS1_O : out STD_LOGIC;
-    SPI0_SS2_O : out STD_LOGIC;
-    SPI0_SS_T : out STD_LOGIC;
     UART0_TX : out STD_LOGIC;
     UART0_RX : in STD_LOGIC;
     M_AXI_GP0_ARVALID : out STD_LOGIC;
@@ -3108,20 +3080,6 @@ architecture STRUCTURE of ps_topp is
   signal processing_system7_0_M_AXI_GP0_WREADY : STD_LOGIC;
   signal processing_system7_0_M_AXI_GP0_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal processing_system7_0_M_AXI_GP0_WVALID : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO0_I : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO0_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO0_T : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO1_I : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO1_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_IO1_T : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SCK_I : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SCK_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SCK_T : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SS1_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SS2_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SS_I : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SS_O : STD_LOGIC;
-  signal processing_system7_0_SPI_0_SS_T : STD_LOGIC;
   signal processing_system7_0_UART_0_RxD : STD_LOGIC;
   signal processing_system7_0_UART_0_TxD : STD_LOGIC;
   signal ps_top_reg_interface_0_dataOut : STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -3137,20 +3095,6 @@ architecture STRUCTURE of ps_topp is
   signal NLW_proc_sys_reset_0_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   attribute X_INTERFACE_INFO : string;
-  attribute X_INTERFACE_INFO of ADC_SPI_io0_i : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_io0_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_io0_t : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_io1_i : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_io1_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_io1_t : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_sck_i : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_sck_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_sck_t : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_ss1_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_ss2_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_ss_i : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_ss_o : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
-  attribute X_INTERFACE_INFO of ADC_SPI_ss_t : signal is "xilinx.com:interface:spi:1.0 ADC_SPI ";
   attribute X_INTERFACE_INFO of DDR_cas_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CAS_N";
   attribute X_INTERFACE_INFO of DDR_ck_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_N";
   attribute X_INTERFACE_INFO of DDR_ck_p : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_P";
@@ -3198,16 +3142,6 @@ architecture STRUCTURE of ps_topp is
   attribute X_INTERFACE_INFO of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
   attribute X_INTERFACE_PARAMETER of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH";
 begin
-  ADC_SPI_io0_o <= processing_system7_0_SPI_0_IO0_O;
-  ADC_SPI_io0_t <= processing_system7_0_SPI_0_IO0_T;
-  ADC_SPI_io1_o <= processing_system7_0_SPI_0_IO1_O;
-  ADC_SPI_io1_t <= processing_system7_0_SPI_0_IO1_T;
-  ADC_SPI_sck_o <= processing_system7_0_SPI_0_SCK_O;
-  ADC_SPI_sck_t <= processing_system7_0_SPI_0_SCK_T;
-  ADC_SPI_ss1_o <= processing_system7_0_SPI_0_SS1_O;
-  ADC_SPI_ss2_o <= processing_system7_0_SPI_0_SS2_O;
-  ADC_SPI_ss_o <= processing_system7_0_SPI_0_SS_O;
-  ADC_SPI_ss_t <= processing_system7_0_SPI_0_SS_T;
   FCLK_CLK0 <= processing_system7_0_FCLK_CLK0;
   OSCILLOGRAMS_BRAM_PORTA_addr(11 downto 0) <= oscillograms_bram_ctrl_BRAM_PORTA_ADDR(11 downto 0);
   OSCILLOGRAMS_BRAM_PORTA_clk <= oscillograms_bram_ctrl_BRAM_PORTA_CLK;
@@ -3225,10 +3159,6 @@ begin
   dataIn_0_1(31 downto 0) <= dataIn(31 downto 0);
   dataOut(31 downto 0) <= ps_top_reg_interface_0_dataOut(31 downto 0);
   oscillograms_bram_ctrl_BRAM_PORTA_DOUT(63 downto 0) <= OSCILLOGRAMS_BRAM_PORTA_dout(63 downto 0);
-  processing_system7_0_SPI_0_IO0_I <= ADC_SPI_io0_i;
-  processing_system7_0_SPI_0_IO1_I <= ADC_SPI_io1_i;
-  processing_system7_0_SPI_0_SCK_I <= ADC_SPI_sck_i;
-  processing_system7_0_SPI_0_SS_I <= ADC_SPI_ss_i;
   processing_system7_0_UART_0_RxD <= UART_rxd;
   regNum(31 downto 0) <= ps_top_reg_interface_0_regNum(31 downto 0);
   regWE <= ps_top_reg_interface_0_regWE;
@@ -3486,20 +3416,6 @@ processing_system7_0: component ps_topp_processing_system7_0_0
       PS_CLK => FIXED_IO_ps_clk,
       PS_PORB => FIXED_IO_ps_porb,
       PS_SRSTB => FIXED_IO_ps_srstb,
-      SPI0_MISO_I => processing_system7_0_SPI_0_IO1_I,
-      SPI0_MISO_O => processing_system7_0_SPI_0_IO1_O,
-      SPI0_MISO_T => processing_system7_0_SPI_0_IO1_T,
-      SPI0_MOSI_I => processing_system7_0_SPI_0_IO0_I,
-      SPI0_MOSI_O => processing_system7_0_SPI_0_IO0_O,
-      SPI0_MOSI_T => processing_system7_0_SPI_0_IO0_T,
-      SPI0_SCLK_I => processing_system7_0_SPI_0_SCK_I,
-      SPI0_SCLK_O => processing_system7_0_SPI_0_SCK_O,
-      SPI0_SCLK_T => processing_system7_0_SPI_0_SCK_T,
-      SPI0_SS1_O => processing_system7_0_SPI_0_SS1_O,
-      SPI0_SS2_O => processing_system7_0_SPI_0_SS2_O,
-      SPI0_SS_I => processing_system7_0_SPI_0_SS_I,
-      SPI0_SS_O => processing_system7_0_SPI_0_SS_O,
-      SPI0_SS_T => processing_system7_0_SPI_0_SS_T,
       UART0_RX => processing_system7_0_UART_0_RxD,
       UART0_TX => processing_system7_0_UART_0_TxD
     );

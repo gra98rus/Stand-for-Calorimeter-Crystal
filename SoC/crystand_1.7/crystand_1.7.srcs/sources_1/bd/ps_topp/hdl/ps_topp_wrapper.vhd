@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Fri Jun 18 19:20:00 2021
+--Date        : Sun Jul  4 14:32:08 2021
 --Host        : deva2 running 64-bit Ubuntu 18.04.5 LTS
 --Command     : generate_target ps_topp_wrapper.bd
 --Design      : ps_topp_wrapper
@@ -13,12 +13,6 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity ps_topp_wrapper is
   port (
-    ADC_SPI_io0_io : inout STD_LOGIC;
-    ADC_SPI_io1_io : inout STD_LOGIC;
-    ADC_SPI_sck_io : inout STD_LOGIC;
-    ADC_SPI_ss1_o : out STD_LOGIC;
-    ADC_SPI_ss2_o : out STD_LOGIC;
-    ADC_SPI_ss_io : inout STD_LOGIC;
     DDR_addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
     DDR_ba : inout STD_LOGIC_VECTOR ( 2 downto 0 );
     DDR_cas_n : inout STD_LOGIC;
@@ -110,88 +104,12 @@ architecture STRUCTURE of ps_topp_wrapper is
     regNum : out STD_LOGIC_VECTOR ( 31 downto 0 );
     dataOut : out STD_LOGIC_VECTOR ( 31 downto 0 );
     reset : out STD_LOGIC_VECTOR ( 0 to 0 );
-    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    ADC_SPI_sck_i : in STD_LOGIC;
-    ADC_SPI_sck_o : out STD_LOGIC;
-    ADC_SPI_sck_t : out STD_LOGIC;
-    ADC_SPI_io0_i : in STD_LOGIC;
-    ADC_SPI_io0_o : out STD_LOGIC;
-    ADC_SPI_io0_t : out STD_LOGIC;
-    ADC_SPI_io1_i : in STD_LOGIC;
-    ADC_SPI_io1_o : out STD_LOGIC;
-    ADC_SPI_io1_t : out STD_LOGIC;
-    ADC_SPI_ss_i : in STD_LOGIC;
-    ADC_SPI_ss_o : out STD_LOGIC;
-    ADC_SPI_ss1_o : out STD_LOGIC;
-    ADC_SPI_ss2_o : out STD_LOGIC;
-    ADC_SPI_ss_t : out STD_LOGIC
+    dataIn : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component ps_topp;
-  component IOBUF is
-  port (
-    I : in STD_LOGIC;
-    O : out STD_LOGIC;
-    T : in STD_LOGIC;
-    IO : inout STD_LOGIC
-  );
-  end component IOBUF;
-  signal ADC_SPI_io0_i : STD_LOGIC;
-  signal ADC_SPI_io0_o : STD_LOGIC;
-  signal ADC_SPI_io0_t : STD_LOGIC;
-  signal ADC_SPI_io1_i : STD_LOGIC;
-  signal ADC_SPI_io1_o : STD_LOGIC;
-  signal ADC_SPI_io1_t : STD_LOGIC;
-  signal ADC_SPI_sck_i : STD_LOGIC;
-  signal ADC_SPI_sck_o : STD_LOGIC;
-  signal ADC_SPI_sck_t : STD_LOGIC;
-  signal ADC_SPI_ss_i : STD_LOGIC;
-  signal ADC_SPI_ss_o : STD_LOGIC;
-  signal ADC_SPI_ss_t : STD_LOGIC;
 begin
-ADC_SPI_io0_iobuf: component IOBUF
-     port map (
-      I => ADC_SPI_io0_o,
-      IO => ADC_SPI_io0_io,
-      O => ADC_SPI_io0_i,
-      T => ADC_SPI_io0_t
-    );
-ADC_SPI_io1_iobuf: component IOBUF
-     port map (
-      I => ADC_SPI_io1_o,
-      IO => ADC_SPI_io1_io,
-      O => ADC_SPI_io1_i,
-      T => ADC_SPI_io1_t
-    );
-ADC_SPI_sck_iobuf: component IOBUF
-     port map (
-      I => ADC_SPI_sck_o,
-      IO => ADC_SPI_sck_io,
-      O => ADC_SPI_sck_i,
-      T => ADC_SPI_sck_t
-    );
-ADC_SPI_ss_iobuf: component IOBUF
-     port map (
-      I => ADC_SPI_ss_o,
-      IO => ADC_SPI_ss_io,
-      O => ADC_SPI_ss_i,
-      T => ADC_SPI_ss_t
-    );
 ps_topp_i: component ps_topp
      port map (
-      ADC_SPI_io0_i => ADC_SPI_io0_i,
-      ADC_SPI_io0_o => ADC_SPI_io0_o,
-      ADC_SPI_io0_t => ADC_SPI_io0_t,
-      ADC_SPI_io1_i => ADC_SPI_io1_i,
-      ADC_SPI_io1_o => ADC_SPI_io1_o,
-      ADC_SPI_io1_t => ADC_SPI_io1_t,
-      ADC_SPI_sck_i => ADC_SPI_sck_i,
-      ADC_SPI_sck_o => ADC_SPI_sck_o,
-      ADC_SPI_sck_t => ADC_SPI_sck_t,
-      ADC_SPI_ss1_o => ADC_SPI_ss1_o,
-      ADC_SPI_ss2_o => ADC_SPI_ss2_o,
-      ADC_SPI_ss_i => ADC_SPI_ss_i,
-      ADC_SPI_ss_o => ADC_SPI_ss_o,
-      ADC_SPI_ss_t => ADC_SPI_ss_t,
       DDR_addr(14 downto 0) => DDR_addr(14 downto 0),
       DDR_ba(2 downto 0) => DDR_ba(2 downto 0),
       DDR_cas_n => DDR_cas_n,

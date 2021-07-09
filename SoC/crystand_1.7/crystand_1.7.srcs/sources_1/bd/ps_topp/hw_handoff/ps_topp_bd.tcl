@@ -155,7 +155,6 @@ proc create_root_design { parentCell } {
 
 
   # Create interface ports
-  set ADC_SPI [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:spi_rtl:1.0 ADC_SPI ]
   set DDR [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 DDR ]
   set FIXED_IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:display_processing_system7:fixedio_rtl:1.0 FIXED_IO ]
   set OSCILLOGRAMS_BRAM_PORTA [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:bram_rtl:1.0 OSCILLOGRAMS_BRAM_PORTA ]
@@ -212,7 +211,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_ACT_QSPI_PERIPHERAL_FREQMHZ {200.000000} \
    CONFIG.PCW_ACT_SDIO_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_SMC_PERIPHERAL_FREQMHZ {10.000000} \
-   CONFIG.PCW_ACT_SPI_PERIPHERAL_FREQMHZ {166.666672} \
+   CONFIG.PCW_ACT_SPI_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_TPIU_PERIPHERAL_FREQMHZ {200.000000} \
    CONFIG.PCW_ACT_TTC0_CLK0_PERIPHERAL_FREQMHZ {108.333336} \
    CONFIG.PCW_ACT_TTC0_CLK1_PERIPHERAL_FREQMHZ {108.333336} \
@@ -253,12 +252,12 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_ENET_RESET_ENABLE {0} \
    CONFIG.PCW_EN_EMIO_ENET0 {0} \
    CONFIG.PCW_EN_EMIO_MODEM_UART0 {0} \
-   CONFIG.PCW_EN_EMIO_SPI0 {1} \
+   CONFIG.PCW_EN_EMIO_SPI0 {0} \
    CONFIG.PCW_EN_EMIO_UART0 {1} \
    CONFIG.PCW_EN_ENET0 {1} \
    CONFIG.PCW_EN_MODEM_UART0 {0} \
    CONFIG.PCW_EN_QSPI {1} \
-   CONFIG.PCW_EN_SPI0 {1} \
+   CONFIG.PCW_EN_SPI0 {0} \
    CONFIG.PCW_EN_UART0 {1} \
    CONFIG.PCW_EN_UART1 {0} \
    CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR0 {5} \
@@ -390,17 +389,17 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_SDIO_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_SINGLE_QSPI_DATA_MODE {x4} \
    CONFIG.PCW_SMC_PERIPHERAL_DIVISOR0 {1} \
-   CONFIG.PCW_SPI0_GRP_SS0_ENABLE {1} \
-   CONFIG.PCW_SPI0_GRP_SS0_IO {EMIO} \
-   CONFIG.PCW_SPI0_GRP_SS1_ENABLE {1} \
-   CONFIG.PCW_SPI0_GRP_SS1_IO {EMIO} \
-   CONFIG.PCW_SPI0_GRP_SS2_ENABLE {1} \
-   CONFIG.PCW_SPI0_GRP_SS2_IO {EMIO} \
-   CONFIG.PCW_SPI0_PERIPHERAL_ENABLE {1} \
-   CONFIG.PCW_SPI0_SPI0_IO {EMIO} \
-   CONFIG.PCW_SPI_PERIPHERAL_DIVISOR0 {6} \
+   CONFIG.PCW_SPI0_GRP_SS0_ENABLE {0} \
+   CONFIG.PCW_SPI0_GRP_SS0_IO {<Select>} \
+   CONFIG.PCW_SPI0_GRP_SS1_ENABLE {0} \
+   CONFIG.PCW_SPI0_GRP_SS1_IO {<Select>} \
+   CONFIG.PCW_SPI0_GRP_SS2_ENABLE {0} \
+   CONFIG.PCW_SPI0_GRP_SS2_IO {<Select>} \
+   CONFIG.PCW_SPI0_PERIPHERAL_ENABLE {0} \
+   CONFIG.PCW_SPI0_SPI0_IO {<Select>} \
+   CONFIG.PCW_SPI_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_SPI_PERIPHERAL_FREQMHZ {166.666666} \
-   CONFIG.PCW_SPI_PERIPHERAL_VALID {1} \
+   CONFIG.PCW_SPI_PERIPHERAL_VALID {0} \
    CONFIG.PCW_TPIU_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_UART0_GRP_FULL_ENABLE {0} \
    CONFIG.PCW_UART0_PERIPHERAL_ENABLE {1} \
@@ -444,7 +443,6 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
   connect_bd_intf_net -intf_net processing_system7_0_M_AXI_GP0 [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins processing_system7_0/M_AXI_GP0]
-  connect_bd_intf_net -intf_net processing_system7_0_SPI_0 [get_bd_intf_ports ADC_SPI] [get_bd_intf_pins processing_system7_0/SPI_0]
   connect_bd_intf_net -intf_net processing_system7_0_UART_0 [get_bd_intf_ports UART] [get_bd_intf_pins processing_system7_0/UART_0]
   connect_bd_intf_net -intf_net spectra_bram_ctrl_BRAM_PORTA [get_bd_intf_ports SPECTRA_BRAM_PORTA] [get_bd_intf_pins spectra_bram_ctrl/BRAM_PORTA]
 

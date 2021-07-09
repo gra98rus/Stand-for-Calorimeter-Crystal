@@ -56,20 +56,6 @@
 `timescale 1ns/1ps
 
 module ps_topp_processing_system7_0_0 (
-SPI0_SCLK_I, 
-SPI0_SCLK_O, 
-SPI0_SCLK_T, 
-SPI0_MOSI_I, 
-SPI0_MOSI_O, 
-SPI0_MOSI_T, 
-SPI0_MISO_I, 
-SPI0_MISO_O, 
-SPI0_MISO_T, 
-SPI0_SS_I, 
-SPI0_SS_O, 
-SPI0_SS1_O, 
-SPI0_SS2_O, 
-SPI0_SS_T, 
 UART0_TX, 
 UART0_RX, 
 M_AXI_GP0_ARVALID, 
@@ -135,20 +121,6 @@ PS_SRSTB,
 PS_CLK, 
 PS_PORB 
 );
-input SPI0_SCLK_I;
-output SPI0_SCLK_O;
-output SPI0_SCLK_T;
-input SPI0_MOSI_I;
-output SPI0_MOSI_O;
-output SPI0_MOSI_T;
-input SPI0_MISO_I;
-output SPI0_MISO_O;
-output SPI0_MISO_T;
-input SPI0_SS_I;
-output SPI0_SS_O;
-output SPI0_SS1_O;
-output SPI0_SS2_O;
-output SPI0_SS_T;
 output UART0_TX;
 input UART0_RX;
 output M_AXI_GP0_ARVALID;

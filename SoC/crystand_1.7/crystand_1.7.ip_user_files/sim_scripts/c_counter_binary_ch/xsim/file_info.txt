@@ -1,2 +1,0 @@
-c_counter_binary_ch.vhd,vhdl,work,../../../ip/c_counter_binary_ch/sim/c_counter_binary_ch.vhd,
-glbl.v,Verilog,work,glbl.v
