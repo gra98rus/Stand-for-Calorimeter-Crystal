@@ -10,16 +10,20 @@ from periphery import MMIO
 REG_ADDRESS = 0x43C00000
 REG_SIZE = 0x10000
 
-REG_COMMAND = 0x0001
-REG_STATUS = 0x0010
-REG_START_EVENT = 0x0011
-REG_TRIGGER_TYPE = 0x0100
-REG_TRIGGER_LEVEL = 0x0101
+REG_COMMAND           = 0x0001
+REG_STATUS            = 0x0010
+REG_START_EVENT       = 0x0011
+REG_TRIGGER_TYPE      = 0x0100
+REG_TRIGGER_LEVEL     = 0x0101
 REG_SELECTED_CHANNELS = 0x0110
-REG_BASKET_NUM = 0x0111
-REG_SHAPER = 0x1000
-REG_SPECTRUM_SPEC = 0x1001
-REG_AMPLIFIERS = 0x1010
+REG_BASKET_NUM        = 0x0111
+REG_SHAPER            = 0x1000
+REG_SPECTRUM_SPEC     = 0x1001
+REG_AMPLIFIERS        = 0x1010
+REG_SPI_DATA          = 0x1011
+REG_SPI_VALID_BYTES   = 0x1100
+REG_SPI_START         = 0x1101
+REG_DESER_RESYNC      = 0x1110
 
 COMMAND_START = 0x0001
 
@@ -42,6 +46,7 @@ shapers_config_3 = 0b1100
 amplifiers_config_0 = 0b0000
 amplifiers_config_1 = 0b0100
 amplifiers_config_2 = 0b1000
+adc_mode = 1
 
 def write_to_reg (reg_num , data):
     mem = MMIO(REG_ADDRESS , REG_SIZE)
@@ -73,6 +78,13 @@ def read_spectrum(spectrum_num):
     mem.close()
     data_ = struct.unpack("4096I",data)
     return data_
+
+def send_pulse(address):
+    write_to_reg(address, 1)
+    i = 0
+    while i < 100:
+        i = i + 1
+    write_to_reg(address, 0)
 
 @csrf_exempt
 def index(request):
@@ -128,21 +140,21 @@ def index(request):
             response = JsonResponse(response)
             return HttpResponse(response)
 
-        if (js['command'] == 'readSpectrum'):                               
+        if (js['command'] == 'readSpectrum'):
             response = {}
             #data = read_spectrum(0)
             data = read_spectrum(int(js['spectrum_num']))
-            for i in range(0,4096):                                        
-                response[str(i)] = data[i]                                
-            response = JsonResponse(response)                             
+            for i in range(0,4096):
+                response[str(i)] = data[i]
+            response = JsonResponse(response)
             return HttpResponse(response)
-       
+
         if (js['command'] == 'setTriggerType'):
             write_to_reg(REG_TRIGGER_TYPE, int(js['data']))
             global trigger_type
             trigger_type = int(js['data'])
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'set_trigger_level'):
             write_to_reg(REG_TRIGGER_LEVEL, int(js['data']))
             print (bin(int(js['data'])))
@@ -159,17 +171,17 @@ def index(request):
             else:
                 trigger_level_3 = int(js['data'])
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'setSelectedChannels'):
             write_to_reg(REG_SELECTED_CHANNELS, int(js['data']))
             global selected_level
             selected_level = int(js['data'])
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'setBasketNum'):
             write_to_reg(REG_BASKET_NUM, int(js['data']))
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'setShapersConfig'):
             write_to_reg(REG_SHAPER, int(js['data']))
             global shapers_config_0
@@ -198,20 +210,63 @@ def index(request):
             else:
                 amplifiers_config_3 = int(js['data']) & 0b0011
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'sendStartEvent'):
-            write_to_reg(REG_START_EVENT, 1)
-            i = 0
-            while i < 100:
-                i = i + 1
-            write_to_reg(REG_START_EVENT, 0)
+            send_pulse(REG_START_EVENT)
             return HttpResponse('ok!')
-        
+
         if (js['command'] == 'update_config_on_page'):
-            response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3, "ampl_config_0" : amplifiers_config_0, "ampl_config_1" : amplifiers_config_1, "ampl_config_2" : amplifiers_config_2})
+            response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3, "ampl_config_0" : amplifiers_config_0, "ampl_config_1" : amplifiers_config_1, "ampl_config_2" : amplifiers_config_2, "adc_mode" : adc_mode})
             return HttpResponse(response)
 
         if (js['command'] == 'set_spectrum_conf'):
             write_to_reg(REG_SPECTRUM_SPEC, int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point']))
             print (bin(int(js['spectrum_num'])<<11 | 1<<10 | int(js['bins_num'])<<7 | int(js['point'])))
+            return HttpResponse('ok!')
+
+        if(js['command'] == 'adc_mode'):
+            global adc_mode
+            if(int(js['data'])):
+                adc_mode = 3392
+            else:
+                adc_mode = 3399
+            write_to_reg(REG_SPI_DATA, 24)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
+
+            write_to_reg(REG_SPI_DATA, adc_mode)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
+
+            write_to_reg(REG_SPI_DATA, 65281)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
+            adc_mode = int(js['data'])
+            return HttpResponse('ok!')
+
+        if (js['command'] == 'sync_deser'):
+            write_to_reg(REG_SPI_DATA, 24)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
+
+            write_to_reg(REG_SPI_DATA, 3399)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
+            ready = 0
+            while not ready:
+                send_pulse(REG_DESER_RESYNC)
+                send_pulse(REG_START_EVENT)
+                data = read_charts()
+                print('Neeeeee!' + str(data[0:8]))
+                for i in range (0, 7):
+                    if(int(data[i]) == 0):
+                        print('URAAA!' + str(data[0:8]))
+                        ready = 1
+
+            if(int(adc_mode)):
+                write_to_reg(REG_SPI_DATA, 3392)
+            else:
+                write_to_reg(REG_SPI_DATA, 3399)
+            write_to_reg(REG_SPI_VALID_BYTES, 3)
+            send_pulse(REG_SPI_START)
             return HttpResponse('ok!')

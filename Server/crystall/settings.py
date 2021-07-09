@@ -25,7 +25,7 @@ SECRET_KEY = 'od3!sdrdh=^0240^om*qc%5*2c=5)a8qj*2ef7=s^xzxfrou8t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.100.10", "127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.1.11", "127.0.0.1"]
 #ALLOWED_HOSTS = []
 
 # Application definition

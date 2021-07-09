@@ -100,7 +100,7 @@ function start() {
    //   drawADC("adc_graph_3_3",3,chartsData);
    //   drawADC("adc_graph_4_4",4,chartsData);
     }
-    
+
 
       var copy = spectrum_data;
       allChartsData.push(copy);
@@ -168,8 +168,8 @@ function drawCharts() {
         drawADC("adc_graph_4",4,chartsData);
 }
 
-function drawSpectrum(num){  
- 
+function drawSpectrum(num){
+
   request = new XMLHttpRequest();
   request.open("POST", "", true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -301,7 +301,7 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
   var str = JSON.stringify(json)
   request.send(str);
   console.log("send POST")
-            
+
   var elem = document.createElement('a');
   elem.setAttribute("class","dropdown-item");
   var href = "#" + (spectrum_num) + "-spectrum-tab-pane"
@@ -343,7 +343,7 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
 }
 
 function sendTriggLevel() {
-    
+
     var request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -355,7 +355,7 @@ function sendTriggLevel() {
     var str = JSON.stringify(json)
     request.send(str);
     console.log("send POST")
-        
+
     request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -367,7 +367,7 @@ function sendTriggLevel() {
     var str = JSON.stringify(json)
     request.send(str);
     console.log("send POST")
-           
+
     request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -379,15 +379,18 @@ function sendTriggLevel() {
     var str = JSON.stringify(json)
     request.send(str);
     console.log("send POST")
-    
-    request = new XMLHttpRequest();
+
+}
+
+function sync_deser() {
+
+    var request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10) + 0) | 49152;
-    var json = {"command" : "set_trigger_level",
+    var json = {"command" : "sync_deser",
                 "regNumber" : "",
-                "data" : level};
+                "data" : ""};
     var str = JSON.stringify(json)
     request.send(str);
     console.log("send POST")
@@ -510,9 +513,9 @@ function update_button(names, select){
             $('#add-spectrum-item').attr("class", "dropdown-item");
           } else {
             console.log("create Spectra");
-            
+
             spectrum_num = (ch-1)*3 + mode;
-            
+
             if(spectra_list[spectrum_num].channel == -1)
                 addSpectrum(ch, pt, smpl, mode, spectrum_num);
             else if (mode == 1 && spectra_list[spectrum_num+1].channel == -1)
@@ -539,6 +542,25 @@ function update_button(names, select){
 //      drawADC("adc_graph_2_2",2,chartsData);
 //      drawADC("adc_graph_3_3",3,chartsData);
 //      drawADC("adc_graph_4_4",4,chartsData);
+    });
+
+    $("input[name='adc_mode']").change( function() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "", true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.responseType = 'text';
+        var data = 0;
+        var value = $('#work_mode').prop("checked");
+        if (value == true)
+            data = 1;
+        if (value == false)
+            data = 0;
+        var json = {"command" : "adc_mode",
+                    "regNumber" : "",
+                    "data" : data};
+        var str = JSON.stringify(json)
+        request.send(str);
+        console.log("send POST")
     });
 
     $("input[name='trigger_type']").change( function() {
@@ -577,7 +599,7 @@ function update_button(names, select){
         request.send(str);
         console.log("send POST")
     });
-    
+
     $("input[name='second_channel']").change( function() {
         var request = new XMLHttpRequest();
         request.open("POST", "", true);
@@ -595,7 +617,7 @@ function update_button(names, select){
         request.send(str);
         console.log("send POST")
     });
-    
+
     $("input[name='third_channel']").change( function() {
         var request = new XMLHttpRequest();
         request.open("POST", "", true);
@@ -749,7 +771,7 @@ function update_button(names, select){
       }
     });
 
-//    $(window).focus(function() { 
+//    $(window).focus(function() {
         function funonload(){
         var trigg_type_but = document.getElementById('force_but').checked;
         var level_type_but = document.getElementById('level_but').checked;
@@ -775,6 +797,17 @@ function update_button(names, select){
                     document.getElementById('css_force_but').setAttribute("class", "btn btn-primary");
                     document.getElementById('css_level_but').setAttribute("class", "btn btn-primary active");
                 }
+                if(json.adc_mode == "1"){
+                    document.getElementById('work_mode').checked = true;
+                    document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary active");
+                    document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary");
+                }
+                else{
+                    document.getElementById('work_mode').checked = false;
+                    document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary");
+                    document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary active");
+
+                }
                 console.log(-(json.trigger_level_0 & 8191));
                 console.log(json.trigger_level_1 & 8192);
                 console.log(json.trigger_level_2 & 8192);
@@ -787,7 +820,7 @@ function update_button(names, select){
                 document.getElementById('triggLevel1').value = json.trigger_level_1 & 8192 ? -(json.trigger_level_1 & 8191) : json.trigger_level_1 & 8191;
                 document.getElementById('triggLevel2').value = json.trigger_level_2 & 8192 ? -(json.trigger_level_2 & 8191) : json.trigger_level_2 & 8191;
                 document.getElementById('triggLevel3').value = json.trigger_level_3 & 8192 ? -(json.trigger_level_3 & 8191) : json.trigger_level_3 & 8191;
-                
+
                 update_button(["first_channel_00", "first_channel_01", "first_channel_02", "first_channel_05"], json.shapers_config_0);
                 update_button(["second_channel_00", "second_channel_01", "second_channel_02", "second_channel_05"], json.shapers_config_1);
                 update_button(["third_channel_00", "third_channel_01", "third_channel_02", "third_channel_05"], json.shapers_config_2);
@@ -885,7 +918,7 @@ function update_button(names, select){
 //function funonload() {
 //    $("#block").css("background-color", "yellow");
 //}
-window.onfocus  = funonload; 
+window.onfocus  = funonload;
 window.onload = funonload;
   });
 console.log($("input[type=radio]"))
