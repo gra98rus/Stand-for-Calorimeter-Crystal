@@ -8,6 +8,7 @@ entity Spectra_memory is
 Port (
     clka    : in std_logic;
     clkb    : in std_logic;
+    rst     : in std_logic_vector(11 downto 0);
     addra   : in spectra_addr_t;
     PS_addr : in std_logic_vector(15 downto 0);
     dina    : in spectra_data_t;
@@ -30,20 +31,21 @@ architecture Behavioral of Spectra_memory is
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
 begin
 
-    spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.RAM
+    spectra_mem: for i in 0 to 11 generate spectrum_RAM_ii: entity work.mem_rst
         generic map(
             RAM_WIDTH => 32,
             RAM_DEPTH => 4096
             )
         port map(
-            clka => clka,
-            clkb => clkb,
+            clka  => clka,
+            clkb  => clkb,
+            rst   => rst  (i),
             addra => addra(i),
             addrb => addrb,
-            dina => dina(i),
-            wea => wea(i),
-            ena => ena(i),
-            enb => enb(i),
+            dina  => dina (i),
+            wea   => wea  (i),
+            ena   => ena  (i),
+            enb   => enb  (i),
             douta => douta(i),
             doutb => doutb(i)
         );
@@ -77,8 +79,7 @@ with enb select
                doutb(10) when B"010000000000",
                doutb(11) when B"100000000000",
                (others => '1') when others;
-			
-			
 
 addrb <= PS_addr(11 downto 0);
+
 end Behavioral;

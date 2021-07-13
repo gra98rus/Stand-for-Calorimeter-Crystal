@@ -90,12 +90,7 @@ process(clkb)
 begin
     if(clkb'event and clkb = '1') then
         if(enb = '1') then
---            if(web = '1') then
---                mem(to_integer(unsigned(addrb))) <= dinb;
---                ram_data_b <= dinb;
---            else
-                ram_data_b <= mem(to_integer(unsigned(addrb)));
---            end if;
+            ram_data_b <= mem(to_integer(unsigned(addrb)));
         end if;
     end if;
 end process;

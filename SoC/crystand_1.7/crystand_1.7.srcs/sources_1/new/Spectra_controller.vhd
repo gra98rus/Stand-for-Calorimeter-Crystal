@@ -9,7 +9,7 @@ entity Spectra_controller is
 Port ( 
     clk              : in  std_logic;
     bram_ctrl_clk    : in  std_logic;
-    spectrum_spec    : in  std_logic_vector(14 downto 0);
+    spectrum_spec    : in  std_logic_vector(15 downto 0);
     adc_data         : in  adc_data_spectr_t;
     adc_max_value    : in  adc_data_spectr_t;
     adc_data_valid   : in  std_logic;
@@ -29,6 +29,7 @@ architecture Behavioral of Spectra_controller is
     signal data_to_mem    : spectra_data_t                := (others => (others => '0'));
     signal data_from_mem  : spectra_data_t                := (others => (others => '0'));
     signal spectra_ena    : std_logic_vector(11 downto 0) := (others => '0');
+    signal spectra_rst    : std_logic_vector(11 downto 0) := (others => '0');
     signal wea            : std_logic_vector(11 downto 0) := (others => '0');
     signal ena            : std_logic_vector(11 downto 0) := (others => '1');
     signal enb            : std_logic_vector(11 downto 0) := (others => '0');
@@ -41,10 +42,6 @@ architecture Behavioral of Spectra_controller is
     signal increase_status_buf2 : std_logic_vector(11 downto 0) := (others => '0');
     signal bins                 : bins_t                        := (others => (others => '0'));
     
-    signal clock_read : std_logic_vector(11 downto 0) := (others => '0');
-    signal read       : std_logic_vector(11 downto 0) := (others => '0');
-    signal written    : std_logic_vector(11 downto 0) := (others => '0');
-    
     signal count      : integer                       := 0;
     type   state_type is (STT_READY, STT_READ_DATA, STT_START_CREATORS, STT_WAIT);
     signal state      : state_type;
@@ -56,15 +53,16 @@ begin
 
 spectra_memory_i: entity work.Spectra_memory
 port map(
-    clka => clk,
-    clkb => bram_ctrl_clk,
-    addra => PL_addr,
+    clka    => clk,
+    clkb    => bram_ctrl_clk,
+    rst     => spectra_rst,
+    addra   => PL_addr,
     PS_addr => PS_addr,
-    dina => data_to_mem,
-    wea => wea,
-    ena => ena,
-    --enb => enb,
-    douta => data_from_mem,
+    dina    => data_to_mem,
+    wea     => wea,
+    ena     => ena,
+    --enb     => enb,
+    douta   => data_from_mem,
     PS_data => PS_data
 );
 
@@ -129,7 +127,7 @@ begin
         
         case (state) is
             when STT_READY =>                                                --waiting for the new valid data
-                start_creators          <= '0';
+                start_creators <= '0';
                 if adc_data_valid = '1' then
                     state               <= STT_READ_DATA;
                     count               <= 0;
@@ -142,23 +140,23 @@ begin
 
             when STT_READ_DATA =>                                            --address offset from the address of the last record
                 if count < 8 then
-                    simple_buff_addr    <= selected_point(count);
+                    simple_buff_addr                  <= selected_point(count);
                     relevant_adc(count + count/2 + 1) <= adc_data(count / 2);
-                    count               <= count + 1;
+                    count                             <= count + 1;
                 else
-                    state               <= STT_START_CREATORS;
+                    state                             <= STT_START_CREATORS;
                 end if;
                 
             when STT_START_CREATORS =>
-                start_creators          <= '1';
+                start_creators <= '1';
                 if adc_data_valid = '1' then
-                    state               <= STT_WAIT;
+                    state <= STT_WAIT;
                 else
-                    state               <= STT_READY;
+                    state <= STT_READY;
                 end if;
                 
             when STT_WAIT =>
-                start_creators          <= '0';
+                start_creators <= '0';
                 if adc_data_valid = '0' then
                     state <= STT_READY;
                 end if;
@@ -171,9 +169,10 @@ process (clk)
 begin
     if clk'event and clk='1' then
         for i in 0 to 11 loop
-            if spectrum_spec(14 downto 11) = std_logic_vector(to_unsigned(i, 4)) then
-                spectra_ena   (i) <= spectrum_spec(10);
-                num_of_bins   (i) <= spectrum_spec(9 downto 7);
+            if spectrum_spec(15 downto 12) = std_logic_vector(to_unsigned(i, 4)) then
+                spectra_rst(i)    <= spectrum_spec(11);
+                spectra_ena(i)    <= spectrum_spec(10);
+                num_of_bins(i)    <= spectrum_spec(9 downto 7);
                 selected_point(i) <= spectrum_spec(6 downto 0);
             end if;
         end loop;

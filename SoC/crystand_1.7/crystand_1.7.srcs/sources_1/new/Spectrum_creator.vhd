@@ -21,16 +21,9 @@ end Spectrum_creator;
 
 architecture Behavioral of Spectrum_creator is
 
-    signal current_max : std_logic_vector(13 downto 0) := (others => '0');
-    signal new_value : std_logic_vector(13 downto 0) := (others => '0');
-    signal counter : integer := 0;
-    signal status_of_val: integer := 0;
-    signal current_bin: std_logic_vector(11 downto 0) := (others => '0');
-
     signal adc_data_valid_delay  : std_logic := '0';
     signal adc_data_valid_result : std_logic := '0';
     
-    signal increase_status_r : std_logic := '0';
     
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
