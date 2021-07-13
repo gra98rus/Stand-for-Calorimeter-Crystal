@@ -342,44 +342,37 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
   console.log(spectra_list)
 }
 
-function sendTriggLevel() {
-
+function send_http_request(json){
     var request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
+}
+
+function sendTriggLevel() {
+
     var level = (0b011111111111111 & parseInt(document.getElementById('triggLevel0').value, 10) + 0);
     var json = {"command" : "set_trigger_level",
-                "regNumber" : "",
-                "data" : level};
-    var str = JSON.stringify(json)
-    request.send(str);
-    console.log("send POST")
+                "data"    : level};
+    send_http_request(json);
 
-    request = new XMLHttpRequest();
-    request.open("POST", "", true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.responseType = 'text';
     level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel1').value, 10) + 0) | 16384;
-    var json = {"command" : "set_trigger_level",
-                "regNumber" : "",
-                "data" : level};
-    var str = JSON.stringify(json)
-    request.send(str);
-    console.log("send POST")
+    json = {"command" : "set_trigger_level",
+                "data"    : level};
+    send_http_request(json);
 
-    request = new XMLHttpRequest();
-    request.open("POST", "", true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.responseType = 'text';
     level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel2').value, 10) + 0) | 32768;
-    var json = {"command" : "set_trigger_level",
-                "regNumber" : "",
-                "data" : level};
-    var str = JSON.stringify(json)
-    request.send(str);
-    console.log("send POST")
+    json = {"command" : "set_trigger_level",
+                "data"    : level};
+    send_http_request(json);
 
+    level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10) + 0) | 49152;
+    json = {"command" : "set_trigger_level",
+                "data" : level};
+    send_http_request(json);
 }
 
 function sync_deser() {
@@ -389,6 +382,19 @@ function sync_deser() {
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
     var json = {"command" : "sync_deser",
+                "regNumber" : "",
+                "data" : ""};
+    var str = JSON.stringify(json)
+    request.send(str);
+    console.log("send POST")
+}
+
+function rst_spectrum(){
+    var request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    var json = {"command" : "rst_spectrum",
                 "regNumber" : "",
                 "data" : ""};
     var str = JSON.stringify(json)
