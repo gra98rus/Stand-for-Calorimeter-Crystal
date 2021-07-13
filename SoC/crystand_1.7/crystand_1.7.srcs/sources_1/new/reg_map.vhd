@@ -17,7 +17,8 @@ package reg_map is
     constant REG_SPI_DATA           : std_logic_vector(15 downto 0)  := X"1011";
     constant REG_SPI_VALID_BYTES    : std_logic_vector(15 downto 0)  := X"1100";
     constant REG_SPI_START          : std_logic_vector(15 downto 0)  := X"1101";
-    constant REG_ADC_RESYNC         : std_logic_vector(15 downto 0)  := X"1110";
+    constant REG_DESER_RESYNC       : std_logic_vector(15 downto 0)  := X"1110";
+    constant REG_DESER_RESET        : std_logic_vector(15 downto 0)  := X"1111";
 
 end reg_map;
 

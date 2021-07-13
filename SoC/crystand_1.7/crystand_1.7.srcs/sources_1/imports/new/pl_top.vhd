@@ -143,10 +143,7 @@ architecture Behavioral of pl_top is
     signal start_type_s : std_logic;
     signal start_event_s : std_logic;
 
-    signal idelayctrl_r: std_logic;
-
     signal deser_out_clk : std_logic := '0';
-    signal deser_locked : std_logic := '0';
 
     signal trigger_ena : std_logic_vector(1 downto 0) := "00";
 
@@ -156,13 +153,15 @@ architecture Behavioral of pl_top is
     signal selected_channels_top : std_logic_vector ( 3 downto 0) := (others => '0');
     signal shapers_config_top    : std_logic_vector ( 7 downto 0);
     signal amplifiers_config_top : std_logic_vector ( 5 downto 0);
-    signal spectra_params        : std_logic_vector (14 downto 0) := (others => '0');
+    signal spectra_params        : std_logic_vector (15 downto 0) := (others => '0');
     signal spi_data              : std_logic_vector (31 downto 0) := (others => '0');
     signal spi_valid_bytes_num   : std_logic_vector ( 2 downto 0) := (others => '0');
     signal spi_start             : std_logic;
 
-    signal adc_resync_r          : std_logic;
-    signal adc_resync            : std_logic;
+    signal deser_resync_r        : std_logic;
+    signal deser_reset_r         : std_logic;
+    signal deser_resync          : std_logic;
+    signal deser_reset           : std_logic;
     signal not_jmp1              : std_logic;
     signal not_jmp2              : std_logic;
 
@@ -199,8 +198,8 @@ generic map(
 port map(
     clock_locked  => ext_clk_pll_locked,
 
-    AdcDeserReset => not_jmp1,
-    AdcReSync     => adc_resync,
+    AdcDeserReset => deser_reset,
+    AdcReSync     => deser_resync,
 
     data_A => adc_data_64(0),
     data_B => adc_data_64(1),
@@ -289,24 +288,25 @@ port map (
 ----------------------------------------------------------------
 reg_i : entity work.reg_file
 port map (
-    clock             => ps_clk_50mhz,
-    dataIn            => dataIn,
-    dataOut           => dataOut,
-    regNum            => regNum,
-    regWE             => regWE,
-    data_ready        => buffer_data_valid,
+    clock               => ps_clk_50mhz,
+    dataIn              => dataIn,
+    dataOut             => dataOut,
+    regNum              => regNum,
+    regWE               => regWE,
+    data_ready          => buffer_data_valid,
 
-    start_event       => start_event,
-    trigger_type      => start_type,
-    selected_channels => selected_channels_top,
-    shapers_config    => shapers_config_top,
-    amplifiers_config => amplifiers_config_top,
-    trigger_level     => data_to_compare,
-    spectrum_spec     => spectra_params,
-    spi_data          => spi_data,
+    start_event         => start_event,
+    trigger_type        => start_type,
+    selected_channels   => selected_channels_top,
+    shapers_config      => shapers_config_top,
+    amplifiers_config   => amplifiers_config_top,
+    trigger_level       => data_to_compare,
+    spectrum_spec       => spectra_params,
+    spi_data            => spi_data,
     spi_valid_bytes_num => spi_valid_bytes_num,
     spi_start           => spi_start,
-    adc_resync          => adc_resync_r
+    deser_resync        => deser_resync_r,
+    deser_reset         => deser_reset_r
 );
 
 spectra_controller_i: entity work.Spectra_controller
@@ -367,7 +367,8 @@ clk_100mhz <= adc_deser_clock;
 
 not_jmp1   <= not JMP1;
 not_jmp2   <= not JMP2;
-adc_resync <= adc_resync_r or not_jmp2;
+deser_resync <= deser_resync_r or not_jmp2;
+deser_reset  <= deser_reset_r  or not_jmp1;
 
 adc_data(3) <= adc_data_64(3)(ADC_LENGTH - 1 downto 0);
 adc_data(2) <= adc_data_64(2)(ADC_LENGTH - 1 downto 0);

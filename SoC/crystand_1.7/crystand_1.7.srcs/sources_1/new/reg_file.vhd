@@ -21,33 +21,36 @@ port(
     selected_channels   : out std_logic_vector( 3 downto 0);
     shapers_config      : out std_logic_vector( 7 downto 0);
     amplifiers_config   : out std_logic_vector( 5 downto 0);
-    spectrum_spec       : out std_logic_vector(14 downto 0);
+    spectrum_spec       : out std_logic_vector(15 downto 0);
     spi_data            : out std_logic_vector(31 downto 0);
     spi_valid_bytes_num : out std_logic_vector( 2 downto 0);
     spi_start           : out std_logic;
-    adc_resync          : out std_logic
+    deser_resync        : out std_logic;
+    deser_reset         : out std_logic
   	);
 
 end reg_file;
 
 architecture behavioral of reg_file is
-	signal data_out_r          : std_logic_vector(31 downto 0) := (others=>'0');
+	signal data_out_r           : std_logic_vector(31 downto 0) := (others=>'0');
 
-	signal echo_reg_r          : std_logic_vector(31 downto 0) := (others=>'0');
-	signal reg_echo_ena_r      : std_logic                     := '0';
+	signal echo_reg_r           : std_logic_vector(31 downto 0) := (others=>'0');
+	signal reg_echo_ena_r       : std_logic                     := '0';
 
-    signal start_event_r       : std_logic                     := '0';
-    signal start_event_delay   : std_logic                     := '0';
-    signal start_event_result  : std_logic                     := '0';
-    signal trigger_type_r      : std_logic                     := '1';
-    signal trigger_level_r     : adc_data_t                    := (others => (others =>'0'));
-    signal selected_channels_r : std_logic_vector( 3 downto 0) := (others => '0');
-    signal shapers_config_r    : std_logic_vector( 7 downto 0) := (others => '0');
-    signal amplifiers_config_r : std_logic_vector( 5 downto 0) := (others => '0');
-    signal spi_start_r         : std_logic;
-    signal spi_start_delay_r   : std_logic;
-    signal adc_resync_r         : std_logic;
-    signal adc_resync_delay_r   : std_logic;
+    signal start_event_r        : std_logic                     := '0';
+    signal start_event_delay    : std_logic                     := '0';
+    signal start_event_result   : std_logic                     := '0';
+    signal trigger_type_r       : std_logic                     := '1';
+    signal trigger_level_r      : adc_data_t                    := (others => (others =>'0'));
+    signal selected_channels_r  : std_logic_vector( 3 downto 0) := (others => '0');
+    signal shapers_config_r     : std_logic_vector( 7 downto 0) := (others => '0');
+    signal amplifiers_config_r  : std_logic_vector( 5 downto 0) := (others => '0');
+    signal spi_start_r          : std_logic;
+    signal spi_start_delay_r    : std_logic;
+    signal deser_resync_r       : std_logic;
+    signal deser_resync_delay_r : std_logic;
+    signal deser_reset_r        : std_logic;
+    signal deser_reset_delay_r  : std_logic;
 
     attribute keep_hierarchy : string;
     attribute keep_hierarchy of Behavioral : architecture is KEEP_HIERAR;
@@ -80,11 +83,23 @@ end process;
 process(clock)
 begin
     if clock'event and clock='1' then
-        adc_resync_delay_r <= adc_resync_r;
-		if adc_resync_r = '1' and adc_resync_delay_r = '0' then
-			adc_resync <= '1';
+        deser_resync_delay_r <= deser_resync_r;
+		if deser_resync_r = '1' and deser_resync_delay_r = '0' then
+			deser_resync <= '1';
 	    else
-	        adc_resync <= '0';
+	        deser_resync <= '0';
+		end if;
+	end if;
+end process;
+
+process(clock)
+begin
+    if clock'event and clock='1' then
+        deser_reset_delay_r <= deser_reset_r;
+		if deser_reset_r = '1' and deser_reset_delay_r = '0' then
+			deser_reset <= '1';
+	    else
+	        deser_reset <= '0';
 		end if;
 	end if;
 end process;
@@ -154,7 +169,7 @@ begin
         end if;
 
         if regNum = REG_SPECTRUM_SPEC and regWE = '1' then
-            spectrum_spec <= dataIn(14 downto 0);
+            spectrum_spec <= dataIn(15 downto 0);
         end if;
 
         if regNum = REG_SPI_DATA and regWE = '1' then
@@ -169,8 +184,12 @@ begin
             spi_start_r <= dataIn(0);
         end if;
 
-        if regNum = REG_ADC_RESYNC and regWE = '1' then
-            adc_resync_r <= dataIn(0);
+        if regNum = REG_DESER_RESYNC and regWE = '1' then
+            deser_resync_r <= dataIn(0);
+        end if;
+
+        if regNum = REG_DESER_RESET and regWE = '1' then
+            deser_reset_r <= dataIn(0);
         end if;
 
 		if regNum=REG_STATUS then
