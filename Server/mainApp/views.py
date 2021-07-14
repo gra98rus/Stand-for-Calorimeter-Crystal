@@ -87,6 +87,34 @@ def send_pulse(address):
         i = i + 1
     write_to_reg(address, 0)
 
+def resync_deser():
+    send_pulse(REG_DESER_RESET)
+    write_to_reg(REG_SPI_DATA, 24)
+    write_to_reg(REG_SPI_VALID_BYTES, 3)
+    send_pulse(REG_SPI_START)
+
+    write_to_reg(REG_SPI_DATA, 3399)
+    write_to_reg(REG_SPI_VALID_BYTES, 3)
+    send_pulse(REG_SPI_START)
+    ready = 0
+    while not ready:
+        send_pulse(REG_DESER_RESYNC)
+        send_pulse(REG_START_EVENT)
+        send_pulse(REG_START_EVENT)
+        data = read_charts()
+        print('Not good sync: ' + str(data[0:8]))
+        for i in range (0, 7):
+            if(int(data[i]) == 0):
+                print('Synchronized! ' + str(data[0:8]))
+                ready = 1
+
+    if(int(adc_mode)):
+        write_to_reg(REG_SPI_DATA, 3392)
+    else:
+        write_to_reg(REG_SPI_DATA, 3399)
+    write_to_reg(REG_SPI_VALID_BYTES, 3)
+    send_pulse(REG_SPI_START)
+
 @csrf_exempt
 def index(request):
     print (HttpRequest.body)
@@ -126,15 +154,6 @@ def index(request):
             response = {}
             write_to_reg(REG_START_EVENT, COMMAND_START)
             status = read_from_reg(REG_STATUS)
-            result = 0
-#            for i in range(0,1024):
-#                status = read_from_reg(REG_STATUS)
-#                result = result + status
-#                print(str(i) + "___" + str(status))
-#            while status != 1:
-#                status = read_from_reg(REG_STATUS)
-#                print(status)
-            print (result)
             data = read_charts()
             for i in range(0,1024):
                 response[str(i)] =  data[i]
@@ -143,7 +162,6 @@ def index(request):
 
         if (js['command'] == 'readSpectrum'):
             response = {}
-            #data = read_spectrum(0)
             data = read_spectrum(int(js['spectrum_num']))
             for i in range(0,4096):
                 response[str(i)] = data[i]
@@ -242,35 +260,12 @@ def index(request):
             return HttpResponse('ok!')
 
         if (js['command'] == 'sync_deser'):
-            send_pulse(REG_DESER_RESET)
-            write_to_reg(REG_SPI_DATA, 24)
-            write_to_reg(REG_SPI_VALID_BYTES, 3)
-            send_pulse(REG_SPI_START)
-
-            write_to_reg(REG_SPI_DATA, 3399)
-            write_to_reg(REG_SPI_VALID_BYTES, 3)
-            send_pulse(REG_SPI_START)
-            ready = 0
-            while not ready:
-                send_pulse(REG_DESER_RESYNC)
-                send_pulse(REG_START_EVENT)
-                data = read_charts()
-                print('Not good sync: ' + str(data[0:8]))
-                for i in range (0, 7):
-                    if(int(data[i]) == 0):
-                        print('Synchronized! ' + str(data[0:8]))
-                        ready = 1
-
-            if(int(adc_mode)):
-                write_to_reg(REG_SPI_DATA, 3392)
-            else:
-                write_to_reg(REG_SPI_DATA, 3399)
-            write_to_reg(REG_SPI_VALID_BYTES, 3)
-            send_pulse(REG_SPI_START)
+            resync_deser()
             return HttpResponse('ok!')
 
         if (js['command'] == 'update_config_on_page'):
             response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3, "ampl_config_0" : amplifiers_config_0, "ampl_config_1" : amplifiers_config_1, "ampl_config_2" : amplifiers_config_2, "adc_mode" : adc_mode})
             return HttpResponse(response)
 
+resync_deser()
 
