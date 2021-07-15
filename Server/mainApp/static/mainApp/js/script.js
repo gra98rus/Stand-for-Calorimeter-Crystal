@@ -93,12 +93,7 @@ function start() {
       }
       var copy = chartsData;
       allChartsData.push(copy);
-
       drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
-   //   drawADC("adc_graph_1_1",1,chartsData);
-   //   drawADC("adc_graph_2_2",2,chartsData);
-   //   drawADC("adc_graph_3_3",3,chartsData);
-   //   drawADC("adc_graph_4_4",4,chartsData);
     }
 
 
@@ -109,9 +104,6 @@ function start() {
           if(spectra_list[i].channel != -1)
         drawSpectrum(i);
       }
-      //readStatus();
-    //  }
-   // }
   }
 }
 
@@ -123,49 +115,43 @@ function someStart() {
 }
 
 function drawADC(id,num,chartsData) {
-  var x = [];
-  var y = [];
-  var type;
-  for (i = 0; i < OSCILLOGRAM_WIDTH; i++) {
-    //data.addRow([i,chartsData[OSCILLOGRAM_WIDTH*(num-1)+i]]);
-    x.push(i);
-    y.push(chartsData[i * 4 + (num-1)]);
-    console.log(chartsData[i * 4 + (num-1)]);
-  }
-  if (chartType=="line")
-    type="scatter";
-  if (chartType=="bar")
-    type="bar";
-  var data = [
-    {
-      x: x,
-      y: y,
-      type: type
+    var x = [];
+    var y = [];
+    var type;
+    for (i = 0; i < OSCILLOGRAM_WIDTH; i++) {
+        x.push(i);
+        y.push(chartsData[i * 4 + (num-1)]);
+        console.log(chartsData[i * 4 + (num-1)]);
     }
-  ];
+    if (chartType=="line")
+        type="scatter";
+    if (chartType=="bar")
+        type="bar";
+    var data = [
+        {
+            x: x,
+            y: y,
+            type: type
+        }
+    ];
 
-  var layout = {
-      title: num + " канал АЦП",
-      showlegend: false
-  };
+    var layout = {
+        title: num + " канал АЦП",
+        showlegend: false
+    };
 
-  console.log(data)
+    console.log(data)
 
-  Plotly.newPlot(id, data, layout);
+    Plotly.newPlot(id, data, layout);
 
-  document.getElementById("spectrumInfo").setAttribute("hidden","true");
-      //1if (chartType=="line")
-      //  var chart = new google.visualization.LineChart(document.getElementById(id));
-      //if (chartType=="column")
-      //  var chart = new google.visualization.ColumnChart(document.getElementById(id));
-      //chart.draw(data, options);
+    document.getElementById("spectrumInfo").setAttribute("hidden","true");
 }
 
 function drawCharts() {
-        drawADC("adc_graph_1",1,chartsData);
-        drawADC("adc_graph_2",2,chartsData);
-        drawADC("adc_graph_3",3,chartsData);
-        drawADC("adc_graph_4",4,chartsData);
+    drawADC("adc_graph_1",1,chartsData);
+    drawADC("adc_graph_2",2,chartsData);
+    drawADC("adc_graph_3",3,chartsData);
+    drawADC("adc_graph_4",4,chartsData);
 }
 
 function drawSpectrum(num){
@@ -230,30 +216,30 @@ function drawSpectrum(num){
   document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectra_list[num].bin_num;
 }
 
-function drawSpectra() {
-  for (var i = 0; i < (spectra_list.length); i++){
+function drawSpectra(){
+    for (var i = 0; i < (spectra_list.length); i++){
         if(spectra_list[i].channel != -1)
             drawSpectrum(i);
     }
 }
 
-  function saveCharts() {
+function saveCharts(){
     var txt = "";
     console.log(allChartsData)
     for (var i = 0; i < allChartsData.length; i++) {
-      for (var j = 0; j < allChartsData[i].length; j++) {
-        txt += j + " " + allChartsData[i][j] + "\r\n";
-      }
+        for (var j = 0; j < allChartsData[i].length; j++) {
+            txt += j + " " + allChartsData[i][j] + "\r\n";
+        }
     }
     for (var i = 0; i < spectra_list.length; i++) {
-      for (var j = 0; j < spectra_list[i].data.length; j++) {
-        txt += j + " " + spectra_list[i].data[j] + "\r\n";
-      }
+        for (var j = 0; j < spectra_list[i].data.length; j++) {
+            txt += j + " " + spectra_list[i].data[j] + "\r\n";
+        }
     }
     console.log(txt);
     var blob = new Blob([txt], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "data.txt");
-  }
+}
 
   function readStatus() {
 
@@ -349,11 +335,10 @@ function send_http_request(json){
     request.responseType = 'text';
     var str = JSON.stringify(json)
     request.send(str);
-    console.log("send POST")
+    console.log(json)
 }
 
 function sendTriggLevel() {
-
     var level = (0b011111111111111 & parseInt(document.getElementById('triggLevel0').value, 10) + 0);
     var json = {"command" : "set_trigger_level",
                 "data"    : level};
@@ -361,22 +346,21 @@ function sendTriggLevel() {
 
     level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel1').value, 10) + 0) | 16384;
     json = {"command" : "set_trigger_level",
-                "data"    : level};
+            "data"    : level};
     send_http_request(json);
 
     level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel2').value, 10) + 0) | 32768;
     json = {"command" : "set_trigger_level",
-                "data"    : level};
+            "data"    : level};
     send_http_request(json);
 
     level  = (0b011111111111111 & parseInt(document.getElementById('triggLevel3').value, 10) + 0) | 49152;
     json = {"command" : "set_trigger_level",
-                "data" : level};
+               "data" : level};
     send_http_request(json);
 }
 
 function sync_deser() {
-
     var request = new XMLHttpRequest();
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -394,22 +378,21 @@ function rst_spectrum(){
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    var json = {"command" : "rst_spectrum",
+    var json = {"command"   : "rst_spectrum",
                 "regNumber" : "",
-                "data" : ""};
+                "data"      : ""};
     var str = JSON.stringify(json)
     request.send(str);
     console.log("send POST")
 }
 
 function deleteSpectrum(num){
-    var add = document.getElementById("add-spectrum-item")
-    var sp = document.getElementById("spectra-menu")
+    var add  = document.getElementById("add-spectrum-item")
+    var sp   = document.getElementById("spectra-menu")
     var elem = document.createElement('a');
 
-
     elem.setAttribute("class","dropdown-item");
-    elem.setAttribute("href","#");
+    elem.setAttribute("href", "#");
     elem.innerHTML='Спектр '+ (num)
     sp.appendChild(elem);
     add.className = "dropdown-item";
@@ -424,6 +407,16 @@ function update_button(names, select){
         if(i != select)
         document.getElementById('css_' + names[i]).setAttribute("class", "btn btn-primary");
     }
+}
+
+function signed_ext(value, valid_bit_num){
+    console.log(value);
+    console.log(value & (1 << (valid_bit_num - 1)));
+    console.log(~((1 << valid_bit_num) - 1));
+    if(value & (1 << (valid_bit_num - 1)))
+        return value | ~((1 << valid_bit_num) - 1);
+    else
+        return value & ((1 << valid_bit_num) - 1);
 }
 
   $(document).ready(function(){
@@ -543,11 +536,6 @@ function update_button(names, select){
       if (value == false)
         chartType="line";
       drawCharts();
-//      drawSpectra();
-//      drawADC("adc_graph_1_1",1,chartsData);
-//      drawADC("adc_graph_2_2",2,chartsData);
-//      drawADC("adc_graph_3_3",3,chartsData);
-//      drawADC("adc_graph_4_4",4,chartsData);
     });
 
     $("input[name='adc_mode']").change( function() {
@@ -588,178 +576,49 @@ function update_button(names, select){
         console.log("send POST")
     });
 
-    $("input[name='first_channel']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        if      ($('#first_channel_00').prop("checked")) data = 0b0000;
-        else if ($('#first_channel_01').prop("checked")) data = 0b0001;
-        else if ($('#first_channel_02').prop("checked")) data = 0b0010;
-        else if ($('#first_channel_05').prop("checked")) data = 0b0011;
+function set_shaper_config(channel, mnemonic){
+    var data = 0;
+    if      ($('#' + mnemonic + '_channel_00').prop("checked")) data = 0b00;
+    else if ($('#' + mnemonic + '_channel_01').prop("checked")) data = 0b01;
+    else if ($('#' + mnemonic + '_channel_02').prop("checked")) data = 0b10;
+    else if ($('#' + mnemonic + '_channel_05').prop("checked")) data = 0b11;
+    data = data | (channel << 2);
+    console.log(data);
+    var json = {"command" : "setShapersConfig",
+                "data"    : data};
+    send_http_request(json);
+}
 
-        var json = {"command" : "setShapersConfig",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
+function set_ampl_config(channel, mnemonic){
+    var data = 0;
+    if      ($('#' + mnemonic + '_ampl_1').prop("checked")) data = 0;
+    else if ($('#' + mnemonic + '_ampl_2').prop("checked")) data = 1;
+    else if ($('#' + mnemonic + '_ampl_4').prop("checked")) data = 2;
+    else data = 3;
+    data = data | (channel << 2);
+    var json = {"command" : "set_ampl_config",
+                "data"    : data};
+    send_http_request(json);
+}
 
-    $("input[name='second_channel']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        if      ($('#second_channel_00').prop("checked")) data = 0b0100;
-        else if ($('#second_channel_01').prop("checked")) data = 0b0101;
-        else if ($('#second_channel_02').prop("checked")) data = 0b0110;
-        else if ($('#second_channel_05').prop("checked")) data = 0b0111;
+    $("input[name='first_channel']").change (set_shaper_config(0, 'first' ));
+    $("input[name='second_channel']").change(set_shaper_config(1, 'second'));
+    $("input[name='third_channel']").change (set_shaper_config(2, 'third' ));
+    $("input[name='fourth_channel']").change(set_shaper_config(3, 'fourth'));
 
-        var json = {"command" : "setShapersConfig",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
-
-    $("input[name='third_channel']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        if      ($('#third_channel_00').prop("checked")) data = 0b1000;
-        else if ($('#third_channel_01').prop("checked")) data = 0b1001;
-        else if ($('#third_channel_02').prop("checked")) data = 0b1010;
-        else if ($('#third_channel_05').prop("checked")) data = 0b1011;
-
-        var json = {"command" : "setShapersConfig",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
-
-    $("input[name='fourth_channel']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        if      ($('#fourth_channel_00').prop("checked")) data = 0b1100;
-        else if ($('#fourth_channel_01').prop("checked")) data = 0b1101;
-        else if ($('#fourth_channel_02').prop("checked")) data = 0b1110;
-        else if ($('#fourth_channel_05').prop("checked")) data = 0b1111;
-
-        var json = {"command" : "setShapersConfig",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
-
-    $("input[name='first_ampl']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        var value = $('#first_ampl_1').prop("checked");
-        if (value == true)
-            data = 0b0000;
-        else{
-            value = $('#first_ampl_2').prop("checked");
-            if (value == true)
-                data = 0b0001;
-            else{
-                value = $('#first_ampl_4').prop("checked");
-                if (value == true)
-                    data = 0b0010;
-                else
-                    data = 0b0011;
-            }
-        }
-        var json = {"command" : "set_ampl_config",
-                    "regNumber" : "",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
-
-    $("input[name='second_ampl']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        var value = $('#second_ampl_1').prop("checked");
-        if (value == true)
-            data = 0b0100;
-        else{
-            value = $('#second_ampl_2').prop("checked");
-            if (value == true)
-                data = 0b0101;
-            else{
-                value = $('#second_ampl_4').prop("checked");
-                if (value == true)
-                    data = 0b0110;
-                else
-                    data = 0b0111;
-            }
-        }
-        var json = {"command" : "set_ampl_config",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
-
-    $("input[name='third_ampl']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        var value = $('#third_ampl_1').prop("checked");
-        if (value == true)
-            data = 0b1000;
-        else{
-            value = $('#third_ampl_2').prop("checked");
-            if (value == true)
-                data = 0b1001;
-            else{
-                value = $('#third_ampl_4').prop("checked");
-                if (value == true)
-                    data = 0b1010;
-                else
-                    data = 0b1011;
-            }
-        }
-        var json = {"command" : "set_ampl_config",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-    });
+    $("input[name='first_ampl']").change (set_ampl_config(0, 'first' ));
+    $("input[name='second_ampl']").change(set_ampl_config(1, 'second'));
+    $("input[name='third_ampl']").change (set_ampl_config(2, 'third' ));
 
     $("input[name='level_num_checkbox']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
         var dataCheck0 = $('#level0').prop("checked") ? 1 : 0;
         var dataCheck1 = $('#level1').prop("checked") ? 1 : 0;
         var dataCheck2 = $('#level2').prop("checked") ? 1 : 0;
         var dataCheck3 = $('#level3').prop("checked") ? 1 : 0;
         var dataCheck = dataCheck0 + dataCheck1 * 2 + dataCheck2 * 4 + dataCheck3 * 8;
         var json = {"command" : "setSelectedChannels",
-                    "data" : dataCheck};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+                    "data"    : dataCheck};
+        send_http_request(json);
     });
 
     $("#basketNumber").children().on("click",function(event) {
@@ -822,10 +681,10 @@ function update_button(names, select){
                 document.getElementById('level1').checked = json.selected_level&2 ? true : false;
                 document.getElementById('level2').checked = json.selected_level&4 ? true : false;
                 document.getElementById('level3').checked = json.selected_level&8 ? true : false;
-                document.getElementById('triggLevel0').value = json.trigger_level_0 & 8192 ? -(json.trigger_level_0 & 8191) : json.trigger_level_0 & 8191;
-                document.getElementById('triggLevel1').value = json.trigger_level_1 & 8192 ? -(json.trigger_level_1 & 8191) : json.trigger_level_1 & 8191;
-                document.getElementById('triggLevel2').value = json.trigger_level_2 & 8192 ? -(json.trigger_level_2 & 8191) : json.trigger_level_2 & 8191;
-                document.getElementById('triggLevel3').value = json.trigger_level_3 & 8192 ? -(json.trigger_level_3 & 8191) : json.trigger_level_3 & 8191;
+                document.getElementById('triggLevel0').value = signed_ext(json.trigger_level_0, 14);
+                document.getElementById('triggLevel1').value = signed_ext(json.trigger_level_1, 14);
+                document.getElementById('triggLevel2').value = signed_ext(json.trigger_level_2, 14);
+                document.getElementById('triggLevel3').value = signed_ext(json.trigger_level_3, 14);
 
                 update_button(["first_channel_00", "first_channel_01", "first_channel_02", "first_channel_05"], json.shapers_config_0);
                 update_button(["second_channel_00", "second_channel_01", "second_channel_02", "second_channel_05"], json.shapers_config_1);
@@ -921,9 +780,6 @@ function update_button(names, select){
             }
         }
     };
-//function funonload() {
-//    $("#block").css("background-color", "yellow");
-//}
 window.onfocus  = funonload;
 window.onload = funonload;
   });
