@@ -31,7 +31,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>Сервер по изучению сцинтилляционных кристаллов</title>
 </head>
 
@@ -365,7 +364,7 @@
                     <label class="btn btn-primary active" id="css_third_ampl_1">
                         <input type="radio" id="third_ampl_1" name="third_ampl" checked> 1
                     </label>
-                    <label class="btn btn-primary" id="css_first_third_2">
+                    <label class="btn btn-primary" id="css_third_ampl_2">
                         <input type="radio" id="third_ampl_2" name="third_ampl"> 2
                     </label>
                     <label class="btn btn-primary" id="css_third_ampl_4">
@@ -375,7 +374,6 @@
                         <input type="radio" id="third_ampl_5" name="third_ampl"> 5
                     </label>
                 </div>
-
         </tr>
         <tr>
             <th scope="row" id="spectrumInfo" hidden>
@@ -384,6 +382,7 @@
                 <p id="modeInfo" class="text-left"></p>
                 <p id="pointInfo" class="text-left"></p>
                 <p id="basketInfo" class="text-left"></p>
+                <button type="button" id="rst_spectrum_btn" class="btn btn-success" onclick="rst_spectrum()" style="margin: 0 auto;width : 80%; text-align: center;">Сбросить спектр</button>
             </th>
         </tr>
     </tbody>
@@ -391,10 +390,7 @@
 </td>
 </tr>
 </table>
-
     </div>
-
-
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -464,5 +460,4 @@
     </div>
 
 </body>
-
 </html>

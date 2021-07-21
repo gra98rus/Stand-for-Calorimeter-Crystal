@@ -98,6 +98,7 @@ def resync_deser():
     send_pulse(REG_SPI_START)
     ready = 0
     while not ready:
+      #  send_pulse(REG_DESER_RESET)
         send_pulse(REG_DESER_RESYNC)
         send_pulse(REG_START_EVENT)
         send_pulse(REG_START_EVENT)
@@ -182,13 +183,13 @@ def index(request):
             global trigger_level_2
             global trigger_level_3
             if (int(js['data']) & 0b1100000000000000 == 0):
-                trigger_level_0 = int(js['data'])
+                trigger_level_0 = int(js['data'] & 0b0011111111111111)
             elif (int(js['data']) & 0b1100000000000000 == 0x4000):
-                trigger_level_1 = int(js['data'])
+                trigger_level_1 = int(js['data'] & 0b0011111111111111)
             elif (int(js['data']) & 0b1100000000000000 == 0x8000):
-                trigger_level_2 = int(js['data'])
+                trigger_level_2 = int(js['data'] & 0b0011111111111111)
             else:
-                trigger_level_3 = int(js['data'])
+                trigger_level_3 = int(js['data'] & 0b0011111111111111)
             return HttpResponse('ok!')
 
         if (js['command'] == 'setSelectedChannels'):
@@ -227,7 +228,7 @@ def index(request):
             elif (int(js['data']) & 0b1100 == 0b0100):
                 amplifiers_config_1 = int(js['data']) & 0b0011
             else:
-                amplifiers_config_3 = int(js['data']) & 0b0011
+                amplifiers_config_2 = int(js['data']) & 0b0011
             return HttpResponse('ok!')
 
         if (js['command'] == 'sendStartEvent'):
@@ -263,7 +264,7 @@ def index(request):
             resync_deser()
             return HttpResponse('ok!')
 
-        if (js['command'] == 'update_config_on_page'):
+        if (js['command'] == 'update_page_config'):
             response = JsonResponse({"trigger_type" : trigger_type, "selected_level" : selected_level, "trigger_level_0" : trigger_level_0, "trigger_level_1" : trigger_level_1, "trigger_level_2" : trigger_level_2, "trigger_level_3" : trigger_level_3, "shapers_config_0" : shapers_config_0, "shapers_config_1" : shapers_config_1, "shapers_config_2" : shapers_config_2, "shapers_config_3" : shapers_config_3, "ampl_config_0" : amplifiers_config_0, "ampl_config_1" : amplifiers_config_1, "ampl_config_2" : amplifiers_config_2, "adc_mode" : adc_mode})
             return HttpResponse(response)
 

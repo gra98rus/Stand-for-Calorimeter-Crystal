@@ -8,103 +8,39 @@ for(var i = 0; i < 12; i++){
     var sp = {channel : -1, point : -1, bin_num: -1, mode: -1}
     spectra_list.push(sp);
 }
-
 var spectrum_data = []
-
 var chartType = "bar"
-//setInterval(readStatus, 1000);
-
-function writeDataToReg() {
-  var sendData = document.getElementById('write_data');
-  var sendRegNum = document.getElementById('write_reg_num');
-  var writeReadData = document.getElementById('write_read_data');
-  var data = sendData.value;
-  var regNumber = sendRegNum.value;
-
-  var request = new XMLHttpRequest();
-
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
-
-  var json = {"command" : "writeRegister",
-              "regNumber" : regNumber,
-              "data" : data};
-  var str = JSON.stringify(json)
-  request.send(str);
-  console.log("send POST")
-}
-
-function readDataFromReg() {
-  var readData = document.getElementById('read_data');
-  var readRegNum = document.getElementById('read_reg_num');
-
-  var regNumber = readRegNum.value;
-
-  var request = new XMLHttpRequest();
-
-  request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var json = JSON.parse(this.responseText);
-      readData.value = json.data;
-      console.log(this.responseText);
-      console.log("receive json");
-    }
-  }
-
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
-
-  console.log({"regNumber": regNumber });
-  var json = {"command" : "readRegister", "regNumber" : regNumber};
-  var str = JSON.stringify(json);
-  request.send(str);
-  console.log("send POST")
-
-}
 
 function start() {
-  var request = new XMLHttpRequest();
+    var json = {"command" : "sendStartEvent"};
+    send_http_request(json);
 
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
+    var request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
 
-  var json = {"command" : "sendStartEvent"};
-  var str = JSON.stringify(json);
-  request.send(str);
+    json = {"command" : "read_charts"};
+    str = JSON.stringify(json);
+    request.send(str);
 
-  request = new XMLHttpRequest();
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
-
-  json = {"command" : "read_charts"};
-  str = JSON.stringify(json);
-  request.send(str);
-
-  request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var json = JSON.parse(this.responseText);
-      chartsData = [];
-      for (var i = 0; i < 4 * OSCILLOGRAM_WIDTH; i++) {
-        chartsData[i] = json[i];
-      }
-      var copy = chartsData;
-      allChartsData.push(copy);
-      drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
+    request.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200){
+            var json = JSON.parse(this.responseText);
+            chartsData = [];
+            for (var i = 0; i < 4 * OSCILLOGRAM_WIDTH; i++)
+                chartsData[i] = json[i];
+            var copy = chartsData;
+            allChartsData.push(copy);
+            drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
+        }
+        var copy = spectrum_data;
+        allChartsData.push(copy);
+        for (var i = 0; i < spectra_list.length; i++){
+            if(spectra_list[i].channel != -1)
+                drawSpectrum(i);
+        }
     }
-
-
-      var copy = spectrum_data;
-      allChartsData.push(copy);
-
-      for (var i = 0; i < spectra_list.length; i++){
-          if(spectra_list[i].channel != -1)
-        drawSpectrum(i);
-      }
-  }
 }
 
 function someStart() {
@@ -121,7 +57,6 @@ function drawADC(id,num,chartsData) {
     for (i = 0; i < OSCILLOGRAM_WIDTH; i++) {
         x.push(i);
         y.push(chartsData[i * 4 + (num-1)]);
-        console.log(chartsData[i * 4 + (num-1)]);
     }
     if (chartType=="line")
         type="scatter";
@@ -134,16 +69,11 @@ function drawADC(id,num,chartsData) {
             type: type
         }
     ];
-
     var layout = {
-        title: num + " канал АЦП",
+        title:      num + " канал АЦП",
         showlegend: false
     };
-
-    console.log(data)
-
     Plotly.newPlot(id, data, layout);
-
     document.getElementById("spectrumInfo").setAttribute("hidden","true");
 }
 
@@ -156,64 +86,61 @@ function drawCharts() {
 
 function drawSpectrum(num){
 
-  request = new XMLHttpRequest();
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
+    request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
 
-  json = {"command"      : "readSpectrum",
-          "spectrum_num" : num
-  };
-  str = JSON.stringify(json);
-  request.send(str);
+    json = {"command"      : "readSpectrum",
+            "spectrum_num" : num};
+    str = JSON.stringify(json);
+    request.send(str);
 
-  request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var json = JSON.parse(this.responseText);
-      spectrum_data = [];
-      for (var i = 0; i < 4096; i++) {
-        spectrum_data[i] = json[i];
-      }
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            spectrum_data = [];
+            for (var i = 0; i < 4096; i++)
+                spectrum_data[i] = json[i];
+        }
     }
-  }
-  var x = [];
-  var y = [];
-  var spectrumData = [];
-  var yc = 0;
-  for (i = -spectra_list[num].bin_num / 2; i < spectra_list[num].bin_num/2; i++) {
-    x.push(i);
-    yc = (i < 0) ? i + Number(spectra_list[num].bin_num) : i;
-    y.push(spectrum_data[yc]);
-  }
-
-  if (chartType=="line")
-    type="scatter";
-  if (chartType=="bar")
-    type="bar";
-
-  var data = [
-    {
-      x: x,
-      y: y,
-      type: type
+    var x = [];
+    var y = [];
+    var spectrumData = [];
+    var yc = 0;
+    for (i = -spectra_list[num].bin_num / 2; i < spectra_list[num].bin_num/2; i++) {
+        x.push(i);
+        yc = (i < 0) ? i + Number(spectra_list[num].bin_num) : i;
+        y.push(spectrum_data[yc]);
     }
-  ];
 
-  var layout = {
-    title: "Амплитудный спектр " + num,
-    showlegend: false
-  };
-  console.log(data)
-  Plotly.newPlot("spectrum_graph_" + num, data, layout);
+    if (chartType=="line")
+        type="scatter";
+    if (chartType=="bar")
+        type="bar";
 
-  document.getElementById("spectrumInfo").removeAttribute("hidden");
-  document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectra_list[num].channel;
-  document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectra_list[num].mode;
-  if (spectra_list[num].mode == "point")
-    document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectra_list[num].point;
-  if (spectra_list[num].mode == "maxAmpl")
-  document.getElementById("pointInfo").innerHTML = "Опорной точки нет ";
-  document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectra_list[num].bin_num;
+    var data = [
+        {
+            x    : x,
+            y    : y,
+            type : type
+        }
+    ];
+
+    var layout = {
+        title      : "Амплитудный спектр " + num,
+        showlegend : false};
+    console.log(data)
+    Plotly.newPlot("spectrum_graph_" + num, data, layout);
+
+    document.getElementById("spectrumInfo").removeAttribute("hidden");
+    document.getElementById("channelInfo").innerHTML = "Канал АЦП: " + spectra_list[num].channel;
+    document.getElementById("modeInfo").innerHTML = "Режим работы: " + spectra_list[num].mode;
+    if (spectra_list[num].mode == "point")
+        document.getElementById("pointInfo").innerHTML = "Опорная точка: " + spectra_list[num].point;
+    if (spectra_list[num].mode == "maxAmpl")
+        document.getElementById("pointInfo").innerHTML = "Опорной точки нет ";
+    document.getElementById("basketInfo").innerHTML = "Количество корзин: " + spectra_list[num].bin_num;
 }
 
 function drawSpectra(){
@@ -241,52 +168,12 @@ function saveCharts(){
     saveAs(blob, "data.txt");
 }
 
-  function readStatus() {
-
-    var regNumber = 16;
-    var request = new XMLHttpRequest();
-
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var json = JSON.parse(this.responseText);
-
-        if (json.data==1) {
-          document.getElementById('status_text').innerHTML = "Статус: Готово!";
-          document.getElementById("start_button").disabled = false;
-        }
-        if (json.data==2) {
-        document.getElementById('status_text').innerHTML = "Статус: В работе!";
-        document.getElementById("start_button").disabled = true;
-      }
-        console.log(this.responseText);
-        console.log("receive json");
-      }
-    }
-
-    request.open("POST", "", true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.responseType = 'text';
-
-    console.log({"regNumber": regNumber });
-    var json = {"command" : "readRegister", "regNumber" : regNumber};
-    var str = JSON.stringify(json);
-    request.send(str);
-    console.log("send POST")
-  }
-
-
 function addSpectrum(channel, point, bin_num, mode, spectrum_num){
-  var request = new XMLHttpRequest();
-  request.open("POST", "", true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.responseType = 'text';
-  var json = {"command"      : "set_spectrum_conf",
-              "spectrum_num" : spectrum_num,
-              "point"        : point,
-              "bins_num"     : Math.log2(bin_num) - 5};
-  var str = JSON.stringify(json)
-  request.send(str);
-  console.log("send POST")
+    var json = {"command"      : "set_spectrum_conf",
+                "spectrum_num" : spectrum_num,
+                "point"        : point,
+                "bins_num"     : Math.log2(bin_num) - 5};
+    send_http_request(json);
 
   var elem = document.createElement('a');
   elem.setAttribute("class","dropdown-item");
@@ -321,10 +208,8 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
 
   document.getElementById(id).setAttribute("style","height:800px;")
 
-
   var sp = {channel : channel, point : point, bin_num: bin_num, mode: mode}
   spectra_list[spectrum_num] = sp
-
   console.log(spectra_list)
 }
 
@@ -333,8 +218,7 @@ function send_http_request(json){
     request.open("POST", "", true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.responseType = 'text';
-    var str = JSON.stringify(json)
-    request.send(str);
+    request.send(JSON.stringify(json));
     console.log(json)
 }
 
@@ -361,29 +245,13 @@ function sendTriggLevel() {
 }
 
 function sync_deser() {
-    var request = new XMLHttpRequest();
-    request.open("POST", "", true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.responseType = 'text';
-    var json = {"command" : "sync_deser",
-                "regNumber" : "",
-                "data" : ""};
-    var str = JSON.stringify(json)
-    request.send(str);
-    console.log("send POST")
+    var json = {"command" : "sync_deser"};
+    send_http_request(json);
 }
 
 function rst_spectrum(){
-    var request = new XMLHttpRequest();
-    request.open("POST", "", true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.responseType = 'text';
-    var json = {"command"   : "rst_spectrum",
-                "regNumber" : "",
-                "data"      : ""};
-    var str = JSON.stringify(json)
-    request.send(str);
-    console.log("send POST")
+    var json = {"command"   : "rst_spectrum"};
+    send_http_request(json);
 }
 
 function deleteSpectrum(num){
@@ -400,6 +268,37 @@ function deleteSpectrum(num){
     console.log(elem)
 }
 
+function signed_ext(value, valid_bit_num){
+    if(value & (1 << (valid_bit_num - 1)))
+        return value | ~((1 << valid_bit_num) - 1);
+    else
+        return value & ((1 << valid_bit_num) - 1);
+}
+
+function set_shaper_config(channel, mnemonic){
+    var data;
+    if      ($('#' + mnemonic + '_channel_00').prop("checked")) data = 0b00;
+    else if ($('#' + mnemonic + '_channel_01').prop("checked")) data = 0b01;
+    else if ($('#' + mnemonic + '_channel_02').prop("checked")) data = 0b10;
+    else if ($('#' + mnemonic + '_channel_05').prop("checked")) data = 0b11;
+    data = data | (channel << 2);
+    var json = {"command" : "setShapersConfig",
+                "data"    : data};
+    send_http_request(json);
+}
+
+function set_ampl_config(channel, mnemonic){
+    var data;
+    if      ($('#' + mnemonic + '_ampl_1').prop("checked")) data = 0;
+    else if ($('#' + mnemonic + '_ampl_2').prop("checked")) data = 1;
+    else if ($('#' + mnemonic + '_ampl_4').prop("checked")) data = 2;
+    else data = 3;
+    data = data | (channel << 2);
+    var json = {"command" : "set_ampl_config",
+                "data"    : data};
+    send_http_request(json);
+}
+
 function update_button(names, select){
     document.getElementById(names[select]).checked = true;
     document.getElementById("css_" + names[select]).setAttribute("class", "btn btn-primary active");
@@ -409,30 +308,20 @@ function update_button(names, select){
     }
 }
 
-function signed_ext(value, valid_bit_num){
-    console.log(value);
-    console.log(value & (1 << (valid_bit_num - 1)));
-    console.log(~((1 << valid_bit_num) - 1));
-    if(value & (1 << (valid_bit_num - 1)))
-        return value | ~((1 << valid_bit_num) - 1);
-    else
-        return value & ((1 << valid_bit_num) - 1);
-}
-
-  $(document).ready(function(){
+$(document).ready(function(){
     drawCharts();
 
     $('.nav-tabs a[href="#add-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
-      $('#Modal').modal('show');
+        $('#Modal').modal('show');
     });
 
     $('.nav-tabs a[href="#delete-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
-      var num = prompt("Введите номер спектра", "");
-      if (num == null || num == "" || num <= 0 || num > (spectra_list.length) || spectra_list[num].channel == -1) {
-          txt = "Неверное значение";
-      } else {
-        deleteSpectrum(num);
-      }
+        var num = prompt("Введите номер спектра", "");
+        if (num == null || num == "" || num <= 0 || num > (spectra_list.length) || spectra_list[num].channel == -1) {
+            txt = "Неверное значение";
+        } else {
+            deleteSpectrum(num);
+        }
     });
 
     $('.nav-tabs a').on('shown.bs.tab', function(event){
@@ -462,7 +351,6 @@ function signed_ext(value, valid_bit_num){
             console.log(cutHref);
             break;
         }
-
     });
 
     $('.dropdown-menu a').on('shown.bs.tab', function(event){
@@ -530,85 +418,37 @@ function signed_ext(value, valid_bit_num){
     });
 
     $("input[name='options']").change( function() {
-      var value = $('#histogram_but').prop("checked");
-      if (value == true)
-        chartType="bar";
-      if (value == false)
-        chartType="line";
+      if ($('#histogram_but').prop("checked")) chartType="bar";
+      else                                     chartType="line";
       drawCharts();
     });
 
     $("input[name='adc_mode']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        var value = $('#work_mode').prop("checked");
-        if (value == true)
-            data = 1;
-        if (value == false)
-            data = 0;
+        var data;
+        if ($('#work_mode').prop("checked")) data = 1;
+        else                                 data = 0;
         var json = {"command" : "adc_mode",
-                    "regNumber" : "",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+                    "data"    : data};
+        send_http_request(json);
     });
 
     $("input[name='trigger_type']").change( function() {
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var data = 0;
-        var value = $('#force_but').prop("checked");
-        if (value == true)
-            data = 1;
-        if (value == false)
-            data = 0;
+        var data;
+        if ($('#force_but').prop("checked")) data = 1;
+        else                                 data = 0;
         var json = {"command" : "setTriggerType",
-                    "regNumber" : "",
-                    "data" : data};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
+                    "data"    : data};
+        send_http_request(json);
     });
 
-function set_shaper_config(channel, mnemonic){
-    var data = 0;
-    if      ($('#' + mnemonic + '_channel_00').prop("checked")) data = 0b00;
-    else if ($('#' + mnemonic + '_channel_01').prop("checked")) data = 0b01;
-    else if ($('#' + mnemonic + '_channel_02').prop("checked")) data = 0b10;
-    else if ($('#' + mnemonic + '_channel_05').prop("checked")) data = 0b11;
-    data = data | (channel << 2);
-    console.log(data);
-    var json = {"command" : "setShapersConfig",
-                "data"    : data};
-    send_http_request(json);
-}
+    $("input[name='first_channel']").change (function() {set_shaper_config(0, 'first' )});
+    $("input[name='second_channel']").change(function() {set_shaper_config(1, 'second')});
+    $("input[name='third_channel']").change (function() {set_shaper_config(2, 'third' )});
+    $("input[name='fourth_channel']").change(function() {set_shaper_config(3, 'fourth')});
 
-function set_ampl_config(channel, mnemonic){
-    var data = 0;
-    if      ($('#' + mnemonic + '_ampl_1').prop("checked")) data = 0;
-    else if ($('#' + mnemonic + '_ampl_2').prop("checked")) data = 1;
-    else if ($('#' + mnemonic + '_ampl_4').prop("checked")) data = 2;
-    else data = 3;
-    data = data | (channel << 2);
-    var json = {"command" : "set_ampl_config",
-                "data"    : data};
-    send_http_request(json);
-}
-
-    $("input[name='first_channel']").change (set_shaper_config(0, 'first' ));
-    $("input[name='second_channel']").change(set_shaper_config(1, 'second'));
-    $("input[name='third_channel']").change (set_shaper_config(2, 'third' ));
-    $("input[name='fourth_channel']").change(set_shaper_config(3, 'fourth'));
-
-    $("input[name='first_ampl']").change (set_ampl_config(0, 'first' ));
-    $("input[name='second_ampl']").change(set_ampl_config(1, 'second'));
-    $("input[name='third_ampl']").change (set_ampl_config(2, 'third' ));
+    $("input[name='first_ampl']").change (function() {set_ampl_config(0, 'first' )});
+    $("input[name='second_ampl']").change(function() {set_ampl_config(1, 'second')});
+    $("input[name='third_ampl']").change (function() {set_ampl_config(2, 'third' )});
 
     $("input[name='level_num_checkbox']").change( function() {
         var dataCheck0 = $('#level0').prop("checked") ? 1 : 0;
@@ -622,165 +462,99 @@ function set_ampl_config(channel, mnemonic){
     });
 
     $("#basketNumber").children().on("click",function(event) {
-      $("#basketNumber").children().attr("class", "dropdown-item");
-      $(event.target).attr("class", "dropdown-item active");
+        $("#basketNumber").children().attr("class", "dropdown-item");
+        $(event.target).attr("class", "dropdown-item active");
     });
 
     $("input[name='mode']").change( function() {
-      var value = $('#pointMode').prop("checked");
-      if (value == true){
-        $("fieldset").removeAttr("disabled");
-      }
-      if (value == false){
-        $("fieldset").attr("disabled","true");
-      }
-    });
-
-//    $(window).focus(function() {
-        function funonload(){
-        var trigg_type_but = document.getElementById('force_but').checked;
-        var level_type_but = document.getElementById('level_but').checked;
-        var request = new XMLHttpRequest();
-        request.open("POST", "", true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.responseType = 'text';
-        var json = {"command" : "update_config_on_page"};
-        var str = JSON.stringify(json)
-        request.send(str);
-        console.log("send POST")
-        request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var json = JSON.parse(this.responseText);
-                console.log(this.responseText);
-                if (json.trigger_type == "1"){
-                    document.getElementById('force_but').checked = true;
-                    document.getElementById('css_force_but').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_level_but').setAttribute("class", "btn btn-primary");
-                }
-                else{
-                    document.getElementById('force_but').checked = false;
-                    document.getElementById('css_force_but').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_level_but').setAttribute("class", "btn btn-primary active");
-                }
-                if(json.adc_mode == "1"){
-                    document.getElementById('work_mode').checked = true;
-                    document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary");
-                }
-                else{
-                    document.getElementById('work_mode').checked = false;
-                    document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary active");
-
-                }
-                console.log(-(json.trigger_level_0 & 8191));
-                console.log(json.trigger_level_1 & 8192);
-                console.log(json.trigger_level_2 & 8192);
-                console.log(json.trigger_level_3 & 8192);
-                document.getElementById('level0').checked = json.selected_level&1 ? true : false;
-                document.getElementById('level1').checked = json.selected_level&2 ? true : false;
-                document.getElementById('level2').checked = json.selected_level&4 ? true : false;
-                document.getElementById('level3').checked = json.selected_level&8 ? true : false;
-                document.getElementById('triggLevel0').value = signed_ext(json.trigger_level_0, 14);
-                document.getElementById('triggLevel1').value = signed_ext(json.trigger_level_1, 14);
-                document.getElementById('triggLevel2').value = signed_ext(json.trigger_level_2, 14);
-                document.getElementById('triggLevel3').value = signed_ext(json.trigger_level_3, 14);
-
-                update_button(["first_channel_00", "first_channel_01", "first_channel_02", "first_channel_05"], json.shapers_config_0);
-                update_button(["second_channel_00", "second_channel_01", "second_channel_02", "second_channel_05"], json.shapers_config_1);
-                update_button(["third_channel_00", "third_channel_01", "third_channel_02", "third_channel_05"], json.shapers_config_2);
-                update_button(["fourth_channel_00", "fourth_channel_01", "fourth_channel_02", "fourth_channel_05"], json.shapers_config_3);
-
-                if(json.ampl_config_0 == 0){
-                    document.getElementById('first_ampl_1').checked = true;
-                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_0 == 1){
-                    document.getElementById('first_ampl_1').checked = true;
-                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_0 == 2){
-                    document.getElementById('first_ampl_1').checked = true;
-                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_0 == 3){
-                    document.getElementById('first_ampl_1').checked = true;
-                    document.getElementById('css_first_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_first_ampl_5').setAttribute("class", "btn btn-primary active");
-                }
-
-                if(json.ampl_config_1 == 0){
-                    document.getElementById('second_ampl_1').checked = true;
-                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_1 == 1){
-                    document.getElementById('second_ampl_1').checked = true;
-                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_1 == 2){
-                    document.getElementById('second_ampl_1').checked = true;
-                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_1 == 3){
-                    document.getElementById('second_ampl_1').checked = true;
-                    document.getElementById('css_second_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_second_ampl_5').setAttribute("class", "btn btn-primary active");
-                }
-
-                if(json.ampl_config_2 == 0){
-                    document.getElementById('third_ampl_1').checked = true;
-                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_2 == 1){
-                    document.getElementById('third_ampl_1').checked = true;
-                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_2 == 2){
-                    document.getElementById('third_ampl_1').checked = true;
-                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary active");
-                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary");
-                }
-                else if(json.ampl_config_2 == 3){
-                    document.getElementById('third_ampl_1').checked = true;
-                    document.getElementById('css_third_ampl_1').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_2').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_4').setAttribute("class", "btn btn-primary");
-                    document.getElementById('css_third_ampl_5').setAttribute("class", "btn btn-primary active");
-                }
-            }
+        var value = $('#pointMode').prop("checked");
+        if (value == true){
+            $("fieldset").removeAttr("disabled");
         }
-    };
-window.onfocus  = funonload;
-window.onload = funonload;
-  });
-console.log($("input[type=radio]"))
+        if (value == false){
+            $("fieldset").attr("disabled","true");
+        }
+    });
+    window.onfocus  = update_page;
+    window.onload = update_page;
+});
+
+function update_page(){
+    var trigg_type_but = document.getElementById('force_but').checked;
+    var level_type_but = document.getElementById('level_but').checked;
+    var request = new XMLHttpRequest();
+    request.open("POST", "", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.responseType = 'text';
+    var json = {"command" : "update_page_config"};
+    request.send(JSON.stringify(json));
+    console.log(json)
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            if (json.trigger_type == "1"){
+                document.getElementById('force_but').checked = true;
+                document.getElementById('css_force_but').setAttribute("class", "btn btn-primary active");
+                document.getElementById('css_level_but').setAttribute("class", "btn btn-primary");
+            }
+            else{
+                document.getElementById('force_but').checked = false;
+                document.getElementById('css_force_but').setAttribute("class", "btn btn-primary");
+                document.getElementById('css_level_but').setAttribute("class", "btn btn-primary active");
+            }
+            if(json.adc_mode == "1"){
+                document.getElementById('work_mode').checked = true;
+                document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary active");
+                document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary");
+            }
+            else{
+                document.getElementById('work_mode').checked = false;
+                document.getElementById('css_adc_work_mode').setAttribute("class", "btn btn-primary");
+                document.getElementById('css_adc_test_mode').setAttribute("class", "btn btn-primary active");
+            }
+            document.getElementById('level0').checked = json.selected_level&1 ? true : false;
+            document.getElementById('level1').checked = json.selected_level&2 ? true : false;
+            document.getElementById('level2').checked = json.selected_level&4 ? true : false;
+            document.getElementById('level3').checked = json.selected_level&8 ? true : false;
+            document.getElementById('triggLevel0').value = signed_ext(json.trigger_level_0, 14);
+            document.getElementById('triggLevel1').value = signed_ext(json.trigger_level_1, 14);
+            document.getElementById('triggLevel2').value = signed_ext(json.trigger_level_2, 14);
+            document.getElementById('triggLevel3').value = signed_ext(json.trigger_level_3, 14);
+
+            update_button(["first_channel_00",
+                           "first_channel_01",
+                           "first_channel_02",
+                           "first_channel_05"], json.shapers_config_0);
+
+            update_button(["second_channel_00",
+                           "second_channel_01",
+                           "second_channel_02",
+                           "second_channel_05"], json.shapers_config_1);
+
+            update_button(["third_channel_00",
+                           "third_channel_01",
+                           "third_channel_02",
+                           "third_channel_05"], json.shapers_config_2);
+
+            update_button(["fourth_channel_00",
+                           "fourth_channel_01",
+                           "fourth_channel_02",
+                           "fourth_channel_05"], json.shapers_config_3);
+
+            update_button(["first_ampl_1",
+                           "first_ampl_2",
+                           "first_ampl_4",
+                           "first_ampl_5"], json.ampl_config_0);
+
+            update_button(["second_ampl_1",
+                           "second_ampl_2",
+                           "second_ampl_4",
+                           "second_ampl_5"], json.ampl_config_1);
+
+            update_button(["third_ampl_1",
+                           "third_ampl_2",
+                           "third_ampl_4",
+                           "third_ampl_5"], json.ampl_config_2);
+        }
+    }
+};
