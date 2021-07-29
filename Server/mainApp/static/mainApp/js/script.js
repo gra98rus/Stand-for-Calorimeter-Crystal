@@ -11,6 +11,8 @@ for(var i = 0; i < 12; i++){
 var spectrum_data = []
 var chartType = "bar"
 
+var current_page_mode = "#all-tab-pane";
+
 function start() {
     var json = {"command" : "sendStartEvent"};
     send_http_request(json);
@@ -32,7 +34,7 @@ function start() {
                 chartsData[i] = json[i];
             var copy = chartsData;
             allChartsData.push(copy);
-            drawCharts();  //FIXME: ИЗменить то что все графики рисуются, на рисование только выделенного
+            drawCharts();
         }
         var copy = spectrum_data;
         allChartsData.push(copy);
@@ -78,10 +80,30 @@ function drawADC(id,num,chartsData) {
 }
 
 function drawCharts() {
-    drawADC("adc_graph_1",1,chartsData);
-    drawADC("adc_graph_2",2,chartsData);
-    drawADC("adc_graph_3",3,chartsData);
-    drawADC("adc_graph_4",4,chartsData);
+    switch(current_page_mode) {
+        case "#1-adc-tab-pane":
+            drawADC("adc_graph_1_1",1,chartsData);
+            break;
+        case "#2-adc-tab-pane":
+            drawADC("adc_graph_2_2",2,chartsData);
+            break;
+        case "#3-adc-tab-pane":
+            drawADC("adc_graph_3_3",3,chartsData);
+            break;
+        case "#4-adc-tab-pane":
+            drawADC("adc_graph_4_4",4,chartsData);
+            break;
+        case "#all-tab-pane":{
+            drawADC("adc_graph_1",1,chartsData);
+            drawADC("adc_graph_2",2,chartsData);
+            drawADC("adc_graph_3",3,chartsData);
+            drawADC("adc_graph_4",4,chartsData);
+            break;
+        }
+        default:
+            console.log(current_page_mode);
+            break;
+    }
 }
 
 function drawSpectrum(num){
@@ -130,7 +152,6 @@ function drawSpectrum(num){
     var layout = {
         title      : "Амплитудный спектр " + num,
         showlegend : false};
-    console.log(data)
     Plotly.newPlot("spectrum_graph_" + num, data, layout);
 
     document.getElementById("spectrumInfo").removeAttribute("hidden");
@@ -175,42 +196,48 @@ function addSpectrum(channel, point, bin_num, mode, spectrum_num){
                 "bins_num"     : Math.log2(bin_num) - 5};
     send_http_request(json);
 
-  var elem = document.createElement('a');
-  elem.setAttribute("class","dropdown-item");
-  var href = "#" + (spectrum_num) + "-spectrum-tab-pane"
-  elem.setAttribute("href", href);
-  elem.innerHTML='Спектр '+ (spectrum_num) + ' (Канал:' + channel + ', режим:' + mode + ')';
-  elem.addEventListener('click',function(event){
-    var i = event.target.href.split("/")[3].replace(/\D+/g,"");
-    drawSpectrum(i);
-    $(this).tab('show');
-  });
+    var elem = document.createElement('a');
+    elem.setAttribute("class","dropdown-item");
+    var href = "#" + (spectrum_num) + "-spectrum-tab-pane"
+    elem.setAttribute("href", href);
+    elem.id = spectrum_num + "_spectrum_tab_icon";
+    elem.innerHTML='Спектр '+ (spectrum_num) + ' (Канал:' + channel + ', режим:' + mode + ')';
+    elem.addEventListener('click',function(event){
+        var i = event.target.href.split("/")[3].replace(/\D+/g,"");
+        drawSpectrum(i);
+        $(this).tab('show');
+    });
 
-  var sp_menu = document.getElementById("spectra-menu")
-  sp_menu.appendChild(elem);
+    var sp_menu = document.getElementById("spectra-menu")
+    sp_menu.appendChild(elem);
+    var sp_item = document.getElementById("add-spectrum-item")
+    sp_item.className = "dropdown-item";
 
-  var sp_item = document.getElementById("add-spectrum-item")
-  sp_item.className = "dropdown-item";
+    var id = "spectrum_graph_" + (spectrum_num);
+    var text = '<table class="table table-bordered"><tbody><tr><td width="100%"><div id="' + id + '"></div></td></table>';
+    var elem1 = document.createElement('div');
+    elem1.setAttribute("class","tab-pane fade");
+    elem1.id = (spectrum_num) + "-spectrum-tab-pane";
+    elem1.innerHTML += text
+    $('a[href="'+href+'"]').on('shown.bs.tab', function (event) {
+        var i = event.target.href.split("/")[3].replace(/\D+/g,"");
+        drawSpectrum(i);
+    });
 
-  var id = "spectrum_graph_" + (spectrum_num);
-  var text = '<table class="table table-bordered"><tbody><tr><td width="100%"><div id="' + id + '"></div></td></table>';
-  var elem1 = document.createElement('div');
-  elem1.setAttribute("class","tab-pane fade");
-  elem1.setAttribute("id",+ (spectrum_num) + "-spectrum-tab-pane");
-  elem1.innerHTML += text
-  $('a[href="'+href+'"]').on('shown.bs.tab', function (event) {
-    var i = event.target.href.split("/")[3].replace(/\D+/g,"");
-    drawSpectrum(i);
-  });
+    var tab = document.getElementsByClassName("tab-content");
+    tab[0].appendChild(elem1);
+    document.getElementById(id).setAttribute("style","height:800px;");
 
-  var tab = document.getElementsByClassName("tab-content")
-  tab[0].appendChild(elem1);
+    var sp = {channel : channel, point : point, bin_num: bin_num, mode: mode};
+    spectra_list[spectrum_num] = sp;
+}
 
-  document.getElementById(id).setAttribute("style","height:800px;")
-
-  var sp = {channel : channel, point : point, bin_num: bin_num, mode: mode}
-  spectra_list[spectrum_num] = sp
-  console.log(spectra_list)
+function deleteSpectrum(num){
+    var elem = document.getElementById( num + "-spectrum-tab-pane");
+    elem.remove();
+    elem = document.getElementById( num + "_spectrum_tab_icon");
+    elem.remove();
+    spectra_list[num].channel = -1;
 }
 
 function send_http_request(json){
@@ -252,20 +279,6 @@ function sync_deser() {
 function rst_spectrum(){
     var json = {"command"   : "rst_spectrum"};
     send_http_request(json);
-}
-
-function deleteSpectrum(num){
-    var add  = document.getElementById("add-spectrum-item")
-    var sp   = document.getElementById("spectra-menu")
-    var elem = document.createElement('a');
-
-    elem.setAttribute("class","dropdown-item");
-    elem.setAttribute("href", "#");
-    elem.innerHTML='Спектр '+ (num)
-    sp.appendChild(elem);
-    add.className = "dropdown-item";
-    spectra_list[num].channel = -1;
-    console.log(elem)
 }
 
 function signed_ext(value, valid_bit_num){
@@ -310,14 +323,14 @@ function update_button(names, select){
 
 $(document).ready(function(){
     drawCharts();
-
-    $('.nav-tabs a[href="#add-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
+    $('.nav-tabs a[href="#add-spectrum"]').on('shown.bs.tab', function(event){
         $('#Modal').modal('show');
     });
 
-    $('.nav-tabs a[href="#delete-spectrum"]').on('shown.bs.tab', function(event){ //FIXME: ЗАМЕНИТЬ АЛЕРТ НА МОДАЛ!!!!!!!!!!!!!!!
+    $('.nav-tabs a[href="#delete-spectrum"]').on('shown.bs.tab', function(event){
         var num = prompt("Введите номер спектра", "");
-        if (num == null || num == "" || num <= 0 || num > (spectra_list.length) || spectra_list[num].channel == -1) {
+        console.log(num);
+        if (num == null || num == "" || num < 0 || num > (spectra_list.length) || spectra_list[num].channel == -1) {
             txt = "Неверное значение";
         } else {
             deleteSpectrum(num);
@@ -325,32 +338,8 @@ $(document).ready(function(){
     });
 
     $('.nav-tabs a').on('shown.bs.tab', function(event){
-      var cutHref = event.target.href.split("/")[3];
-      console.log(cutHref)
-        switch(cutHref) {
-          case "#1-adc-tab-pane":
-            drawADC("adc_graph_1_1",1,chartsData);
-            break;
-          case "#2-adc-tab-pane":
-            drawADC("adc_graph_2_2",2,chartsData);
-            break;
-          case "#3-adc-tab-pane":
-            drawADC("adc_graph_3_3",3,chartsData);
-            break;
-          case "#4-adc-tab-pane":
-            drawADC("adc_graph_4_4",4,chartsData);
-            break;
-          case "#all-tab-pane":{
-            drawADC("adc_graph_1",1,chartsData);
-            drawADC("adc_graph_2",2,chartsData);
-            drawADC("adc_graph_3",3,chartsData);
-            drawADC("adc_graph_4",4,chartsData);
-            break;
-          }
-          default:
-            console.log(cutHref);
-            break;
-        }
+        current_page_mode = (event.target.href.split("/")[3] == "#") ? current_page_mode : event.target.href.split("/")[3];
+        drawCharts();
     });
 
     $('.dropdown-menu a').on('shown.bs.tab', function(event){
@@ -364,63 +353,66 @@ $(document).ready(function(){
     });
 
     $("#createSpectrum").click(function(){
-      var ch;
-      var mode;
-      var pt;
-      var smpl;
-      var spectrum_num;
-      if ($('#channelADC1').prop("checked") == true)
-        ch = 1;
-      if ($('#channelADC2').prop("checked") == true)
-        ch = 2;
-      if ($('#channelADC3').prop("checked") == true)
-        ch = 3;
-      if ($('#channelADC4').prop("checked") == true)
-        ch = 4;
-      if ($('#pointMode').prop("checked") == true) {
-        mode = 1;
-        pt = $("#pointADC").val();
-      }
-      if ($('#maxAmplMode').prop("checked") == true) {
-        mode = 0;
-        pt = 0;
-      }
-      smpl = $("#basketNumber > .active").text();
-      console.log(pt);
-      if (ch > 4 || ch < 1) {
-        alert("Неправильный канал!");
-        $('#add-spectrum-item').attr("class", "dropdown-item");
-      } else {
-        if (pt < 0 || pt > OSCILLOGRAM_WIDTH ) {
-          alert("Неправильная опорная точка!");
-          $('#add-spectrum-item').attr("class", "dropdown-item");
-        } else {
-          if (smpl < 0 || smpl > 4096 || smpl == "") {
-            alert("Выберите количество корзин!");
-            $('#add-spectrum-item').attr("class", "dropdown-item");
-          } else {
-            console.log("create Spectra");
-
-            spectrum_num = (ch-1)*3 + mode;
-
-            if(spectra_list[spectrum_num].channel == -1)
-                addSpectrum(ch, pt, smpl, mode, spectrum_num);
-            else if (mode == 1 && spectra_list[spectrum_num+1].channel == -1)
-                addSpectrum(ch, pt, smpl, mode, spectrum_num + 1);
-          }
+        var ch;
+        var mode;
+        var pt;
+        var smpl;
+        var spectrum_num;
+        if ($('#channelADC1').prop("checked") == true)
+            ch = 1;
+        if ($('#channelADC2').prop("checked") == true)
+            ch = 2;
+        if ($('#channelADC3').prop("checked") == true)
+            ch = 3;
+        if ($('#channelADC4').prop("checked") == true)
+            ch = 4;
+        if ($('#pointMode').prop("checked") == true){
+            mode = 1;
+            pt = $("#pointADC").val();
         }
-      }
-      $('#Modal').modal('hide');
+        if ($('#maxAmplMode').prop("checked") == true){
+            mode = 0;
+            pt = 0;
+        }
+        smpl = $("#basketNumber > .active").text();
+        console.log(pt);
+        if (ch > 4 || ch < 1) {
+            alert("Неправильный канал!");
+            $('#add-spectrum-item').attr("class", "dropdown-item");
+        }
+        else{
+            if (pt < 0 || pt > OSCILLOGRAM_WIDTH ) {
+                alert("Неправильная опорная точка!");
+                $('#add-spectrum-item').attr("class", "dropdown-item");
+            }
+            else{
+                if (smpl < 0 || smpl > 4096 || smpl == "") {
+                    alert("Выберите количество корзин!");
+                    $('#add-spectrum-item').attr("class", "dropdown-item");
+                }
+                else{
+                    spectrum_num = (ch-1)*3 + mode;
+
+                    if(spectra_list[spectrum_num].channel == -1)
+                        addSpectrum(ch, pt, smpl, mode, spectrum_num);
+                    else if (mode == 1 && spectra_list[spectrum_num+1].channel == -1)
+                        addSpectrum(ch, pt, smpl, mode, spectrum_num + 1);
+                    else
+                        alert("Невозможно создать гистограмму по данному каналу. Пожалуйста, удалите уже имеющуюся гистограмму.");
+                }
+            }
+        }
+        $('#Modal').modal('hide');
     });
 
     $('#Modal').on('hide.bs.modal', function(event) {
-      $('#add-spectrum-item').attr("class", "dropdown-item");
+        $('#add-spectrum-item').attr("class", "dropdown-item");
     });
 
     $("input[name='options']").change( function() {
-      if ($('#histogram_but').prop("checked")) chartType="bar";
-      else                                     chartType="line";
-      drawCharts();
+        if ($('#histogram_but').prop("checked")) chartType="bar";
+        else                                     chartType="line";
+        drawCharts();
     });
 
     $("input[name='adc_mode']").change( function() {
